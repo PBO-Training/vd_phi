@@ -1,0 +1,140 @@
+<!-- Row 1 -->
+<div class="form-row">
+  <div class="col-md-12">
+    <div class="row btn-fun">
+      <div class="col-sm-10">
+        <button [routerLink]="['/project']" routerLinkActive="router-link-active"
+          class="btn btn btn-secondary btn-sm btn-master" type="button">
+          <i class="feather icon-rotate-ccw"></i>
+          {{'button.back'| translate}}
+        </button>
+        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-info btn-sm btn-master" type="submit"
+          (click)="onEdit()">
+          <i class="feather icon-edit"></i>
+          {{'button.edit'| translate}}
+        </button>
+      </div>
+    </div>
+    <!-- BEGIN Card Infomation Project -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <h4 style="margin-bottom: auto;">{{'project.detail.title.title-projectInfo-info-project'| translate}}</h4>
+        </div>
+        <!-- row 1 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label class="floating-label">
+              {{'project.detail.label.project-code'| translate}}
+            </label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectCode}}</span>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label class="floating-label">
+              {{'project.detail.label.project-name'| translate}}
+            </label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectName}}</span>
+          </div>
+        </div>
+        <!-- row 2 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.customer'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.objectCustomer?.customerName}}</span>
+          </div>
+        </div>
+        <!-- row 3 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.start-date'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectStartDate | date:'dd-MM-yyyy'}}</span>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.end-date'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectEndDate | date:'dd-MM-yyyy'}}</span>
+          </div>
+        </div>
+        <!-- row 4 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.status'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.objectStatusProject?.statusProjectName}}</span>
+          </div>
+        </div>
+        <!-- row 5 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.department'| translate}} </label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.objectDepartment?.departmentName}}</span>
+          </div>
+        </div>
+        <!-- row 6 -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label class="floating-label">{{'project.detail.label.project-effort'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectEffort}}</span>
+          </div>
+        </div>
+        <!-- Input Note -->
+        <div class="row mb-1">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label class="floating-label">{{'project.detail.label.description'| translate}}</label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span>{{projectResponse?.projectDescription}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Card Infomation Project -->
+
+    <!-- BEGIN Card Evaluate Project -->
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header">
+          <h4 style="margin-bottom: auto;">{{'project.detail.title.title-projectInfo-evaluate-project'| translate}}</h4>
+        </div>
+        <div class="row">
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.evaluate'| translate}} </label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span
+              *ngIf="projectResponse?.objectEvaluateProject === null; else elseBlockEvaluate">{{'project.detail.label.no-evaluate'|
+              translate}}</span>
+            <ng-template #elseBlockEvaluate>
+              <span>{{projectResponse?.objectEvaluateProject?.evaluateProjectName}}</span>
+            </ng-template>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <label>{{'project.detail.label.level'| translate}} </label>
+          </div>
+          <div class="col-sm-3 col-lg-2 mb-1">
+            <span
+              *ngIf="projectResponse?.objectLevelProject === null; else elseBlockLevel">{{'project.detail.label.no-level'|
+              translate}}</span>
+            <ng-template #elseBlockLevel>
+              <span>{{projectResponse?.objectLevelProject?.levelProjectName}}</span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

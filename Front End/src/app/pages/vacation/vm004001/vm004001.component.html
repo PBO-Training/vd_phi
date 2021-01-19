@@ -1,0 +1,375 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.vacation-summary'" *ngIf="this.isDataAvailable">
+</app-breadcrumb-share>
+<div class="col-md-12" *ngIf="this.isDataAvailable">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-down"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-up"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchSummaryList()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="employeeCode">
+                                    {{'vacation.form.vacation-employeeCode'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="employeeName">
+                                    {{'vacation.form.vacation-employeeName'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>
+                                    {{'vacation.form.vacation-year'| translate}}
+                                </label>
+                                <select class="mb-12 form-control form-control-sm" id="vacationYear"
+                                    formControlName="vacationYear">
+                                    <option *ngFor="let item of this.yearList; let i = index" value="{{item.key}}">
+                                        {{item.value}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="department">
+                                    {{'vacation.form.vacation-department'| translate}}
+                                </label>
+                                <ng-select placeholder="All" class="custom" (add)="onAddNewDepartmentID($event)"
+                                    id="department" formControlName="departmentID" [multiple]="true">
+                                    <ng-option *ngFor="let item of selectDepartments" [value]="item.keyResponse">
+                                        {{item.valueResponse}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchSummaryList()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (click)="resetForm()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12" *ngIf="this.isDataAvailable">
+    <!--<div class="btn-fun text-right">
+        <button type="button" class="btn  btn-primary btn-sm btn-master">
+            <i class="fas fa-file-export"></i>
+            {{'button.export-excel'| translate}}
+        </button>
+    </div>-->
+    <br>
+</div>
+<div class="col-md-12"
+    *ngIf="vacationSummaryList?.length !== 0 && vacationSummaryList !== undefined && this.isDataAvailable ; else loading">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive" *ngIf="this.vacationSummaryList.length > 0">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">
+                        {{'p.display'| translate}}
+                    </p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of this.screenPropsSummary.pageOpiton"
+                                [selected]="option === this.screenPropsSummary.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex" *ngIf="this.vacationSummaryList.length > 1; else oneRecord">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (this.screenPropsSummary.pageNum !== 0 ? this.screenPropsSummary.pageNum *
+                        this.screenPropsSummary.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (vacationSummaryList.length + (this.screenPropsSummary.pageNum !== 0 ?
+                        this.screenPropsSummary.pageNum * this.screenPropsSummary.pageSize : 0)) || 0}} {{'p.of'|
+                        translate}} {{screenPropsSummary.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+                <ng-template #oneRecord>
+                    <div class="d-flex" *ngIf="this.vacationSummaryList.length === 1">
+                        <p class="text-panigator">
+                            {{'p.from'| translate}}
+                            {{ (1 + (this.screenPropsSummary.pageNum !== 0 ? this.screenPropsSummary.pageNum *
+                            this.screenPropsSummary.pageSize : 0)) || 0}}
+                            {{'p.to'| translate}}
+                            {{ (vacationSummaryList.length + (this.screenPropsSummary.pageNum !== 0 ?
+                            this.screenPropsSummary.pageNum * this.screenPropsSummary.pageSize : 0)) || 0}} {{'p.of'|
+                            translate}} {{this.screenPropsSummary.totalRecord || 0}}
+                            {{'p.record-singular'| translate}}
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="this.screenPropsSummary.totalRecord"
+                    (pageChange)="pageChangeOutput($event)" [(page)]="this.screenPropsSummary.page"
+                    [pageSize]="this.screenPropsSummary.pageSize" [maxSize]="this.screenPropsSummary.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <col class="border border-primary">
+                    <ng-container *ngFor="let itemtype of this.selectTypes; let i = index ">
+                        <col class="border border-primary">
+                    </ng-container>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="remove-th th-5 text-center">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th sortable="employeeCode" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-employeeCode'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeName" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-employeeName'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="departmentName" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-department'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'departmentName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'departmentName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="totalVacation" class="th-10 sort-column bg-light border border-primary"
+                            (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-total-vacation'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'totalVacation' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'totalVacation' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="totalLeave" class="th-10 sort-column bg-light border border-primary"
+                            (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-total-leave'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'totalLeave' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'totalLeave' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="bonusVacation" class="th-10 sort-column bg-light border border-primary"
+                            (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-total-bonus'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'bonusVacation' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'bonusVacation' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="remainVacation" class="th-10 sort-column bg-light border border-primary"
+                            (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-remain'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'remainVacation' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'remainVacation' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="bg-light border border-primary">
+                            {{'vacation.list.table.vacation-year'| translate}}
+                        </th>
+                        <th class="bg-light border border-primary">
+                            {{'vacation.list.table.violation-salary'| translate}}
+                        </th>
+                        <th class="bg-light border border-primary">
+                            {{'vacation.list.table.violation-un-salary'| translate}}
+                        </th>
+                        <ng-container *ngFor="let itemtype of this.selectTypes; let i = index ">
+                            <th class="border border-primary">
+                                {{itemtype.valueResponse}}
+                            </th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of vacationSummaryList; let i = index ">
+                        <tr *ngIf="item">
+                            <td class="text-center">{{i + (screenPropsSummary.pageNum * screenPropsSummary.pageSize) +
+                                1}}</td>
+                            <td><a class="text-left underline"
+                                    [routerLink]="['/vacation-summary-list/detail/',item.employeeID,this.formBaseSummary.value.vacationYear]"
+                                    routerLinkActive="router-link-active">
+                                    {{item.employeeCode}}</a></td>
+                            <td><a class="text-left underline"
+                                    [routerLink]="['/vacation-summary-list/detail/',item.employeeID,this.formBaseSummary.value.vacationYear]"
+                                    routerLinkActive="router-link-active">
+                                    {{item.firstName}}
+                                    {{item.lastName}}
+                                </a></td>
+                            <td>
+                                <span *ngIf="item.departmentName != '0'">
+                                    {{item.departmentName}}
+                                </span>
+                                <span *ngIf="item.departmentName == '0'">
+                                    -
+                                </span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.totalVacation > 0 && item.totalVacation == 1">
+                                    <b>{{item.totalVacation}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.totalVacation > 0 && item.totalVacation != 1">
+                                    <b>{{item.totalVacation}}</b>
+                                    {{'vacation.list.table.vacation-day-unit'| translate}}
+                                </span>
+                                <span *ngIf="item.totalVacation == 0">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.totalLeave > 0 && item.totalLeave == 1" class="text-warning">
+                                    <b>{{item.totalLeave}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.totalLeave > 0 && item.totalLeave != 1" class="text-warning">
+                                    <b>{{item.totalLeave}}</b>
+                                    {{'vacation.list.table.vacation-day-unit'| translate}}
+                                </span>
+                                <span *ngIf="item.totalLeave == 0">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.bonusVacation > 0 && item.bonusVacation == 1" class="text-info">
+                                    <b>{{item.bonusVacation}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.bonusVacation > 0 && item.bonusVacation != 1" class="text-info">
+                                    <b>{{item.bonusVacation}}</b>
+                                    {{'vacation.list.table.vacation-day-unit'| translate}}
+                                </span>
+                                <span *ngIf="item.bonusVacation == 0">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.remainVacation > 0 && item.remainVacation == 1" class="text-success">
+                                    <b>{{(item.remainVacation) - item.unsalaryDeduction/Type.TimeDefault.workTime}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.remainVacation > 0 && item.remainVacation != 1" class="text-success">
+                                    <b>{{(item.remainVacation) - item.unsalaryDeduction/Type.TimeDefault.workTime}}</b>
+                                    {{'vacation.list.table.vacation-day-unit'| translate}}
+                                </span>
+                                <span *ngIf="item.remainVacation < 0 && item.remainVacation == 1" class="text-danger">
+                                    <b>{{item.remainVacation - item.unsalaryDeduction/Type.TimeDefault.workTime}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.remainVacation < 0 && item.remainVacation != 1" class="text-danger">
+                                    <b>{{item.remainVacation - item.unsalaryDeduction/Type.TimeDefault.workTime}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.remainVacation == 0">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.Year != 0">
+                                    <b>{{item.Year}}</b>
+                                </span>
+                                <span *ngIf="item.Year === '0'">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.salaryDeduction != 0" class="text-info">
+                                    <b>{{item.salaryDeduction/Type.TimeDefault.workTime | number : '1.2-2'}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.salaryDeduction === '0'">-</span>
+                            </td>
+                            <td>
+                                <span *ngIf="item.unsalaryDeduction != 0" class="text-info">
+                                    <b>{{item.unsalaryDeduction/Type.TimeDefault.workTime | number : '1.2-2'}}</b>
+                                    {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                </span>
+                                <span *ngIf="item.unsalaryDeduction === '0'">-</span>
+                            </td>
+                            <ng-container *ngFor="let itemtype of this.selectTypes;">
+                                <td>
+                                    <span *ngIf="item[itemtype.keyResponse] != 0 && item[itemtype.keyResponse] == 1"
+                                        class="text-danger">
+                                        <b>{{item[itemtype.keyResponse] }}</b>
+                                        {{'vacation.list.table.vacation-day-unit-1'| translate}}
+                                    </span>
+                                    <span *ngIf="item[itemtype.keyResponse] != 0 && item[itemtype.keyResponse] != 1"
+                                        class="text-danger">
+                                        <b>{{item[itemtype.keyResponse] }}</b>
+                                        {{'vacation.list.table.vacation-day-unit'| translate}}
+                                    </span>
+                                    <span *ngIf="item[itemtype.keyResponse] === '0'">-</span>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="col-md-12" *ngIf="vacationSummaryList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

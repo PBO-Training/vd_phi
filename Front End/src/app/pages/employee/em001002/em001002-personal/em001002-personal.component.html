@@ -1,0 +1,949 @@
+<form [formGroup]="formDetails" (ngSubmit)="submit(formDetails.value)" novalidate appFocus>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-fun row">
+                <div class="col-sm-10">
+                    <button [hidden]="isProfile" *ngIf="idEmployee ? authButton.UPDATE : authButton.CREATE"
+                        type="button" (click)="openPopup()" class="btn   btn-secondary  btn-sm btn-master">
+                        <i class="feather icon-rotate-ccw"></i>
+                        {{'button.back'| translate}}
+                    </button>
+                    <button *ngIf="idEmployee ? authButton.UPDATE : authButton.CREATE" type="submit"
+                        class="btn  btn-primary btn-sm btn-master">
+                        <i class="feather icon-save"></i>
+                        {{'button.save'| translate}}
+                    </button>
+                    <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+                        (click)="openPopupPersonal()">
+                        <i class="feather icon-x-square"></i>
+                        {{'button.cancel'| translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 biography">
+            <!-- style="padding-right: 10px;" -->
+            <div class="row" style="height: 100%;">
+                <div class="col-md-12">
+                    <div class="card" style="height: calc(100% - 10px);">
+                        <div class="card-body">
+                            <!-- avatar skill -->
+                            <div class="form-row">
+                                <div class="mb-4 col-md-12 text-center">
+                                    <h4 class="text-center">
+                                        {{employeeName ? employeeName : ('employee.create.form.biography'| translate)}}
+                                    </h4>
+                                    <div class="image-container">
+                                        <img class="img-personal" [src]="url ? url : 'assets/images/user/avatar-1.png'">
+                                        <br>
+                                        <input type='file' (change)="onSelectFile($event)" id="file"
+                                            class="select-profile-picture" formControlName="avataUrl">
+                                        <span class="message">
+                                            {{'employee.create.form.avataUrl'| translate}}
+                                        </span>
+                                    </div>
+                                    <div *ngIf="!isAvatar" class="invalid-feedback d-block">
+                                        {{'employee.create.form.avataUrl'| translate}}
+                                        {{'server-error.015'| translate: typeImageUpload}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end avatar -->
+                            <!-- said -->
+                            <div class="form-row">
+                                <div class="mb-2 col-md-12">
+                                    <textarea readonly id="biographyTextarea"
+                                        [innerHTML]="formDetails.value.biography ? formDetails.value.biography : ('employee.create.form.biography'| translate)">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <!-- said -->
+                            <div class="form-row" *ngIf="employeeDetails?.listSkill.length > 0">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.tab.skill'| translate}}
+                                    </h5>
+                                    <ng-container *ngFor="let item of employeeDetails.listSkill index as i">
+                                        <div *ngIf="i >= 0 && i < 5" class="row mb-2">
+                                            <div class="col-md-3 pr-0">
+                                                <div>{{item.skillName}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <ngb-progressbar type="success" [height]="'13px'"
+                                                    [value]="+item.levelSkillValue">
+                                                </ngb-progressbar>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="form-row" *ngIf="employeeDetails?.listLanguage.length > 0">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.tab.language'| translate}}
+                                    </h5>
+                                    <ng-container *ngFor="let item of employeeDetails.listLanguage index as i">
+                                        <div *ngIf="i >= 0 && i < 5" class="row mb-2">
+                                            <div class="col-md-3 pr-0">
+                                                <div>{{item.languageName}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span>{{item.languageCertificate}} </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="form-row"
+                                *ngIf="employeeDetails?.totalExperience !== undefined  && employeeDetails?.totalExperience !== null">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.form.experience'| translate}}
+                                    </h5>
+                                    <div class="col-md-12 pr-0 pl-0">
+                                        <div style="display: inline-grid;">
+                                            <p *ngIf="employeeDetails.totalExperience === 0">
+                                                {{'employee.create.form.total'| translate}}:
+                                                {{'employee.create.form.no-experience' | translate}}
+                                            </p>
+                                            <p *ngIf="employeeDetails.totalExperience > 0">
+                                                {{'employee.create.form.total'| translate}}:
+                                                <span *ngIf="totalYear === 1">
+                                                    {{totalYear}} {{'employee.create.form.year' | translate}}
+                                                </span>
+                                                <span *ngIf="totalYear > 1">
+                                                    {{totalYear}} {{'employee.create.form.years' | translate}}
+                                                </span>
+                                                <span *ngIf="totalMonth === 1">
+                                                    {{totalMonth}} {{'employee.create.form.month' | translate}}
+                                                </span>
+                                                <span *ngIf="totalMonth > 1">
+                                                    {{totalMonth}} {{'employee.create.form.months' | translate}}
+                                                </span>
+                                            </p>
+                                            <p *ngIf="employeeDetails.inCompanyExperience === 0">
+                                                {{'employee.create.form.in'| translate}} {{companyName}}:
+                                                {{'employee.create.form.no-experience' | translate}}
+                                            </p>
+                                            <p *ngIf="employeeDetails.inCompanyExperience > 0">
+                                                {{'employee.create.form.in'| translate}} {{companyName}}:
+                                                <span *ngIf="inCompanyYear === 1">
+                                                    {{inCompanyYear}} {{'employee.create.form.year' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyYear > 1">
+                                                    {{inCompanyYear}} {{'employee.create.form.years' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyMonth === 1">
+                                                    {{inCompanyMonth}} {{'employee.create.form.month' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyMonth > 1">
+                                                    {{inCompanyMonth}} {{'employee.create.form.months' | translate}}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 detail-personal">
+            <!-- personal -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- style="padding-left: unset;" -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-header-personal" style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ; 
+              padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.tab.personal'| translate}}
+                                </h4>
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee Code -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="employee_code">
+                                        {{'employee.create.form.employee_code'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input type="text" id="first" class="form-control form-control form-control-sm"
+                                        [readOnly]="isHidden"
+                                        [ngClass]="{ 'is-invalid': f.employeeCode.errors && !f.employeeCode.pristine}"
+                                        formControlName="employeeCode">
+                                    <div *ngIf="f.employeeCode.invalid && !f.employeeCode.pristine"
+                                        class="invalid-feedback d-block">
+                                        <div *ngIf="f.employeeCode.errors.required">
+                                            {{'employee.create.form.employee_code'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.employeeCode.errors.pattern; else checkLength">
+                                            {{'employee.create.form.employee_code'| translate}}
+                                            {{'server-error.007'| translate}}
+                                        </div>
+                                        <ng-template #checkLength>
+                                            <div *ngIf="f.employeeCode.errors.maxlength">
+                                                {{'employee.create.form.employee_code'| translate}}
+                                                {{'server-error.008'| translate:maxLenghtCode}}
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="invalid-feedback d-block" *ngIf="f.employeeCode.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.employee_code'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Employee Code -->
+                                <!-- Employee First Name -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="firstName">
+                                        {{'employee.create.form.firstName'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm " id="firstName"
+                                        [ngClass]="{ 'is-invalid':f.firstName.errors &&  !f.firstName.pristine }"
+                                        name="firstName" formControlName="firstName">
+                                    <div *ngIf="f.firstName.errors && !f.firstName.pristine" class="invalid-feedback">
+                                        <div *ngIf="f.firstName.errors.required">
+                                            {{'employee.create.form.firstName'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.firstName.errors.maxlength">
+                                            {{'employee.create.form.firstName'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtName}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.firstName.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.firstName'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End First Name -->
+                                <!-- Employee Last Name -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="lastName">
+                                        {{'employee.create.form.lastName'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm " id="lastName"
+                                        [ngClass]="{ 'is-invalid':  f.lastName.errors &&  !f.lastName.pristine }"
+                                        name="lastName" formControlName="lastName">
+                                    <div *ngIf="f.lastName.errors &&  !f.lastName.pristine" class="invalid-feedback">
+                                        <div *ngIf="f.lastName.errors.required">
+                                            {{'employee.create.form.lastName'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.lastName.errors.maxlength">
+                                            {{'employee.create.form.lastName'| translate}}
+                                            {{'server-error.008'| translate: maxLenghtName}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.lastName.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.lastName'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Last Name -->
+                            </div>
+                            <!-- Row (Birthday,Gender,Married) -->
+                            <div class="form-row">
+                                <!-- Employee Birthday -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="BirthDay">
+                                        {{'employee.create.form.birthday'| translate}}
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                            formControlName="birthday" ngbDatepicker #d2="ngbDatepicker"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            [ngClass]="{ 'is-invalid': f.birthday.errors || f.birthday.errors  }">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                                type="button">
+                                                <i class="icon-calendar far fa-calendar-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="f.birthday.errors || f.birthday.errors" class="invalid-feedback">
+                                            <div *ngIf="f.birthday.errors?.greater">
+                                                {{'employee.create.form.birthday'| translate}}
+                                                {{'server-error.012'| translate}}
+                                                {{'server-error.message-plus.today'| translate}}
+                                            </div>
+                                            <div
+                                                *ngIf="f.birthday.errors && !f.birthday.errors?.serverError  && !f.birthday.errors?.greater">
+                                                {{'employee.create.form.birthday'| translate}}
+                                                {{'server-error.003'| translate}}
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="f.birthday.errors?.serverError">
+                                            <div>
+                                                {{'employee.create.form.birthday'| translate}}
+                                                {{displayMessage}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Birthday -->
+                                <!-- Employee Gender -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="gender">
+                                        {{'employee.create.form.gender'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" name="gender" formControlName="gender"
+                                        [ngClass]="{ 'is-invalid': f.gender.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option [value]=true>Male</ng-option>
+                                        <ng-option [value]=false>Female</ng-option>
+                                    </ng-select>
+                                    <div *ngIf="f.gender.errors" class="invalid-feedback">
+                                        <div *ngIf="f.gender.errors.required">
+                                            {{'employee.create.form.gender'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.gender.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.gender'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Gender -->
+                                <!-- Employee Married -->
+                                <div class="mb-1 col-md-4">
+                                    <div class="form-row">
+                                        <div class="col-md-6 ">
+                                            <label for="marital">
+                                                {{'employee.create.form.marital'| translate}}
+                                            </label>
+                                            <br>
+                                            <label for="married">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" id="married"
+                                                        formControlName="married">
+                                                    <span class="custom-control-label">
+                                                        {{'employee.create.form.maritaled'| translate}}
+                                                    </span>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div *ngIf='isMarried' class="col-md-6">
+                                            <label for="numOfChild">
+                                                {{'employee.create.form.employeenum'| translate}}
+                                            </label>
+                                            <input type="text" style="text-align: right" onlyNumber
+                                                class="form-control form-control form-control-sm " id="employeenum"
+                                                [ngClass]="{ 'is-invalid': f.numOfChild.errors }" name="numOfChild"
+                                                maxlength="2" formControlName="numOfChild">
+                                            <div class="invalid-feedback" *ngIf="f.numOfChild.errors?.serverError">
+                                                <div>
+                                                    {{'employee.create.form.employeenum'| translate}}
+                                                    {{displayMessage}}
+                                                </div>
+                                            </div>
+                                            <div class="invalid-feedback" *ngIf="f.numOfChild.errors?.max">
+                                                <div>
+                                                    {{'employee.create.form.employeenum'| translate}}
+                                                    {{'server-error.012'| translate}} 30
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Married -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee Address -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Address">
+                                        {{'employee.create.form.address'| translate}}
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm " id="address"
+                                        name="address" formControlName="address"
+                                        [ngClass]="{ 'is-invalid':f.address.errors }">
+                                    <div *ngIf="f.address.errors" class="invalid-feedback">
+                                        <div *ngIf="f.address.errors.required">
+                                            {{'employee.create.form.address'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.address.errors.minlength">
+                                            {{'employee.create.form.address'| translate}}
+                                            {{'server-error.011'| translate}}
+                                        </div>
+                                        <div *ngIf="f.address.errors.maxlength">
+                                            {{'employee.create.form.address'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtString}}
+                                        </div>
+                                        <div *ngIf="f.address.errors.pattern">
+                                            {{'employee.create.form.address'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.address.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.address'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Adress -->
+                                <!-- Employee Nationality -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="nationality">
+                                        {{'employee.create.form.nationality'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" id="nationality" name="nationality"
+                                        formControlName="nationalityID"
+                                        [ngClass]="{ 'is-invalid': f.nationalityID.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option *ngFor="let item of listNationality" [value]="item.nationalityID">
+                                            {{item.nationalityName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div class="invalid-feedback" *ngIf="f.nationalityID.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.nationality'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Nationality -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee dateOfIssue -->
+                                <div class="mb-1 col-md-4">
+                                    <label>
+                                        {{'employee.create.form.dateOfIssue'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d3"
+                                            formControlName="dateOfIssueOfIDCard" ngbDatepicker #d3="ngbDatepicker"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            [ngClass]="{ 'is-invalid': f.dateOfIssueOfIDCard.errors}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()"
+                                                type="button">
+                                                <i class="icon-calendar far fa-calendar-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="f.dateOfIssueOfIDCard.errors && !f.dateOfIssueOfIDCard.errors?.serverError"
+                                            class="invalid-feedback">
+                                            <div
+                                                *ngIf="f.dateOfIssueOfIDCard.errors && !f.dateOfIssueOfIDCard.errors?.required  && !f.dateOfIssueOfIDCard.errors?.greater">
+                                                {{'employee.create.form.dateOfIssue'| translate}}
+                                                {{'server-error.003'| translate}}
+                                            </div>
+                                            <div *ngIf="f.dateOfIssueOfIDCard.errors?.required">
+                                                {{'employee.create.form.dateOfIssue'| translate}}
+                                                {{'server-error.001'| translate}}
+                                            </div>
+                                            <div *ngIf="f.dateOfIssueOfIDCard.errors.maxlength">
+                                                {{'employee.create.form.dateOfIssue'| translate}}
+                                                {{'server-error.008'| translate:maxLenghtPhone}}
+                                            </div>
+                                            <div *ngIf="f.dateOfIssueOfIDCard.errors?.greater ">
+                                                {{'employee.create.form.dateOfIssue'| translate}}
+                                                {{'server-error.012'| translate}}
+                                                {{'server-error.message-plus.today'| translate}}
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="f.dateOfIssueOfIDCard.errors?.serverError">
+                                            <div>
+                                                {{'employee.create.form.dateOfIssue'| translate}}
+                                                {{displayMessage}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Employee Identitycard -->
+                                <div class="mb-1 col-md-4">
+                                    <label>
+                                        {{'employee.create.form.identitycard'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input onlyNumber class="form-control form-control form-control-sm "
+                                        id="identityCard" name="identityCard" type="text" formControlName="identityCard"
+                                        minlength="9"
+                                        [ngClass]="{ 'is-invalid': f.identityCard.errors && !f.identityCard.pristine }"
+                                        maxlength="12">
+                                    <div *ngIf="f.identityCard.errors &&   !f.identityCard.pristine "
+                                        class="invalid-feedback">
+                                        <div *ngIf="f.identityCard.errors?.required">
+                                            {{'employee.create.form.identitycard'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.identityCard.errors?.minlength">
+                                            {{'employee.create.form.identitycard'| translate}}
+                                            {{'server-error.011'| translate: minLenghtIDCard}}
+                                        </div>
+                                        <div *ngIf="f.identityCard.errors?.maxlength">
+                                            {{'employee.create.form.identitycard'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtIDCard}}
+                                        </div>
+                                        <div *ngIf="f.identityCard.errors?.pattern">
+                                            {{'employee.create.form.identitycard'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.identityCard.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.identitycard'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Identitycard -->
+                                <!-- End dateOfIssue -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Employeee Biography -->
+                                <div class="mb-1 col-md-12">
+                                    <label for="Notes">
+                                        {{'employee.create.form.biography'| translate}}
+                                    </label>
+                                    <textarea [ngClass]="{ 'is-invalid': f.biography.errors }"
+                                        formControlName="biography" class="form-control form-control form-control-sm "
+                                        rows="8"></textarea>
+                                    <div *ngIf=" f.biography.errors" class="invalid-feedback">
+                                        <div *ngIf="f.biography.errors.maxlength">
+                                            {{'employee.create.form.biography'| translate}}
+                                            {{'server-error.008'| translate : maxLenghtNotes}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.biography.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.biography'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end personal -->
+            <!-- contact -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.contact'| translate}}
+                                </h4>
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee Email -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Email">
+                                        {{'employee.create.form.email'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input type="email" class="form-control form-control form-control-sm " id="email"
+                                        name="email" formControlName="email"
+                                        [ngClass]="{ 'is-invalid': f.email.errors  &&   !f.email.pristine }">
+                                    <div *ngIf="f.email.errors &&   !f.email.pristine" class="invalid-feedback">
+                                        <div *ngIf="f.email.errors.required">
+                                            {{'employee.create.form.email'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.email.errors.minlength">
+                                            {{'employee.create.form.email'| translate}}
+                                            {{'server-error.011'| translate}}
+                                        </div>
+                                        <div *ngIf="f.email.errors.maxlength">
+                                            {{'employee.create.form.email'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtInput}}
+                                        </div>
+                                        <div *ngIf="f.email.errors.email">
+                                            {{'employee.create.form.email'| translate}}
+                                            {{'server-error.007'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.email.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.email'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Email -->
+                                <!-- Employee Phone -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Phone">
+                                        {{'employee.create.form.phone'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <input type="text" onlyNumber class="form-control form-control form-control-sm "
+                                        id="phone" name="phone" formControlName="phone"
+                                        [ngClass]="{ 'is-invalid':  f.phone.errors &&    !f.phone.pristine }"
+                                        maxlength="11">
+                                    <div *ngIf="f.phone.errors &&  !f.phone.pristine" class="invalid-feedback">
+                                        <div *ngIf="f.phone.errors.required">
+                                            {{'employee.create.form.phone'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.phone.errors.minlength">
+                                            {{'employee.create.form.phone'| translate}}
+                                            {{'server-error.011'| translate:minLenghtPhone}}
+                                        </div>
+                                        <div *ngIf="f.phone.errors.maxlength">
+                                            {{'employee.create.form.phone'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtPhone}}
+                                        </div>
+                                        <div *ngIf="f.phone.errors.pattern">
+                                            {{'employee.create.form.phone'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.phone.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.phone'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Phone -->
+                                <!-- Employee skype -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Skype">
+                                        {{'employee.create.form.skype'| translate}}
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm " id="Skype"
+                                        name="skype" value="live: " formControlName="skype"
+                                        [ngClass]="{ 'is-invalid': f.skype.errors }">
+                                    <div *ngIf="f.skype.errors" class="invalid-feedback">
+                                        <div *ngIf="f.skype.errors.maxlength">
+                                            {{'employee.create.form.skype'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtInput}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.skype.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.skype'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End skype -->
+                            </div>
+                            <!-- Employee  Emergency -->
+                            <div class="form-row">
+                                <div class="mb-1 col-md-4">
+                                    <label for="emergency">
+                                        {{'employee.create.form.emergency'| translate}}
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm " id="emergency"
+                                        name="skype" [ngClass]="{ 'is-invalid': f.emergency.errors }"
+                                        formControlName="emergency">
+                                    <div *ngIf="f.emergency.errors" class="invalid-feedback">
+                                        <div *ngIf="f.emergency.errors.required">
+                                            {{'employee.create.form.emergency'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div *ngIf="f.emergency.errors.minlength">
+                                            {{'employee.create.form.emergency'| translate}}
+                                            {{'server-error.011'| translate}}
+                                        </div>
+                                        <div *ngIf="f.emergency.errors.maxlength">
+                                            {{'employee.create.form.emergency'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtInput}}
+                                        </div>
+                                        <div *ngIf="f.emergency.errors.pattern">
+                                            {{'employee.create.form.emergency'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.emergency.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.emergency'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Emergency -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end contact -->
+            <!-- education -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.education'| translate}}
+                                </h4>
+                            </div>
+                            <!-- University,Employee Degree -->
+                            <div class="form-row">
+                                <!-- University -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="University">
+                                        {{'employee.create.form.university'| translate}}
+                                    </label>
+                                    <input type="text" class="form-control form-control form-control-sm" id="university"
+                                        name="university" formControlName="university"
+                                        [ngClass]="{ 'is-invalid': f.university.errors }">
+                                    <div *ngIf="f.university.errors" class="invalid-feedback">
+                                        <div *ngIf="f.university.errors.maxlength">
+                                            {{'employee.create.form.university'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtInput}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.university.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.university'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Employee Degree -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Degree">
+                                        {{'employee.create.form.degree'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" id="degree" name="degree"
+                                        formControlName="degreeID" [ngClass]="{ 'is-invalid': f.degreeID.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option *ngFor="let item of listDegree" [value]="item.degreeID">
+                                            {{item.degreeName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div *ngIf=" f.degreeID.errors" class="invalid-feedback">
+                                        <div *ngIf="f.degreeID.errors.maxlength">
+                                            {{'employee.create.form.degree'| translate}}
+                                            {{'server-error.008'| translate:maxLenghtInput}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.degreeID.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.degree'| translate}} {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Degree -->
+                                <!-- Employee GraduateYear -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Graduate">
+                                        {{'employee.create.form.graduateYear'| translate}}
+                                    </label>
+                                    <input type="text" onlyNumber class="form-control form-control form-control-sm"
+                                        id="graduateYear" name="graduateYear" min="1950" max="2050"
+                                        formControlName="graduateYear" autocomplete="off" maxlength="4"
+                                        [ngClass]="{ 'is-invalid': f.graduateYear.errors }">
+                                    <div *ngIf=" f.graduateYear.errors" class="invalid-feedback">
+                                        <div *ngIf="f.graduateYear.errors.checkYear">
+                                            {{'employee.create.form.graduateYear'| translate}}
+                                            {{'server-error.012'| translate}}
+                                            {{'server-error.message-plus.current-year'| translate}}
+                                        </div>
+                                        <div *ngIf="f.graduateYear.errors.min">
+                                            {{'employee.create.form.graduateYear'| translate}}
+                                            {{'server-error.004'| translate}} 1950
+                                        </div>
+                                        <div *ngIf="f.graduateYear.errors.pattern">
+                                            {{'employee.create.form.graduateYear'| translate}}
+                                            {{'server-error.005'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.graduateYear.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.graduateYear'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End GraduateYear -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end education -->
+            <!-- position -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div *ngIf="!isHidden" class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.position'| translate}}
+                                </h4>
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee Department Name -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="nationality">
+                                        {{'employee.create.form.department_name'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" id="departmentID" name="departmentID"
+                                        formControlName="departmentID"
+                                        [ngClass]="{ 'is-invalid': f.departmentID.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option *ngFor="let item of listDepartment" [value]="item.departmentID">
+                                            {{item.departmentName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div class="invalid-feedback" *ngIf="f.departmentID.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.department_name'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Department Name -->
+                                <!-- Employee Date Join Company -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="Company">
+                                        {{'employee.create.form.dateJoinCompany'| translate}}
+                                        <i class="color-red">*</i>
+                                    </label>
+                                    <div class="input-group">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d11"
+                                            formControlName="dateJoinCompany" ngbDatepicker #d11="ngbDatepicker"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            [ngClass]="{ 'is-invalid': (f.dateJoinCompany.errors?.serverError || f.dateJoinCompany.errors && !f.dateJoinCompany.pristine)}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary calendar" (click)="d11.toggle()"
+                                                type="button">
+                                                <i class="icon-calendar far fa-calendar-alt"></i>
+                                            </button>
+                                        </div>
+                                        <div *ngIf="f.dateJoinCompany.errors &&   !f.dateJoinCompany.pristine "
+                                            class="invalid-feedback">
+                                            <div
+                                                *ngIf="f.dateJoinCompany.errors && !f.dateJoinCompany.errors?.serverError 
+                                                && !f.dateJoinCompany.errors?.required && !f.dateJoinCompany.errors?.greater">
+                                                {{'employee.create.form.dateJoinCompany'| translate}}
+                                                {{'server-error.003'| translate}}
+                                            </div>
+                                            <div *ngIf="f.dateJoinCompany.errors.maxlength">
+                                                {{'employee.create.form.dateJoinCompany'| translate}}
+                                                {{'server-error.008'| translate:maxLenghtPhone}}
+                                            </div>
+                                            <div *ngIf="f.dateJoinCompany.errors?.required">
+                                                {{'employee.create.form.dateJoinCompany'| translate}}
+                                                {{'server-error.001'| translate}}
+                                            </div>
+                                            <div *ngIf="f.dateJoinCompany.errors?.greater ">
+                                                {{'employee.create.form.dateJoinCompany'| translate}}
+                                                {{'server-error.012'| translate}}
+                                                {{'server-error.message-plus.today'| translate}}
+                                            </div>
+                                        </div>
+                                        <div class="invalid-feedback" *ngIf="f.dateJoinCompany.errors?.serverError">
+                                            <div>
+                                                {{'employee.create.form.dateJoinCompany'| translate}}
+                                                {{displayMessage}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Date Join Company -->
+                                <!-- Employee  Position -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="nationality">
+                                        {{'employee.create.form.position'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" id="positionEmployeeID"
+                                        name="positionEmployeeID" formControlName="positionEmployeeID"
+                                        [ngClass]="{ 'is-invalid': f.positionEmployeeID.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option *ngFor="let item of listPositionEmployee"
+                                            [value]="item.positionEmployeeID">
+                                            {{item.positionEmployeeName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div class="invalid-feedback" *ngIf="f.positionEmployeeID.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.position'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Position -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Employee  Status -->
+                                <div class="mb-1 col-md-4">
+                                    <label for="nationality">
+                                        {{'employee.create.form.status'| translate}}
+                                    </label>
+                                    <ng-select [clearable]=false class="mb-12" id="statusEmployeeID"
+                                        name="statusEmployeeID" formControlName="statusEmployeeID"
+                                        [ngClass]="{ 'is-invalid': f.statusEmployeeID.errors }"
+                                        notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                        <ng-option *ngFor="let item of listStatusEmployee"
+                                            [value]="item.statusEmployeeID">
+                                            {{item.statusEmployeeName}}
+                                        </ng-option>
+                                    </ng-select>
+                                    <div *ngIf="f.statusEmployeeID.errors" class="invalid-feedback">
+                                        <div *ngIf="f.statusEmployeeID.errors.pattern">
+                                            {{'employee.create.form.status'| translate}}
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" *ngIf="f.emergency.errors?.serverError">
+                                        <div>
+                                            {{'employee.create.form.address'| translate}}
+                                            {{displayMessage}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Status -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Row -->
+                    <!-- end position -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card" style="margin-bottom: 10px !important;">
+                                <div class="card-body">
+                                    <div class="card-header-personal"
+                                        style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                        <h4 style="margin-bottom: auto;">
+                                            {{'employee.create.form.description'| translate}}
+                                        </h4>
+                                    </div>
+                                    <!-- Row (Description) -->
+                                    <div class="form-row">
+                                        <!-- Employeee Description -->
+                                        <div class="mb-1 col-md-12">
+                                            <textarea name [ngClass]="{ 'is-invalid': f.description.errors }"
+                                                formControlName="description"
+                                                class="form-control form-control form-control-sm " rows="8"></textarea>
+                                            <div *ngIf=" f.description.errors" class="invalid-feedback">
+                                                <div *ngIf="f.description.errors.maxlength">
+                                                    {{'employee.create.form.description'| translate}}
+                                                    {{'server-error.008'| translate : maxLenghtNotes}}
+                                                </div>
+                                            </div>
+                                            <div class="invalid-feedback" *ngIf="f.description.errors?.serverError">
+                                                <div>
+                                                    {{'employee.create.form.description'| translate}} {{displayMessage}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Notes -->
+                                    </div>
+                                    <!-- End Row -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

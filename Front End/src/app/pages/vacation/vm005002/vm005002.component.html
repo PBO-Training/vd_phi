@@ -1,0 +1,358 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.import-timekeeping'">
+</app-breadcrumb-share>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-down"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-up"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="employeeCode">
+                                {{'vacation.detail-timekeeping.employee-code'| translate}}
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="employeeCodeFilter">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="employeeName">
+                                {{'vacation.detail-timekeeping.employee-name'| translate}}
+                            </label>
+                            <input type="text" class="form-control form-control-sm" id="employeeNameFilter">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="start_date">
+                                {{'vacation.form.vacation-start-date'| translate}}
+                            </label>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    ngbDatepicker #d1="ngbDatepicker" [minDate]='config.minDate' id="startDateFilter"
+                                    [maxDate]='config.maxDate'>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="end_date">
+                                {{'vacation.form.vacation-end-date'| translate}}
+                            </label>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                    ngbDatepicker #d2="ngbDatepicker" [minDate]='config.minDate' id="endDateFilter"
+                                    [maxDate]='config.maxDate'>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                        type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="violation">
+                                {{'vacation.detail-timekeeping.violation'| translate}}
+                            </label>
+                            <ng-select placeholder="All" class="custom" id="violation" [multiple]="true"
+                                (change)="changeViolation($event)" [(ngModel)]="selectedViolation">
+                                <ng-option [value]="1">
+                                    {{'vacation.detail-timekeeping.check-in'| translate}}
+                                </ng-option>
+                                <ng-option [value]="2">
+                                    {{'vacation.detail-timekeeping.check-out'| translate}}
+                                </ng-option>
+                                <ng-option [value]="3">
+                                    {{'vacation.detail-timekeeping.check-in-missing'| translate}}
+                                </ng-option>
+                                <ng-option [value]="4">
+                                    {{'vacation.detail-timekeeping.check-out-missing'| translate}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="time-locale">
+                                {{'vacation.detail-timekeeping.time-locale'| translate}}
+                            </label>
+                            <ng-select placeholder="All" class="custom" id="timeLocale" [multiple]="true"
+                                (change)="changeTimeLocale($event)" [(ngModel)]="selectedTimeLocale">
+                                <ng-option [value]="5">
+                                    {{'vacation.detail-timekeeping.am'| translate}}
+                                </ng-option>
+                                <ng-option [value]="6">
+                                    {{'vacation.detail-timekeeping.pm'| translate}}
+                                </ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="row mb-2 mt-2">
+                        <div class="col-sm-10">
+                            <button type="button" class="btn  btn-primary btn-sm btn-master" (click)="searchDataList()">
+                                <i class="feather icon-search"></i>
+                                {{'button.search'| translate}}
+                            </button>
+                            <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                (click)="resetDataList()">
+                                <i class="feather icon-refresh-ccw"></i>
+                                {{'button.refresh'| translate}}
+                            </button>
+                            <button type="button" class="btn btn-secondary  btn-sm btn-master" (click)="back($event)">
+                                <i class="feather icon-rotate-ccw"></i>
+                                {{'button.back'| translate}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+    <div class="text-right">
+        <div class="file btn  btn-primary btn-sm btn-master"
+            *ngIf="updateData?.length === 0 && isDataAvailable === true && this.isClear === false && authButton.CREATE">
+            <i class="fas fa-file-import"> </i> {{'vacation.import-timekeeping.import'| translate}}
+            <input class="inputFile" type="file" name="file" (change)="onFileChange($event)" multiple="false"
+                accept=".xls,.xlsx" />
+        </div>
+        <button type="button" class="btn  btn-primary btn-sm btn-master"
+            *ngIf="updateData?.length != 0 && this.isProcessData === false && authButton.CREATE" (click)="processDataTimeKeeping()">
+            <i class="far fa-check-circle"></i>
+            {{'vacation.import-timekeeping.process-data' | translate}}
+        </button>
+        <button type="button" class="btn  btn-primary btn-sm btn-master" *ngIf="this.isProcessData === true && authButton.CREATE"
+            (click)="saveDataTimeKeeping()">
+            <i class="feather icon-save"></i>
+            {{'button.save' | translate}}
+        </button>
+        <button type="button" class="btn   btn-secondary  btn-sm btn-master" (click)="resetForm()"
+            *ngIf="this.isClear === true && authButton.CREATE">
+            <i class="feather icon-refresh-ccw"></i>
+            {{'button.refresh'| translate}}
+        </button>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive" *ngIf="this.updateData.length > 0">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">
+                        {{'p.display'| translate}}
+                    </p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of this.screenProps.pageOpiton"
+                                [selected]="option === this.screenProps.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex" *ngIf="this.updateData.length > 0;">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (this.screenProps.pageNum !== 0 ? (this.screenProps.pageNum-1) *
+                        this.screenProps.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (this.screenProps.pageNum * this.screenProps.pageSize) < screenProps.totalRecord ?
+                            (this.screenProps.pageNum * this.screenProps.pageSize) : screenProps.totalRecord || 0}}
+                            {{'p.of'| translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}} </p>
+                </div>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="this.screenProps.totalRecord" (pageChange)="pageChangeOutput($event)"
+                    [(page)]="this.screenProps.page" [pageSize]="this.screenProps.pageSize"
+                    [maxSize]="this.screenProps.maxSize" [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                    <col class="text-muted">
+                    <col class="text-muted">
+                    <col class="text-muted">
+                    <col class="text-muted">
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="remove-th th-5 text-left">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th sortable="employeeCode" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.import-timekeeping.employee-code'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeName" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.import-timekeeping.employee-name'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="date" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.import-timekeeping.date'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'date' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'date' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="violation" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.import-timekeeping.violation'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'violation' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'violation' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.import-timekeeping.checkin-am'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.import-timekeeping.checkout-am'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.import-timekeeping.checkin-pm'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.import-timekeeping.checkout-pm'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.import-timekeeping.status'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.import-timekeeping.times'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.import-timekeeping.minushour'| translate}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container
+                        *ngFor="let item of updateData | slice: (this.screenProps.pageNum * this.screenProps.pageSize) - this.screenProps.pageSize : this.screenProps.pageNum * this.screenProps.pageSize ; let i = index">
+                        <tr *ngIf="item">
+                            <td class="text-left">{{i + ((screenProps.pageNum-1) * screenProps.pageSize) + 1}}</td>
+                            <td class="text-left">{{item.employeeCode}}</td>
+                            <td class="text-left">
+                                <i *ngIf="item.employeeName == '002'" class="text-danger">
+                                    {{'server-error.002'|
+                                    translate}}
+                                </i>
+                                <span *ngIf="item.employeeName != '002'">
+                                    {{item.employeeName}}
+                                </span>
+                            </td>
+                            <td class="text-left">{{item.date | date: 'MMM dd, yy' : 'UTC'}}</td>
+                            <td class="text-left">
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInAM">{{'vacation.violation-error-code.check-in-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutAM">{{'vacation.violation-error-code.check-out-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInPM">{{'vacation.violation-error-code.check-in-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutPM">{{'vacation.violation-error-code.check-out-pm'|
+                                    translate}}</i>
+
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInAMMissing">{{'vacation.violation-error-code.missing-check-in-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutAMMissing">{{'vacation.violation-error-code.missing-check-out-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInPMMissing">{{'vacation.violation-error-code.missing-check-in-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutPMMissing">{{'vacation.violation-error-code.missing-check-out-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === 'OK'">-</i>
+                            </td>
+                            <td class="text-left text-muted bg-light">
+                                <i class="text-danger" *ngIf="item.checkInAM != '-'">{{item.checkInAM}}</i>
+                                <i *ngIf="item.checkInAM === null">-</i>
+                            </td>
+                            <td class="text-left text-muted bg-light">
+                                <i class="text-danger" *ngIf="item.checkOutAM != '-'">{{item.checkOutAM}}</i>
+                                <i *ngIf="item.checkOutAM === null">-</i>
+                            </td>
+                            <td class="text-left text-muted bg-light">
+                                <i class="text-danger" *ngIf="item.checkInPM != '-'">{{item.checkInPM}}</i>
+                                <i *ngIf="item.checkInPM === null">-</i>
+                            </td>
+                            <td class="text-left text-muted bg-light">
+                                <i class="text-danger" *ngIf="item.checkOutPM != '-'">{{item.checkOutPM}}</i>
+                                <i *ngIf="item.checkOutPM === null">-</i>
+                            </td>
+                            <td class="text-center">
+                                <span class="badge badge-pill badge-success"
+                                    *ngIf="item.violation === 'OK'">{{'vacation.import-timekeeping.status-good'|
+                                    translate}}</span>
+                                <span class="badge badge-pill badge-danger"
+                                    *ngIf="item.violation != 'OK' && item.employeeName != '002'">{{'vacation.import-timekeeping.status-fail'|
+                                    translate}}</span>
+                                <span class="badge badge-pill badge-warning"
+                                    *ngIf="item.employeeName == '002'">{{'vacation.import-timekeeping.status-unknown'|
+                                    translate}}</span>
+                            </td>
+                            <td class="text-center">
+                                <span class="text-info" *ngIf="item.times > 0">
+                                    {{item.times}}
+                                </span>
+                                <span *ngIf="item.times == 0">
+                                    -
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <span class="text-info" *ngIf="item.minusHour > 0">
+                                    {{item.minusHour}}
+                                </span>
+                                <span *ngIf="item.minusHour === 0">
+                                    -
+                                </span>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <tr *ngIf="updateData?.length === 0">
+                        <td *ngIf="isFormatWrong === false">
+                            {{ 'table.no-data' | translate}}
+                        </td>
+                        <td *ngIf="isFormatWrong === true">
+                            {{ 'table.no-data' | translate}} {{'vacation.import-timekeeping.format-fail'| translate}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

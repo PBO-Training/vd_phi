@@ -1,0 +1,81 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.permission'"></app-breadcrumb-share>
+<!-- <div class="col-md-12" style="margin-bottom: 20px;">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="screenProps.isCollapsed = !screenProps.isCollapsed"
+            [attr.aria-expanded]="!screenProps.isCollapsed" aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <div style="margin-left: 5px; display: inline-flex;">
+                <i class="fas fa-angle-up" *ngIf="screenProps.isCollapsed"></i>
+                <i class="fas fa-angle-down" *ngIf="!screenProps.isCollapsed"></i>
+            </div>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <div class="row">
+                        <div class="col-md-2" *ngFor="let item of listListPermission;">
+                            <label class="check-task custom-control custom-checkbox d-flex done-task text-center">
+                                <input type="checkbox" class="custom-control-input"
+                                    (change)="onChange(item.groupScreenCode,$event)" checked="true">
+                                <span class="custom-control-label"></span>
+                                {{item.groupScreenCode}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div> -->
+<div class="col-md-12 mb-2 mt-2">
+
+</div>
+<div class="col-md-12" *ngFor="let item of listListPermission;" id="{{item.groupScreenCode}}" style="display: block;">
+    <div class="card table-card" *ngIf="item.listRoleScreen.length > 0" >
+        <div class="d-flex justify-content-between panigator-responsive card-header-right" (click)="item.isCollapsed = !item.isCollapsed"
+        [attr.aria-expanded]="!item.isCollapsed" aria-controls="collapseExample">
+            <div>
+                <div class="top-page-size">
+                    <span>{{item.groupScreenCode}}</span>
+                </div>
+            </div>
+            <div class="grid-panigator" >
+                <i class="fas fa-angle-up" *ngIf="item.isCollapsed"></i>
+                <i class="fas fa-angle-down" *ngIf="!item.isCollapsed"></i>
+            </div>
+        </div>
+        <div class="table-responsive" id="collapseExample" [ngbCollapse]="item.isCollapsed">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th [ngClass]="{'text-center': i!=0}" *ngFor="let item of listRole; let i = index">
+                            <a data-toggle="tooltip" title="{{item.roleCode}}"
+                                [routerLink]="['/permission/detail','role-' + item.roleCode]">{{item.roleCode}} </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let roleScreenItem of item.listRoleScreen; let i = index;">
+                        <tr>
+                            <td [ngClass]="{'text-center': j!=0}" *ngFor="let item of listRole;let j = index;">
+                                <!-- thang dau tien la ten man hinh -->
+                                <a class="role-screen" *ngIf="j==0" data-toggle="tooltip"
+                                    title="{{roleScreenItem.screenCode}}"
+                                    [routerLink]="['/permission/detail', 'screen-' + roleScreenItem.screenCode]">{{roleScreenItem.screenCode}}</a>
+                                <!-- cac truong sau la checkbox -->
+                                <div *ngIf="j!=0">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            [checked]="roleScreenItem[item.roleCode]" disabled>
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

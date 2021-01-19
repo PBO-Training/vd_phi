@@ -1,0 +1,109 @@
+<ng-container *ngIf="isUpdate; else createBreabcrumb">
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.role'" [childBreabcrumb]="'breadcrumb.child.update'" [parrentBreabcrumbUrl]="'/role'">
+    </app-breadcrumb-share>
+</ng-container>
+<ng-template #createBreabcrumb>
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.role'" [childBreabcrumb]="'breadcrumb.child.create'" [parrentBreabcrumbUrl]="'/role'">
+    </app-breadcrumb-share>
+</ng-template>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.role.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.role.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="roleID">
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.role.detail.label.role-code'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="roleCode"
+                            [ngClass]="{ 'is-invalid': (submitted && f.roleCode.errors && f.roleCode.pristine) || f.roleCode.errors?.serverError}">
+                        <div *ngIf="submitted && f.roleCode.errors && f.roleCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.roleCode.errors.required">
+                                {{'master.role.detail.label.role-code'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.roleCode.errors.pattern; else checkLength">
+                                {{'master.role.detail.label.role-code'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.roleCode.errors.maxlength">
+                                    {{'master.role.detail.label.role-code'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.roleCode.errors?.serverError">
+                            <div>{{'master.role.detail.label.role-code'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.role.detail.label.role-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder formControlName="roleName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.roleName.errors && f.roleName.pristine) || f.roleName.errors?.serverError}">
+                        <div *ngIf="submitted && f.roleName.errors && f.roleName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.roleName.errors.required">
+                                {{'master.role.detail.label.role-name'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.roleName.errors.maxlength">
+                                {{'master.role.detail.label.role-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.roleName.errors?.serverError">
+                            <div>{{'master.role.detail.label.role-name'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label>
+                            {{'master.role.detail.label.role-value'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder formControlName="roleValue" maxlength="4"
+                            [ngClass]="{ 'is-invalid': (submitted && f.roleValue.errors && f.roleValue.pristine) || f.roleValue.errors?.serverError}">
+                        <div *ngIf="submitted && f.roleValue.errors && f.roleValue.pristine" class="invalid-feedback">
+                            <div *ngIf="f.roleValue.errors.required">
+                                {{'master.role.detail.label.role-value'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.roleValue.errors.pattern">
+                                {{'master.role.detail.label.role-value'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.roleValue.errors?.serverError">
+                            <div>{{'master.role.detail.label.role-value'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+                            type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

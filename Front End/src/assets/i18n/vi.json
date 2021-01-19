@@ -1,0 +1,1230 @@
+{
+    "server-error": {
+        "001": "là trường bắt buộc",
+        "002": "không xác định giá trị",
+        "003": "có định dạng chưa phù hợp",
+        "004": "phải lớn hơn",
+        "005": "số chưa hợp lệ",
+        "006": "kích thước số chưa hợp lệ",
+        "007": "có định dạng không hợp lệ",
+        "008": "vượt quá {{value}} ký tự",
+        "009": "giá trị đã tồn tại",
+        "010": "số vượt ngưỡng cho phép",
+        "011": "yêu cầu lớn hơn {{value}} ký tự",
+        "012": "phải bé hơn",
+        "013": "ngày hiện tại",
+        "014": "năm hiện tại",
+        "015": "chỉ hổ trợ: {{value}}",
+        "016": "phải lớn hơn",
+        "801": "không chính xác",
+        "802": "sai quy tắc",
+        "851": "trùng với ngày lễ hoặc ngày cuối tuần",
+        "852": "trùng với yêu cầu khác",
+        "853": "quá 1 tháng so với ngày bắt đầu",
+        "903": "nội dung có định dạng không hợp lệ",
+        "904": "kích thước dữ liệu vượt quá",
+        "910": "lỗi",
+        "911": "lớn hơn năm hiện tại",
+        "912": "phải lớn hơn năm 1950",
+        "message-plus": {
+            "today": "hôm nay",
+            "current-year": "năm nay"
+        }
+    },
+    "notification": {
+        "500": "Hệ thống đang bảo trì.",
+        "504": "Hệ thống không phản hồi"
+    },
+    "button": {
+        "search": "Tìm kiếm",
+        "create": "Thêm",
+        "delete": "Xóa",
+        "refresh": "Làm mới",
+        "save": "Lưu",
+        "unSave": "Không Lưu",
+        "back": "Quay lại",
+        "export-excel": "Xuất Excel",
+        "close": "Đóng",
+        "dismiss": "Bỏ qua",
+        "add": "Thêm",
+        "skip": "Bỏ qua",
+        "edit": "Sửa đổi",
+        "download": "Tải về",
+        "default-employee-create": "Tạo nhanh một nhân viên",
+        "approve": "Xác nhận",
+        "reject": "Từ chối",
+        "cancel": "Hủy",
+        "export-excel-profile": "Xuất hồ sơ",
+        "export-excel-history": "Xuất lịch sử",
+        "reviews":"Đánh giá",
+        "remove":"Xóa",
+        "more":"Xem thêm",
+        "interim-assessment":"Đánh giá tạm thời",
+        "complete-review":"Đánh giá hoàn thành",
+        "ok": "Đồng ý"
+    },
+    "p": {
+        "no": "STT",
+        "display": "Hiển thị",
+        "of": "của",
+        "record": "bản ghi",
+        "record-singular": "bản ghi",
+        "from": "Từ",
+        "to": "đến"
+    },
+    "table": {
+        "no-data": "Không có dữ liệu"
+    },
+    "dashboard": {
+        "title": {
+            "employee-statistics": "Thống kê nhân viên theo phòng ban",
+            "employee-over-month": "Thống kê nhân viên vào công ty qua các tháng",
+            "total":"Tổng"
+        }
+    },
+    "employee": {
+        "list": {
+            "title": {
+                "title_parent": "Nhân viên",
+                "title_name": "Danh sách",
+                "title_search": "Tìm kiếm"
+            },
+            "formsearch": {
+                "full_name": "Tên đầy đủ",
+                "department": "Bộ phận",
+                "contract": "Hợp đồng",
+                "project": "Dự án",
+                "employee_code": "Mã nhân viên",
+                "gender": "Giới tính",
+                "start_date": "Ngày bắt đầu",
+                "experience": "Kinh nghiệm",
+                "foreign-language": "Ngoại ngữ",
+                "end_date": "Ngày kết thúc",
+                "skill": "Kỹ năng",
+                "info-label": "Tìm kiếm với các kĩ năng:",
+                "exp-time-unit": "năm",
+                "skill-title": "Vui lòng nhập số năm kinh nghiệm tương ứng với kĩ năng",
+                "skill-name": "Tên kĩ năng",
+                "skill-experience": "Năm kinh nghiệm"
+            },
+            "table_th": {
+                "code": "Mã nhân viên",
+                "name": "Tên đầy đủ",
+                "phone": "SĐT",
+                "skype": "Skype",
+                "department": "Bộ phận",
+                "project": "Dự án",
+                "skill": "Kỹ năng",
+                "foreign-language": "Ngoại ngữ",
+                "contract_type": "Hợp đồng"
+            },
+            "export": {
+                "profile-header": {
+                    "no": "STT",
+                    "employeeCode": "Mã NV",
+                    "fullName": "Họ tên",
+                    "biography": "Tiểu sử",
+                    "birthday": "Ngày sinh",
+                    "gender": "Giới tính",
+                    "email": "Email",
+                    "phone": "SĐT",
+                    "address": "Địa chỉ",
+                    "identityCard": "CMND",
+                    "graduateYear": "Năm tốt nghiệp",
+                    "university": "Trường ĐH",
+                    "skype": "Skype",
+                    "dateJoinCompany": "Ngày tham gia công ty",
+                    "numOfChild": "Con cái",
+                    "emergency": "Liên lạc khẩn cấp",
+                    "dateOfIssueOfIDCard": "Ngày cấp",
+                    "description": "Mô tả",
+                    "married": "Tình trạng hôn nhân",
+                    "departmentName": "Bộ phận",
+                    "statusEmployeeName": "Trạng thái",
+                    "positionEmployeeName": "Vị trí",
+                    "nationalityName": "Quốc tịch",
+                    "degreeName": "Loại bằng",
+                    "listEmpSkillName": "Kĩ năng",
+                    "listEmpLanguageName": "Ngoại ngữ",
+                    "listEmpProjectName": "Dự án",
+                    "contractTypeName": "Hợp đồng"
+                },
+                "data": {
+                    "male": "Nam",
+                    "female": "Nữ",
+                    "married": "Đã lập gia đình",
+                    "single": "Độc thân"
+                }
+            },
+            "table-td": {
+                "multi-years": "Năm",
+                "single-year": "Năm"
+            }
+        },
+        "create": {
+
+            "tab": {
+                "personal": "Thông tin",
+                "skill": "Kỹ năng",
+                "history": "Lịch sử",
+                "contract": "Hợp đồng",
+                "language": "Ngoại ngữ"
+            },
+            "title": {
+                "title_parent": "Nhân viên",
+                "title_name": "Chi tiết",
+                "title_search": "Tìm kiếm",
+                "title_profile": "Thông tin chung",
+                "title_technical": "Kỹ năng",
+                "title_language": "Ngoại ngữ",
+                "title_history": "Lịch sử",
+                "title_contract": "Liên hệ",
+                "title_skill": "Kỹ năng"
+            },
+            "form": {
+                "employee_code": "Mã nhân viên",
+                "firstName": "Họ nhân viên",
+                "lastName": "Tên nhân viên",
+                "marital": "Hôn nhân",
+                "maritaled": "Gia đình",
+                "status": "Tình trạng",
+                "avataUrl": "Ảnh đại diện",
+                "gender": "Giới tính",
+                "birthday": "Ngày sinh",
+                "nationality": "Quốc tịch",
+                "email": "Email",
+                "phone": "SĐT",
+                "address": "Địa chỉ",
+                "dateJoinCompany": "Ngày vào công ty",
+                "skype": "Skype",
+                "degree": "Trình độ",
+                "graduateYear": "Năm tốt nghiệp",
+                "university": "Trường đại học",
+                "employeenum": "Số con",
+                "emergency": "Liên lạc khẩn",
+                "identitycard": "CMND",
+                "dateOfIssue": "Ngày cấp",
+                "nameskill": "Tên kỹ năng",
+                "levelskill": "Cấp độ",
+                "Experience": "Kinh nghiệm (tháng)",
+                "action": "Chức năng",
+                "namelanguage": "Tên ngoại ngữ",
+                "category": "Loại ngoại ngữ",
+                "certificate": "Chứng chỉ",
+                "levellanguage": "Cấp độ",
+                "points": "Điểm thi",
+                "expiration_day": "Ngày hết hạn",
+                "department_name": "Bộ phận",
+                "project_name": "Tên dự án",
+                "company_name": "Tên công ty",
+                "role": "Vai trò",
+                "in_brycen": "Trong Brycen",
+                "description": "Chú thích",
+                "start_date": "Ngày bắt đầu",
+                "end_date": "Ngày kết thúc",
+                "operation_system": "Hệ điều hành",
+                "processProjectID": "Công đoạn tham gia",
+                "database": "CSDL",
+                "language": "Kỹ năng",
+                "tools": "Phần mềm",
+                "evaluate": "Đánh giá",
+                "biography": "Tiểu sử",
+                "type": "Loại",
+                "position": "Chức vụ",
+                "attachments": "Tệp đính kèm",
+                "type-skill": "Loại kỹ năng",
+                "experience": "Kinh nghiệm ",
+                "work-experience": "kinh nghiệm làm việc",
+                "total": "Tổng",
+                "in": "Tại",
+                "month": "tháng",
+                "months": "tháng",
+                "year": "năm",
+                "years": "năm",
+                "education": "Giáo dục",
+                "no-experience": "chưa có",
+                "contact": "Liên hệ",
+                "male": "Nam",
+                "female": "Nữ",
+                "married": "Đã có gia đình",
+                "single": "Độc thân",
+                "language-placeholder": "Chọn kỹ năng",
+                "skill-exp": "Kinh nghiệm",
+                "skill-placeholder": "Chọn kỹ năng",
+                "skill-type-placeholder": "Chọn loại kỹ năng",
+                "scopework-placeholder": "Chọn quy trình",
+                "role-placeholder": "Chọn vai trò",
+                "evaluate-placeholder": "Chọn đánh giá",
+                "operation-system-placeholder": "Chọn hệ thống",
+                "database-placeholder": "Chọn CSDL",
+                "languageID-placeholder": "Chọn ngoại ngữ",
+                "language-categoryID-placeholder": "Chọn loại ngoại ngữ",
+                "language-certificate-placeholder": "Chứng chỉ - Điểm",
+                "level-project-placeholder": "Chọn độ khó của dự án",
+                "contract-type-placeholder": "Chọn loại hợp đồng",
+                "position-employee-placeholder": "Chọn vị trí",
+                "no-description": "Không có chú thích"
+            },
+
+            "table_th": {
+                "code": "Mã nhân viên",
+                "name": "Tên đầy đủ",
+                "phone": "SĐT",
+                "skype": "Skype",
+                "department": "Bộ phận",
+                "project": "Dự án",
+                "skill": "Kỹ năng",
+                "foreign-language": "Ngoại ngữ",
+                "contract_type": "Liên hệ"
+            },
+            "notification": {
+                "full-skill-type": "Bạn hiện đã có hết loại kỹ năng!"
+            }
+        },
+        "toast": {
+            "error_code": "Mã nhân viên đã tồn tại"
+        },
+        "change-password": {
+            "title": "Thay đổi mật khẩu",
+            "current": "Mật khẩu hiện tại",
+            "new": "Mật khẩu mới",
+            "confirm": "Xác nhận mật khẩu mới",
+            "show": "Hiển thị mật khẩu",
+            "password-guide": "Quy tắc đặt mật khẩu:",
+            "password-guide-1": "- Có ít nhất 8 ký tự",
+            "password-guide-2": "- Có ít nhất một chữ cái viết thường",
+            "password-guide-3": "- Có ít nhất một chữ cái viết hoa",
+            "password-guide-4": "- Có ít nhất một chữ số",
+            "password-guide-5": "- Có ít nhất một trong các ký tự sau: @#$%^&+=",
+            "password-guide-6": "- Mật khẩu không chứa dấu cách"
+        },
+        "view": {
+            "history-view": {
+                "no": "STT",
+                "company-name": "Tên công ty",
+                "inside-company": "Trong công ty",
+                "project-name": "Tên dự án",
+                "start-date": "Ngày bắt đầu",
+                "end-date": "Ngày kết thúc",
+                "evaluate": "Đánh giá loại",
+                "scope-work": "Công đoạn tham gia",
+                "role": "Vai trò",
+                "os": "Hệ điều hành",
+                "skill": "Kĩ năng",
+                "db": "CSDL",
+                "tool": "Công cụ",
+                "history-inside": "Lịch sử từ dự án",
+                "history-outside": "Lịch sử từ người dùng"
+            },
+            "skill-view": {
+                "no": "STT",
+                "skill-type": "Loại kỹ năng",
+                "skill-name": "Tên kỹ năng",
+                "skill-level": "Mức độ kỹ năng",
+                "skill-exp": "Kinh nghiệm"
+            },
+            "language-view": {
+                "no": "STT",
+                "language-category": "Loại ngoại ngữ",
+                "language-name": "Tên ngoại ngữ",
+                "language-certificate": "Chứng chỉ ngoại ngữ",
+                "language-level": "Cấp độ",
+                "language-point": "Điểm thi",
+                "language-expiration-date": "Ngày hết hạn",
+                "language-header": "Ngoại ngữ"
+            }
+        }
+    },
+    "master": {
+        "department": {
+            "list": {
+                "name": "Tên bộ phận",
+                "code": "Mã bộ phận",
+                "table": {
+                    "derpartment-code": "Mã bộ phận",
+                    "description": "Mô tả",
+                    "derpartment-name": "Tên bộ phận",
+                    "derpartment-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Tạo mới phòng ban",
+                    "title-create": "Tạo mới phòng ban",
+                    "title-update": "Cập nhật phòng ban",
+                    "department-name": "Tên bộ phận",
+                    "description": "Mô tả",
+                    "departmentCode": "Mã bộ phận"
+                }
+            }
+        },
+        "language": {
+            "list": {
+                "name": "Tên bằng ngoại ngữ",
+                "code": "Mã bằng ngoại ngữ",
+                "category": "Loại ngoại ngữ",
+                "table": {
+                    "language-code": "Mã bằng ngoại ngữ",
+                    "description": "Mô tả",
+                    "language-name": "Tên bằng ngoại ngữ",
+                    "language-content": "Nội dung",
+                    "language-category-name": "Loại ngoại ngữ"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật bằng ngoại ngữ",
+                    "title-create": "Tạo mới bằng ngoại ngữ",
+                    "language-name": "Tên bằng",
+                    "description": "Mô tả",
+                    "languageCode": "Mã bằng",
+                    "language-category-name": "Loại ngoại ngữ"
+                }
+            }
+        },
+        "login": {
+            "signin": "Đăng nhập",
+            "username": "Tài khoản",
+            "password": "Mật khẩu",
+            "save-credentials": "Lưu thông tin",
+            "badcredential": "Tài khoản hoặc mật khẩu không đúng!",
+            "username-is-required": "Tên đăng nhập là bắt buộc",
+            "password-is-required": "Mật khẩu là bắt buộc"
+        },
+        "skill": {
+            "list": {
+                "name": "Tên kỹ năng",
+                "code": "Mã kỹ năng",
+                "type": "Loại kỹ năng",
+                "table": {
+                    "skill-code": "Mã kỹ năng",
+                    "description": "Mô tả",
+                    "skill-name": "Tên kỹ năng",
+                    "skill-content": "Nội dung",
+                    "skill-No.": "STT",
+                    "skill-type": "Loại kỹ năng"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Tạo mới kỹ năng",
+                    "skill-name": "Tên kỹ năng",
+                    "title-update": "Cập nhật kỹ năng",
+                    "title-create": "Tạo mới kỹ năng",
+                    "description": "Mô tả",
+                    "skillCode": "Mã kỹ năng",
+                    "skill-type": "Loại kỹ năng"
+                }
+            }
+        },
+        "user": {
+            "list": {
+                "username": "Tên tài khoản",
+                "role": "Vai trò",
+                "table": {
+                    "username": "Tên tài khoản",
+                    "role": "Vai trò",
+                    "employee-name": "Nhân viên"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Tạo mới tài khoản",
+                    "title-create": "Tạo mới tài khoản",
+                    "title-update": "Cập nhật tài khoản",
+                    "username": "Tên tài khoản",
+                    "password": "Mật khẩu mới",
+                    "confirm": "Xác nhận mật khẩu mới",
+                    "role": "Vai trò",
+                    "employee": "Mã nhân viên",
+                    "assign-to": "Tạo cho"
+                }
+            }
+        },
+        "customer": {
+            "list": {
+                "name": "Tên khách hàng",
+                "code": "Mã khách hàng",
+                "table": {
+                    "customer-name": "Tên khách hàng",
+                    "customer-code": "Mã khách hàng",
+                    "description": "Mô tả"
+                }
+            },
+            "detail": {
+                "label": {
+                    "customer-name": "Tên khách hàng",
+                    "customer-code": "Mã khách hàng",
+                    "description": "Mô tả",
+                    "title-name": "Tạo mới khách hàng",
+                    "title-create": "Tạo mới khách hàng",
+                    "title-update": "Cập nhật khách hàng"
+                }
+            }
+        },
+        "skill-level": {
+            "list": {
+                "name": "Tên bậc kỹ năng",
+                "code": "Mã bậc kỹ năng",
+                "table": {
+                    "skill-level-code": "Mã bậc kỹ năng",
+                    "description": "Mô tả",
+                    "skill-level-name": "Tên bậc kỹ năng",
+                    "skill-level-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-create": "Tạo mới bậc kỹ năng",
+                    "title-update": "Cập nhật bậc kỹ năng",
+                    "skill-level-name": "Tên bậc kỹ năng",
+                    "skill-level-value": "Giá trị bậc kỹ năng",
+                    "skill-level-code": "Mã bậc kỹ năng",
+                    "description": "Mô tả"
+                }
+            }
+        },
+        "level-language": {
+            "list": {
+                "name": "Tên level bằng ngoại ngữ",
+                "code": "Mã level bằng ngoại ngữ",
+                "table": {
+                    "level-language-code": "Mã level bằng ngoại ngữ",
+                    "description": "Mô tả",
+                    "level-language-name": "Tên level bằng ngoại ngữ",
+                    "level-language-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật level bằng ngoại ngữ",
+                    "title-create": "Tạo mới level bằng ngoại ngữ",
+                    "level-language-name": "Tên level bằng",
+                    "level-language-value": "Giá trị level bằng",
+                    "description": "Mô tả",
+                    "level-language-Code": "Mã level bằng"
+                }
+            }
+        },
+        "status-employee": {
+            "list": {
+                "name": "Tên trạng thái nhân viên",
+                "code": "Mã trạng thái nhân viên",
+                "table": {
+                    "status-employee-code": "Mã trạng thái nhân viên",
+                    "status-employee-name": "Tên trạng thái nhân viên",
+                    "status-employee-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Tạo mới trạng thái nhân viên",
+                    "title-create": "Tạo mới trạng thái nhân viên",
+                    "title-update": "Cập nhật trạng thái nhân viên",
+                    "status-employee-name": "Tên trạng thái nhân viên",
+                    "statusEmployeeCode": "Mã trạng thái nhân viên"
+                }
+            }
+        },
+        "employeePosition": {
+            "list": {
+                "name": "Tên vị trí nhân viên",
+                "code": "Mã vị trí nhân viên",
+                "table": {
+                    "employeePosition-code": "Mã vị trí nhân viên",
+                    "description": "Mô tả",
+                    "employeePosition-name": "Tên vị trí nhân viên",
+                    "employeePosition-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật vị trí nhân viên",
+                    "title-create": "Tạo mới vị trí nhân viên",
+                    "employeePosition-name": "Tên vị trí nhân viên",
+                    "description": "Mô tả",
+                    "employeePosition-code": "Mã vị trí nhân viên"
+                }
+            }
+        },
+        "projectPosition": {
+            "list": {
+                "name": "Tên vai trò của dự án",
+                "code": "Mã vai trò của dự án",
+                "table": {
+                    "projectPosition-code": "Mã vai trò của dự án",
+                    "description": "Mô tả",
+                    "projectPosition-name": "Tên vai trò của dự án",
+                    "projectPosition-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật vai trò của dự án",
+                    "title-create": "Tạo mới vai trò của dự án",
+                    "projectPosition-name": "Tên vai trò của dự án",
+                    "description": "Mô tả",
+                    "projectPosition-code": "Mã vai trò của dự án"
+                }
+            }
+        },
+        "vacationType": {
+            "list": {
+                "name": "Tên kiểu ngày nghỉ",
+                "code": "Mã kiểu ngày nghỉ",
+                "table": {
+                    "vacationType-code": "Mã kiểu ngày nghỉ",
+                    "description": "Mô tả",
+                    "vacationType-name": "Tên kiểu ngày nghỉ",
+                    "vacationType-content": "Nội dung"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật kiểu ngày nghỉ",
+                    "title-create": "Tạo mới kiểu ngày nghỉ",
+                    "vacationType-name": "Tên kiểu ngày nghỉ",
+                    "description": "Mô tả",
+                    "vacationType-code": "Mã kiểu ngày nghỉ"
+                }
+            }
+        },
+        "holiday": {
+            "list": {
+                "name": "Mô tả",
+                "year": "Năm",
+                "table": {
+                    "holiday-year": "Năm",
+                    "holiday-name": "Mô tả"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật chi tiết nghỉ lễ",
+                    "title-create": "Thêm mới chi tiết nghỉ lễ",
+                    "title-update-detail": "Cập nhật các ngày nghỉ lễ",
+                    "title-create-detail": "Thêm các ngày nghỉ lễ",
+                    "holiday-name": "Mô tả",
+                    "holidayYear": "Năm"
+                }
+            },
+            "create": {
+                "form" : {
+                    "holidayDetailName" : "Mô tả",
+                    "holidayDetailDate" : "Ngày"
+                }
+            }
+        },
+        "role": {
+            "list": {
+                "name": "Tên nhóm quyền",
+                "code": "Mã nhóm quyền",
+                "table": {
+                    "role-code": "Mã nhóm quyền",
+                    "role-name": "Tên nhóm quyền"
+                }
+            },
+            "detail": {
+                "label":{
+                    "title-update": "Cập nhật nhóm quyền",
+                    "title-create": "Thêm mới nhóm quyền",
+                    "role-code": "Mã nhóm quyền",
+                    "role-name": "Tên nhóm quyền",
+                    "role-value": "Giá trị của nhóm quyền"
+                }
+            }
+        },
+        "scopeWork": {
+            "list": {
+                "name": "Tên Quy Trình",
+                "code": "Mã Quy Trình",
+                "table": {
+                    "scope-work-name": "Tên Quy Trình",
+                    "scope-work-code": "Mã Quy Trình",
+                    "description": "Mô tả",
+                    "scope-work-description": "Mô tả"
+                }
+            },
+            "detail": {
+                "label": {
+                    "scope-work-name": "Tên Quy Trình",
+                    "scope-work-code": "Mã Quy Trình",
+                    "scope-work-value": "Giá Trị",
+                    "scope-work-description": "Mô tả",
+                    "title-name": "Thêm Quy Trình",
+                    "title-update": "Cập Nhật Quy Trình",
+                    "title-create": "Tạo Mới Quy Trình"
+                }
+            }
+        },
+        "degree": {
+            "list": {
+                "name": "Tên Trình độ",
+                "code": "Mã Trình độ",
+                "table": {
+                    "degree-code": "Mã Trình độ",
+                    "description": "Mô tả",
+                    "degree-name": "Tên Trình độ"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Cập nhật Trình độ",
+                    "title-create": "Tạo mới Trình độ",
+                    "degree-name": "Tên Trình độ",
+                    "description": "Mô tả",
+                    "degree-code": "Mã Trình độ"
+                }
+            }
+        },
+        "screen": {
+            "list": {
+                "name": "Tên màn hình",
+                "code": "Mã màn hình"
+            }
+        },
+        "role-screen": {
+            "detail": {
+                "title-update": "Cập nhật phân quyền",
+                "role": "Nhóm quyền",
+                "screen": "Màn hình"
+            }
+        }
+    },
+    "notification-message": {
+        "unchecked": "Vui lòng chọn bản ghi muốn xóa!",
+        "delete-success": "Xóa thành công!",
+        "delete-fail": "Xóa thất bại!",
+        "save-success": "Lưu thành công!",
+        "save-fail": "Lưu thất bại!",
+        "question-delete": "Bạn có chắc muốn xóa !",
+        "update-success": "Cập nhật thành công!",
+        "update-fail": "Cập nhật thất bại!",
+        "question-changeTab": "Dữ liệu sẽ bị xóa. Bạn có muốn lưu lại không!",
+        "add-member-unchecked": "Vui lòng chọn nhân viên!",
+        "export-unchecked": "Vui lòng chọn nhân viên để xuất dữ liệu!",
+        "employee-unUse": "Hiện đang có nhân viên chưa sử dụng!"
+    },
+    "confirm-message": {
+        "delete": "Bạn có muốn xóa nó!",
+        "update": "Bạn có muốn lưu lại những thay đổi!"
+    },
+    "title-modal": {
+        "reviews-member": "Đánh giá thành viên"
+    },
+    "project": {
+        "list": {
+            "name": "Dự án",
+            "table": {
+                "project-code": "Mã dự án",
+                "project-status": "Tình trạng",
+                "project-name": "Tên dự án",
+                "project-level": "Độ khó",
+                "project-cost": "Định giá",
+                "project-department": "Bộ phận",
+                "project-member": "Thành viên",
+                "project-start-date-to": "Ngày bắt đầu đến",
+                "project-start-date-from": "Ngày bắt đầu từ",
+                "project-start-date": "Ngày bắt đầu",
+                "project-end-date": "Ngày kết thúc",
+                "project-evaluate": "Đánh giá",
+                "project-customer": "Khách hàng",
+                "project-description": "Mô tả",
+                "project-DifferenceAverage": "Chênh lệch mục tiêu",
+                "project-issueAmountDifferenceAverage": "Chênh lệch số lượng",
+                "project-issueQualityDifferenceAverage": "Chênh lệch chất lượng",
+                "project-issuePercentDoneAverage": "% Hoàn thành",
+                "issue-tracker": "Mục theo dõi",
+                "issue-status": "Trạng thái",
+                "issue-project": "Dự án",
+                "issue-name": "Tên Vấn đề",
+                "issue-subject": "Tiêu Đề",
+                "issue-startDatePlan": "Ngày bắt đầu",
+                "issue-endDatePlan": "Ngày kết thúc",
+                "issue-startDateActual": "Ngày bắt đầu",
+                "issue-endDateActual": "Ngày kết thúc",
+                "issue-amountPlan": "Số lượng",
+                "issue-qualityPlan": "Chất lượng",
+                "issue-amountActual": "Số lượng",
+                "issue-qualityActual": "Chất lượng",
+                "issue-AmountDifference": "Chênh lệch số lượng",
+                "issue-QualityDifference": "Chênh lệch chất lượng",
+                "issue-StartDateDifference": "Chênh lệch ngày bắt đầu",
+                "issue-EndDateDifference": "Chênh lệch ngày kết thúc",
+                "issue-plan": "Kế hoạch",
+                "issue-actual": "Thực tế",
+                "issue-efficiency": "Hiệu quả đạt được so với kế hoạch",
+                "issue-id": "Vé",
+                "member-code": "Mã nhân viên",
+                "member-name": "Tên nhân viên",
+                "member-dateJoinProject": "Ngày tham gia",
+                "member-dateOutProject": "Ngày kết thúc",
+                "member-role": "Vai trò",
+                "member-action": "Hành động",
+                "member-evaluate": "Xếp loại",
+                "member-comment": "Nhận xét",
+                "document-name": "Tên",
+                "document-url": "Đường dẫn tải về",
+                "document-description": "Mô tả"
+            }
+        },
+        "detail": {
+            "tabs": {
+                "tab-info": "Thông tin dự án",
+                "tab-overview": "Tổng quan",
+                "tab-issue": "Vấn đề",
+                "tab-document": "Tài liệu",
+                "tab-member": "Thành viên"
+            },
+            "title": {
+                "title-name": "Chi tiết",
+                "title-projectInfo-info-project": "Thông tin dự án",
+                "title-projectInfo-evaluate-project": "Đánh giá dự án",
+                "title-projectMember-activity": "Họat động"
+            },
+            "label": {
+                "no-evaluate" : "Chưa có đánh giá",
+                "no-activity": "Chưa có hoạt động",
+                "no-level" : "Chưa có đánh giá độ khó dự án",
+                "project-code": "Mã dự án",
+                "project-name": "Tên dự án",
+                "start-date": "Ngày bắt đầu",
+                "end-date": "Ngày kết thúc",
+                "project-effort": "Nguồn lực (MM)",
+                "level": "Độ khó",
+                "department": "Phòng ban",
+                "evaluate": "Đánh giá",
+                "description": "Mô tả",
+                "customer": "Khách hàng",
+                "status": "Trạng thái",
+                "employee-code": "Mã nhân viên",
+                "employee-name": "Tên nhân viên",
+                "issue-tracker": "Mục theo dõi",
+                "issue-status": "Trạng thái",
+                "issue-priority": "Mức ưu tiên",
+                "issue-project": "Dự án",
+                "issue-name": "Tên Vấn đề",
+                "issue-subject": "Tiêu Đề",
+                "issue-startDatePlan": "Ngày bắt đầu theo kế hoạch",
+                "issue-endDatePlan": "Ngày kết thúc theo kế hoạch",
+                "issue-startDateActual": "Ngày bắt đầu thực tế",
+                "issue-endDateActual": "Ngày kết thúc thực tế",
+                "issue-amountPlan": "Số lượng theo kế hoạch",
+                "issue-qualityPlan": "Chất lượng theo kế hoạch",
+                "issue-amountActual": "Số lượng thực tế",
+                "issue-qualityActual": "Chất lượng thực tế",
+                "issue-percentDone": "Mức hoàn thành",
+                "issue-estimatedTime": "Thời gian dự kiến",
+                "issue-description": "Mô tả",
+                "issue-plan": "Kế hoạch",
+                "issue-actual": "Thực tế",
+                "issue-title-create": "Tạo mới issue",
+                "issue-assigned": "Vấn đề được phân công",
+                "issue-closed": "Vấn đề đã đóng",
+                "document-file": "Tệp",
+                "choose-file": "Chọn tệp",
+                "choose-other-file": "Chọn file khác",
+                "file-message":"Không có file nào được chọn",
+                "document-description": "Mô tả",
+                "document-maxSize": "Maximum: 25MB",
+                "closed":"Closed",
+                "open":"Open",
+                "total":"Tổng",
+                "target":"Target",
+                "issue-added-by": {
+                    "added-by": "Được thêm bởi",
+                    "about": "cách đây",
+                    "hour-ago": "giờ trước",
+                    "munite-ago": "phút trước",
+                    "day-ago": "ngày trước",
+                    "second-ago": "giây trước"
+                },
+                "issue-updated-by": {
+                    "updated-by": "Được chỉnh sửa bởi",
+                    "about": "cách đây",
+                    "hour-ago": "giờ trước",
+                    "munite-ago": "phút trước",
+                    "day-ago": "ngày trước",
+                    "second-ago": "giây trước"
+                },
+                "date-from": "Từ ngày",
+                "date-to": "Đến ngày"
+            },
+            "form": {
+                "customer-name": "Khách hàng",
+                "department-name": "Phòng ban",
+                "level-name": "Độ khó",
+                "evaluate-name": "Đánh giá",
+                "start-date-name": "Ngày bắt đầu",
+                "end-date-name": "Ngày kết thúc",
+                "status-name": "Trạng thái",
+                "role-placeholder":"-- Chọn vai trò --",
+                "rank-placeholder":"-- Chọn xếp loại --"
+            }
+        }
+    },
+    "vacation": {
+        "list": {
+            "name": "Vacation",
+            "table": {
+                "vacation-employeeID": "ID nhân viên",
+                "vacation-employeeName": "Tên nhân viên",
+                "vacation-employeeCode": "Mã nhân viên",
+                "vacation-department": "Bộ phận",
+                "vacation-start-date": "Ngày bắt đầu",
+                "vacation-end-date": "Ngày kết thúc",
+                "vacation-type": "Loại",
+                "vacation-option": "Lựa chọn",
+                "vacation-status": "Trạng thái",
+                "vacation-leave-hour": "Thời gian nghỉ",
+                "vacation-reason": "Lý do",
+                "vacation-unit": "Giờ",
+                "vacation-day-unit": "Ngày",
+                "vacation-unit-1": "Giờ",
+                "vacation-day-unit-1": "Ngày",
+                "vacation-total-vacation": "Số lượng phép",
+                "vacation-total-leave": "Ngày đã nghỉ",
+                "vacation-total-bonus": "Cộng phép",
+                "vacation-remain": "Còn lại",
+                "vacation-year": "Năm",
+                "vacation-send-date": "Gởi vào lúc",
+                "violation-salary": "Vi phạm trừ lương",
+                "violation-un-salary": "Vi phạm trừ phép"
+            }
+        },
+        "form": {
+            "vacation-employeeCode": "Mã nhân viên",
+            "vacation-employeeName": "Tên nhân viên",
+            "vacation-department": "Phòng ban",
+            "vacation-type": "Loại kỳ nghỉ",
+            "vacation-option": "Lựa chọn",
+            "vacation-status": "Trạng thái",
+            "vacation-start-date": "Ngày bắt đầu",
+            "vacation-end-date": "Ngày kết thúc",
+            "vacation-reason": "Lý do",
+            "vacation-title": "Thông tin kỳ nghỉ",
+            "vacation-assign": "Đăng ký nhóm xác nhận",
+            "vacation-year": "Năm"
+        },
+        "tabpanel": {
+            "vacation-tab1": "Danh sách nhận",
+            "vacation-tab2": "Danh sách gửi",
+            "vacation-tab3": "Danh sách lịch sử"
+        },
+        "detail": {
+            "vacation-assign": "Đăng ký nhóm xác nhận",
+            "vacation-start-date": "Ngày bắt đầu",
+            "vacation-end-date": "Ngày kết thúc",
+            "vacation-reason": "Lý do",
+            "vacation-title": "Thông tin kỳ nghỉ",
+            "vacation-type": "Loại kỳ nghỉ",
+            "vacation-option": "Lựa chọn",
+            "vacation-option1": "Cả ngày",
+            "vacation-option2": "Nửa ngày",
+            "vacation-option3": "Đặc biệt",
+            "vacation-status": "Trạng thái",
+            "vacation-start-time": "Giờ bắt đầu",
+            "vacation-end-time": "Giờ kết thúc",
+            "vacation-period": "Giờ nghỉ",
+            "vacation-leader": "Trưởng dự án",
+            "vacation-manager": "Trưởng bộ phận",
+            "vacation-forward": "Nhóm văn phòng" ,
+            "vacation-title-create": "Tạo kỳ nghỉ" ,
+            "vacation-title-update": "Cập nhật kỳ nghỉ",
+            "vacation-locale-AM": "Sáng",
+            "vacation-locale-PM": "Chiều",
+            "vacation-min-unit": "Phút",
+            "vacation-hour-unit": "Giờ",
+            "shift-work-option1": "Shift 1: 7:30-11:30 13:00-17:00",
+            "shift-work-option2": "Shift 2: 7:00-11:30 13:00-16:30"
+        },
+        "approve": {
+            "vacation-start-time": "Thời gian bắt đầu",
+            "vacation-end-time": "Thời gian nghỉ",
+            "vacation-leader": "Trưởng dự án",
+            "vacation-manager": "Trưởng bộ phận",
+            "vacation-forward": "Nhóm văn phòng" ,
+            "vacation-title-approve": "Xác nhận kỳ nghỉ",
+            "vacation-role": "Vai trò xác nhận",
+            "vacation-approver": "Người xác nhận",
+            "vacation-result": "Kết quả xác nhận",
+            "vacation-comment": "Ghi chú",
+            "vacation-datetime": "Thời gian",
+            "vacation-locale-AM": "Sáng",
+            "vacation-locale-PM": "Chiều",
+            "vacation-title": "Thông tin kỳ nghỉ",
+            "vacation-approve-process": "Tiến trình xác nhận"
+        },
+        "timekeeping": {
+            "start-timekeeping": "Bắt đầu",
+            "end-timekeeping": "Kết thúc",
+            "description": "Mô tả",
+            "is-active": "Kích hoạt",
+            "year": "Năm",
+            "action": "Hành động",
+            "activated": "Đã kích hoạt",
+            "non-activated": "Chưa kích hoạt",
+            "import": "Thêm",
+            "save": "Đã lưu",
+            "report": "Báo cáo",
+            "view": "Xem",
+            "reset": "Cài đặt gốc"
+        },
+        "import-timekeeping": {
+            "employee-code": "Mã nhân viên",
+            "employee-name": "Tên nhân viên",
+            "date": "Ngày",
+            "violation": "Sai phạm",
+            "checkin-am": "Giờ vào buổi sáng",
+            "checkout-am": "Giờ ra buổi sáng",
+            "checkin-pm": "Giờ vào buổi chiều",
+            "checkout-pm": "Giờ ra buổi chiều",
+            "import": "Nhập liệu",
+            "process-data": "Xử lý dữ liệu",
+            "status": "Trạng thái",
+            "fail": "Sai phạm",
+            "status-good": "TỐT",
+            "status-fail": "VI PHẠM",
+            "status-unknown": "KHÔNG XÁC ĐỊNH",
+            "format-fail": " bởi vì tập tin nhập liệu không đúng chuẩn",
+            "times": "Số lần",
+            "minushour": "Bị trừ (Giờ)"
+        },
+        "detail-timekeeping": {
+            "employee-code": "Mã nhân viên",
+            "employee-name": "Tên nhân viên",
+            "date": "Ngày",
+            "violation": "Sai phạm",
+            "checkin-am": "Giờ vào buổi sáng",
+            "checkout-am": "Giờ ra buổi sáng",
+            "checkin-pm": "Giờ vào buổi chiều",
+            "checkout-pm": "Giờ ra buổi chiều",
+            "start-date": "Ngày bắt đầu",
+            "end-date": "Ngày kết thúc",
+            "am": "Buổi sáng",
+            "pm": "Buổi chiều",
+            "time-locale":"Thời gian",
+            "all": "Tất cả",
+            "check-in": "Đi trễ",
+            "check-out": "Về sớm",
+            "check-in-missing": "Quên chấm công giờ vào",
+            "check-out-missing": "Quên chấm công giờ ra" ,
+            "bypass": "Bỏ qua",
+            "times": "Số lần",
+            "minushour": "Bị trừ (Giờ)",
+            "status": "Trạng thái",
+            "minus-salary": "Trừ lương",
+            "minus-un-salary": "Trừ phép"
+        },
+        "report-timekeeping": {
+            "employee-code": "Mã nhân viên",
+            "employee-name": "Tên nhân viên",
+            "department": "Bộ phận",
+            "check_in": "Đi trễ",
+            "check_out": "Về sớm",
+            "missing_check_in": "Quên chấm công giờ vào",
+            "missing_check_out": "Quên chấm công giờ ra",
+            "start_report_date": "Ngày bắt đầu báo cáo",
+            "end_report_date": "Ngày kết thúc báo cáo",
+            "unit" : "Lần",
+            "minus-salary": "Trừ lương",
+            "minus-un-salary": "Trừ phép",
+            "unit-hour" : "Giờ"
+        },
+        "violation-error-code": {
+            "check-in-am": "Đi trễ buổi sáng",
+            "check-out-am": "Về sớm buổi sáng",
+            "check-in-pm": "Đi trễ buổi chiều",
+            "check-out-pm": "Về sớm buổi chiều",
+            "missing-check-in-am": "Quên giờ vào buổi sáng",
+            "missing-check-out-am": "Quên giờ ra buổi sáng",
+            "missing-check-in-pm": "Quên giờ vào buổi chiều",
+            "missing-check-out-pm": "Quên giờ ra buổi chiều",
+            "all": "Tất cả"
+        }
+    },
+    "error": {
+        "forbidden403": {
+            "back-to-home": "Trở lại trang chủ",
+            "permission-denied": "Bạn không có quyền truy cập!"
+        },
+        "notfound404": {
+            "back-to-home": "Trở lại trang chủ",
+            "not-found": "OPPS! Lỗi 404 không tìm thấy trang"
+        }
+    },
+    "left-menu": {
+        "group-menu": {
+            "dashboard": "Trang chủ",
+            "profile": "Thông tin cá nhân",
+            "employee": "Quản lý nhân viên",
+            "project": "Quản lý dự án",
+            "vacation": "Quản lý ngày nghỉ",
+            "master": "Dữ liệu chung"
+        },
+        "menu-item": {
+            "dashboard": {
+                "dashboard": "Trang chủ"
+            },
+            "profile": {
+                "profile": "Thông tin cá nhân",
+                "update-password": "Thay đổi mật khẩu"
+            },
+            "employee": {
+                "employee": "Danh sách nhân viên"
+            },
+            "project": {
+                "project": "Danh sách dự án"
+            },
+            "vacation": {
+                "history-request": "Lịch sử ngày nghỉ",
+                "receive-request": "Phê duyệt ngày nghỉ",
+                "send-request": "Đăng ký ngày nghỉ",
+                "vacation": "Ngày nghỉ",
+                "vacation-summary": "Thống kê ngày nghỉ",
+                "timekeeping": "Quản lý chấm công",
+                "tracking-timekeeping": "Theo dõi chấm công",
+                "shift-work-request": "Đăng ký chuyển giờ làm",
+                "shift-work-receive": "Phê duyệt chuyển giờ làm",
+                "shift-work-history": "Lịch sử chuyển giờ làm"
+            },
+            "master": {
+                "customer": "Khách hàng",
+                "department": "Phòng ban",
+                "employee-position": "Chức vụ",
+                "employee-status": "Trạng thái nhân viên",
+                "holiday": "Ngày lễ",
+                "language": "Ngoại ngữ cá nhân",
+                "level-language": "Cấp độ ngoại ngữ",
+                "level-skill": "Cấp độ kỹ năng",
+                "permission": "Phân quyền hệ thống",
+                "project-position": "Vai trò dự án",
+                "role": "Vai trò hệ thống",
+                "skill": "Kỹ năng cá nhân",
+                "user": "Tài khoản hệ thống",
+                "vacation-type": "Loại ngày nghỉ",
+                "degree": "Bằng cấp",
+                "scope-work": "Vị trí đảm nhiệm"
+            }
+        }
+    },
+    "breadcrumb": {
+        "parrent": {
+            "dashboard": {
+                "dashboard": "Trang chủ"
+            },
+            "profile": {
+                "profile": "Thông tin cá nhân",
+                "update-password": "Thay đổi mật khẩu"
+            },
+            "employee": {
+                "employee": "Nhân viên"
+            },
+            "project": {
+                "project": "Dự án"
+            },
+            "vacation": {
+                "history-request": "Lịch sử ngày nghỉ",
+                "receive-request": "Phê duyệt ngày nghỉ",
+                "send-request": "Đăng ký ngày nghỉ",
+                "vacation": "Ngày nghỉ",
+                "vacation-summary": "Thống kê ngày nghỉ",
+                "vacation-detail": "Chi tiết",
+                "vacation-approve": "Xác nhận",
+                "vacation-history-detail": "Chi tiết",
+                "timekeeping": "Chấm công",
+                "import-timekeeping": "Nhập dữ liệu chấm công",
+                "detail-timekeeping": "Chi tiết chấm công",
+                "report-timekeeping": "Thống kê chấm công",
+                "tracking-timekeeping": "Theo dõi chấm công",
+                "shift-work-request": "Đăng ký chuyển giờ làm",
+                "shift-work-detail": "Chi tiết",
+                "shift-work-receive": "Phê duyệt chuyển giờ làm",
+                "shift-work-approve": "Chi tiết",
+                "shift-work-history": "Lịch sử chuyển giờ làm",
+                "shift-work-history-detail": "Chi tiết"
+            },
+            "master": {
+                "customer": "Khách hàng",
+                "department": "Phòng ban",
+                "employee-position": "Chức vụ",
+                "employee-status": "Trạng thái nhân viên",
+                "holiday": "Ngày lễ",
+                "language": "Ngoại ngữ cá nhân",
+                "level-language": "Cấp độ Ngoại ngữ",
+                "level-skill": "Cấp độ kỹ năng",
+                "permission": "Phân quyền hệ thống",
+                "project-position": "Vai trò dự án",
+                "role": "Vai trò hệ thống",
+                "skill": "Kỹ năng cá nhân",
+                "user": "Tài khoản hệ thống",
+                "vacation-type": "Loại ngày nghỉ",
+                "degree": "Bằng cấp",
+                "scope-work": "Vị trí đảm nhiệm"
+            }
+        },
+        "child": {
+            "update": "Cập nhật",
+            "create": "Tạo mới"
+        }
+    },
+    "ng-select": {
+        "not-found-text": "Không tìm thấy",
+        "place-holder-all": "Tất cả"
+    },
+    "title": {
+        "dash-board": {
+            "dashboard": "Trang chủ"
+        },
+        "profile": {
+            "profile": "Thông tin cá nhân",
+            "update-password": "Thay đổi mật khẩu"
+        },
+        "employee": {
+            "employee": "Nhân viên - Quản lý nhân viên"
+        },
+        "project": {
+            "project": "Dự án - Quản lý Dự án"
+        },
+        "vacation": {
+            "history-request": "Lịch sử ngày nghỉ-Quản lý ngày nghỉ",
+            "receive-request": "Phê duyệt ngày nghỉ-Quản lý ngày nghỉ",
+            "send-request": "Đăng ký ngày nghỉ-Quản lý ngày nghỉ",
+            "vacation": "Ngày nghỉ-Quản lý ngày nghỉ",
+            "vacation-summary": "Thống kê ngày nghỉ-Quản lý ngày nghỉ",
+            "vacation-detail": "Chi tiết-Quản lý ngày nghỉ",
+            "vacation-approve": "Xác nhận-Quản lý ngày nghỉ",
+            "vacation-history-detail": "Chi tiết-Quản lý ngày nghỉ",
+            "timekeeping": "Chấm công-Quản lý ngày nghỉ",
+            "import-timekeeping": "Nhập dữ liệu chấm công-Quản lý ngày nghỉ",
+            "detail-timekeeping": "Chi tiết chấm công-Quản lý ngày nghỉ",
+            "report-timekeeping": "Thống kê chấm công-Quản lý ngày nghỉ",
+            "tracking-timekeeping": "Theo dõi chấm công-Quản lý ngày nghỉ",
+            "shift-work-request": "Đăng ký chuyển giờ làm-Quản lý ngày nghỉ",
+            "shift-work-detail": "Chi tiết-Quản lý ngày nghỉ",
+            "shift-work-receive": "Phê duyệt chuyển giờ làm-Quản lý ngày nghỉ",
+            "shift-work-approve": "Chi tiết-Quản lý ngày nghỉ",
+            "shift-work-history": "Lịch sử chuyển giờ làm-Quản lý ngày nghỉ",
+            "shift-work-history-detail": "Chi tiết-Quản lý ngày nghỉ"
+        },
+        "master": {
+            "customer": "Khách hàng - Dữ liệu chung",
+            "department": "Phòng ban - Dữ liệu chung",
+            "employee-position": "Chức vụ - Dữ liệu chung",
+            "employee-status": "Trạng thái nhân viên - Dữ liệu chung",
+            "holiday": "Ngày lễ - Dữ liệu chung",
+            "language": "Ngoại ngữ cá nhân - Dữ liệu chung",
+            "level-language": "Cấp độ Ngoại ngữ - Dữ liệu chung",
+            "level-skill": "Cấp độ kỹ năng - Dữ liệu chung",
+            "permission": "Phân quyền hệ thống - Dữ liệu chung",
+            "project-position": "Vai trò dự án - Dữ liệu chung",
+            "role": "Vai trò hệ thống - Dữ liệu chung",
+            "skill": "Kỹ năng - Dữ liệu chung - Dữ liệu chung",
+            "user": "Tài khoản hệ thống - Dữ liệu chung",
+            "vacation-type": "Loại ngày nghỉ - Dữ liệu chung",
+            "degree": "Bằng cấp - Dữ liệu chung",
+            "scope-work": "Vị trí đảm nhiệm - Dữ liệu chung"
+
+        }
+    }
+}

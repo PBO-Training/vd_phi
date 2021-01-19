@@ -1,0 +1,143 @@
+<form class="create-form" [formGroup]="formLanguage" (ngSubmit)="submit(formLanguage.value)" novalidate appFocus>
+    <!--Add Language -->
+    <div class="row">
+        <div class="col-sm-6 btn-fun">
+            <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                class="btn   btn-secondary  btn-sm btn-master">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE" type="button" class="btn btn-primary btn-sm btn-master"
+                (click)="addLanguage()"><i class="feather icon-plus"></i> {{'button.add'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE" type="submit" class="btn  btn-primary btn-sm btn-master">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+                (click)="openPopupLanguage()">
+                <i class="feather icon-x-square"></i>
+                {{'button.cancel'| translate}}
+            </button>
+        </div>
+    </div>
+    <ng-container formArrayName="listLanguage">
+        <div class="row" *ngFor="let language of languages.controls; index as i " [formGroupName]="i">
+            <div class="col-md-12">
+                <div class="card emp-tab">
+                    <div class="card-body  emp-tab">
+                        <div class="index-el">
+                            <p style="font-weight: 600;">{{i + 1}}</p>
+                        </div>
+                        <div class="close btn-el" (click)="deleteLanguage(i)">
+                            <i class="feather icon-x"></i>
+                        </div>
+                        <div class="row">
+                            <!--Language Category -->
+                            <div class="col-sm-3 mb-2">
+                                <label class="floating-label" for="languageCategoryID">
+                                    {{'employee.create.form.category'| translate}} </label>
+                                <ng-select #appLanguage
+                                    placeholder="-- {{'employee.create.form.language-categoryID-placeholder' | translate}} --"
+                                    formControlName="languageCategoryID"
+                                    [ngClass]="{ 'is-invalid': languages.controls[i].get('languageCategoryID').errors && submited == true}"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-option *ngFor="let item of listLanguageCategory"
+                                        [value]="item.languageCategoryID">
+                                        {{item.languageCategoryName}}
+                                    </ng-option>
+                                </ng-select>
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="languages.controls[i].get('languageCategoryID').errors?.required && submited == true">
+                                    {{'employee.create.form.category'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                            <!--End Language Category -->
+
+                            <!--Language Name -->
+                            <div class="col-sm-3 mb-2">
+                                <!-- <div class="mb-2"> -->
+                                <label class="floating-label" for="languageID">
+                                    {{'employee.create.form.namelanguage'| translate}} </label>
+                                <ng-select appLanguage
+                                    placeholder="-- {{'employee.create.form.languageID-placeholder' | translate}} --"
+                                    formControlName="languageID" bindLabel="name"
+                                    [ngClass]="{ 'is-invalid': languages.controls[i].get('languageID').errors && submited == true}"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-container *ngFor="let item of listLanguage index as in">
+                                        <ng-option
+                                            *ngIf="+language.value.languageCategoryID === +item.languageCategoryID || language.value.languageCategoryID === null"
+                                            [value]="item.languageID">
+                                            {{item.languageName}}
+                                        </ng-option>
+                                    </ng-container>
+                                </ng-select>
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="languages.controls[i].get('languageID').errors?.required && submited == true">
+                                    {{'employee.create.form.namelanguage'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="!languages.controls[i].get('languageID').errors?.required && languages.controls[i].errors?.duplicate && submited == true">
+                                    {{'employee.create.form.namelanguage'| translate}}
+                                    {{'server-error.009'| translate}}
+                                </div>
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="submited && languages.controls[i].hasError('serverError','languageID')">
+                                    {{'employee.create.form.namelanguage'| translate}} {{displayMessage}}
+                                </div>
+                            </div>
+                            <!--End Language Name -->
+
+                            <!--Certificate Language -->
+                            <div class="col-sm-3 mb-2">
+                                <label class="floating-label" for="password">{{'employee.create.form.certificate'|
+                                    translate}}</label>
+                                <input type="text" class="form-control form-control form-control-sm text-left"
+                                    [maxLength]=50
+                                    placeholder="{{'employee.create.form.language-certificate-placeholder' | translate}}"
+                                    formControlName="languageCertificate"
+                                    [ngClass]="{ 'is-invalid': languages.controls[i].get('languageCertificate').errors && submited == true}">
+                                <div class="invalid-feedback d-block"
+                                    *ngIf="languages.controls[i].get('languageCertificate').errors?.required && submited == true">
+                                    {{'employee.create.form.certificate'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                            <!--End Certificate Language -->
+
+                            <!--Language Expiration day -->
+                            <div class="col-sm-3 mb-2">
+                                <!-- <div class="mb-2"> -->
+                                <label class="floating-label" for="password">{{'employee.create.form.expiration_day'|
+                                    translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d4"
+                                        ngbDatepicker #d4="ngbDatepicker" [minDate]='config.minDate'
+                                        [maxDate]='config.maxDate'
+                                        [ngClass]="{'is-invalid': languages.controls[i].get('expirationDate').errors}"
+                                        formControlName="expirationDate">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                    <div *ngIf="languages.controls[i].invalid" class="invalid-feedback">
+                                        <div *ngIf="languages.controls[i].get('expirationDate').errors">
+                                            {{'server-error.003'| translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Expiration day -->
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </ng-container>
+</form>

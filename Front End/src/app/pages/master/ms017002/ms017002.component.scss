@@ -1,0 +1,27 @@
+.role-screen {
+    display: inline-block;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+.permission{
+    display: flex;
+}
+.chk-option {
+    margin: 0 20px 0 20px;
+}
+.search-body {
+    margin-bottom: 10px;
+}
+.card-header-right {
+    cursor: pointer;
+}
+.top-page-size span {
+    font-weight: 900; 
+    font-size: 15px;
+    margin: 8px 0 8px 0;
+}
+.card {
+    margin-bottom: 15px;
+}

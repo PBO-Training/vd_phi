@@ -1,0 +1,94 @@
+<!-- <div *ngIf="employeeDetails"> -->
+  <div class="row">
+      <div class="col-md-12">
+          <div class="btn-fun row">
+              <div class="col-sm-10">
+                  <button type="button" (click)="onBack(false)" class="btn   btn-secondary  btn-sm btn-master">
+                      <i class="feather icon-rotate-ccw"></i>
+                      {{'button.back'| translate}}
+                  </button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 info">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header-personal" style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ; padding-top: unset !important;">
+                  <h4 style="margin-bottom: auto;" *ngIf="employeeID !== null">
+                    {{emlpoyeeName}}
+                  </h4>
+                </div>
+                <div class="row mb-1">
+                  <label class="col-md-6">
+                    {{'employee.create.form.email'| translate}}
+                  </label>
+                  <span class="col-md-6">
+                    {{email}}
+                  </span>
+                  <label class="col-md-6">
+                    {{'project.list.table.member-dateJoinProject'| translate}}
+                  </label>
+                  <span class="col-md-6">
+                    {{dateJoinProject}}
+                  </span>
+                  <label class="col-md-6">
+                    {{'project.detail.label.issue-assigned'| translate}}
+                  </label>
+                  <span class="col-md-6">
+                    {{assignedIssue}}
+                  </span>
+                  <label class="col-md-6">
+                    {{'project.detail.label.issue-closed'| translate}}
+                  </label>
+                  <span class="col-md-6">
+                    {{closedIssue}}
+                  </span>                  
+                </div>                 
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-8 activity">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-header-Activity" style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ; padding-top: unset !important;">
+                <h4 style="margin-bottom: auto;" *ngIf="employeeID !== null">
+                  {{'project.detail.title.title-projectMember-activity'| translate}}
+                </h4>
+              </div>
+              <div *ngIf=" issueDate.length === 0" class="row mb-1">
+                <span class="col-md-12">
+                    {{'project.detail.label.no-activity'| translate}}
+                </span>
+              </div>
+              <div class="row" *ngFor="let item of issueDate.sort().reverse().slice(0, 3); let i = index;">                 
+                <div class="col-12">
+                  <label >{{item}}</label>
+                </div>
+                <div class="col-12" *ngFor="let itemIssue of listIssue">
+                  <div  *ngFor="let historyIssueUpdate of itemIssue.historyIssueUpdate">
+                    <ul *ngIf="item === historyIssueUpdate.historyUpdateIssueDate" style="color: rgb(63, 93, 117);">
+                      <li> 
+                        <span> {{historyIssueUpdate.historyUpdateIssueTime}} - </span> 
+                        <span (click)="navigateIssueDetail(itemIssue.issueID)" class= "underline"> 
+                          Ticket #{{itemIssue.issueID}}
+                          ({{itemIssue.statusIssue.statusIssueName}}): 
+                          {{itemIssue.issueName}}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>  
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

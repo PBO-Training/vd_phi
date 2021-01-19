@@ -1,0 +1,68 @@
+div[class*='col-sm'] label {
+    margin-bottom: 0.05rem;
+}
+
+div[class*='mb-2 row'] {
+    margin-bottom: 0.25rem !important;
+}
+
+table td {
+    cursor: default;
+}
+
+button[class*='calendar'] {
+    padding: 0rem 0rem;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.icon-calendar {
+    padding: 0.325rem 0.675rem;
+}
+
+.can-click {
+    cursor: pointer;
+}
+
+td a {
+    text-decoration: underline;
+}
+
+.invalid {
+    border: 2px solid red !important;
+}
+
+.skill-info-label {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+::ng-deep.skill-tooltip .arrow::before{
+    border-top-color: rgb(57, 201, 65);
+}
+
+::ng-deep.language-tooltip .arrow::before{
+    border-top-color: rgb(57, 201, 65);
+}
+
+::ng-deep .tooltip-inner{
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 3px 0px rgba(0,0,0,0.3);
+    width: 300px;
+}
+
+::ng-deep.language-tooltip .tooltip-inner {
+    max-width: 300px;
+    width: 300px;
+  }
+
+::ng-deep.customize-tooltip-skill {
+    color: red;
+    font-weight: bold;
+}
+::ng-deep.customize-tooltip-project {
+    color: rgb(255, 238, 0);
+    font-weight: bold;
+}

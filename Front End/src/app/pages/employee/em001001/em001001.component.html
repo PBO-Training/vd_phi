@@ -1,0 +1,547 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.employee.employee'"></app-breadcrumb-share>
+<div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{'employee.list.title.title_remove'| translate}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">{{'employee.list.button.close'| translate}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn  btn-primary">{{'employee.list.button.delete'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'employee.list.title.title_search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-up"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-down"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchEmployee()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="full_name">
+                                    {{'employee.list.formsearch.full_name'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" id="full_name"
+                                    formControlName="employeeName">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="full_name">
+                                    {{'employee.list.formsearch.employee_code'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" id="employee_code"
+                                    formControlName="employeeCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="start_date">
+                                    {{'employee.list.formsearch.start_date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                        [formControl]="formSearch.controls['startDate']" ngbDatepicker
+                                        #d1="ngbDatepicker" [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.startDate.errors}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="!f.startDate.errors?.greater && !formSearch.hasError('dates') && f.startDate.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'employee.list.formsearch.start_date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                                <div *ngIf="f.startDate.errors?.greater" class="invalid-feedback d-block">
+                                    {{'employee.list.formsearch.start_date'| translate}}
+                                    {{'server-error.012'| translate}}
+                                    {{'server-error.message-plus.today'| translate}}
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="end_date">
+                                    {{'employee.list.formsearch.end_date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                        [formControl]="formSearch.controls['endDate']" ngbDatepicker #d2="ngbDatepicker"
+                                        [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.endDate.errors || formSearch.hasError('dates')}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="f.endDate.errors" class="invalid-feedback d-block">
+                                    {{'employee.list.formsearch.end_date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                                <div *ngIf="formSearch.hasError('dates') && !f.endDate.errors ">
+                                    <div class="invalid-feedback d-block">
+                                        <span>{{'employee.list.formsearch.end_date'| translate}}
+                                            {{'server-error.004'| translate}}
+                                            {{'employee.list.formsearch.start_date'| translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="department">
+                                    {{'employee.list.formsearch.department'| translate}}
+                                </label>
+                                <ng-select placeholder="{{'ng-select.place-holder-all' | translate}}" id="department"
+                                    formControlName="departmentID"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-option *ngFor="let item of departments" [value]="item.departmentID">
+                                        {{item.departmentName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="gender">
+                                    {{'employee.list.formsearch.gender'| translate}}
+                                </label>
+                                <ng-select placeholder="{{'ng-select.place-holder-all' | translate}}" id="gender"
+                                    formControlName="employeeGenderID"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-option [value]="1">Male</ng-option>
+                                    <ng-option [value]="0">Female</ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="contract">
+                                    {{'employee.list.formsearch.contract'| translate}}
+                                </label>
+                                <ng-select placeholder="{{'ng-select.place-holder-all' | translate}}" id="contract"
+                                    formControlName="contractTypeID"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-option *ngFor="let item of contractTypes" [value]="item.keyResponse">
+                                        {{item.valueResponse}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="project">
+                                    {{'employee.list.formsearch.project'| translate}}
+                                </label>
+                                <ng-select placeholder="{{'ng-select.place-holder-all' | translate}}" id="project"
+                                    formControlName="projectIDList" [multiple]="true"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}"
+                                    (add)="onAddNewProjectID($event)">
+                                    <ng-option *ngFor="let item of projects" [value]="item.keyResponse">
+                                        {{item.valueResponse}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="foreign-language">
+                                    {{'employee.list.formsearch.foreign-language'| translate}}
+                                </label>
+                                <ng-select placeholder="{{'ng-select.place-holder-all' | translate}}"
+                                    id="foreign-language" formControlName="languageIDList" [multiple]="true"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}"
+                                    (add)="onAddNewLanguageID($event)">
+                                    <ng-option *ngFor="let item of languages" [value]="item.languageCategoryID">
+                                        {{item.languageCategoryName}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="skill">
+                                    {{'employee.list.formsearch.skill'| translate}}
+                                </label>
+                                <ng-select #select placeholder="{{'ng-select.place-holder-all' | translate}}"
+                                    bindLabel="name" id="skill" formControlName="skillIDList" [multiple]="true"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}"
+                                    (add)="onAddNewSkillID($event)" (remove)="onRemoveExistSkillID($event)"
+                                    (clear)="onClearAllItem()">
+                                    <ng-option *ngFor="let item of skills; index as i" [value]="item.skillID">
+                                        {{item.skillName}} <span class="badge badge-pill badge-danger"
+                                            *ngIf="skillsNew[i].skillExperience > 0">{{skillsNew[i].skillExperience}}</span>
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-sm-12">
+                                <a type="button" (click)="onClickMoreBtn()" class="icon-more-skill">
+                                    <i class="fas fa-cogs"></i>
+                                    <span class="skill-info-label">{{'employee.list.formsearch.info-label' |
+                                        translate}}</span>
+                                </a>
+                                <span *ngFor="let item of formSearch.value.listSkillExp; last as last">
+                                    {{item.skillName}}<span *ngIf="item.skillExperience > 0"> ({{item.skillExperience}}
+                                        {{'employee.list.formsearch.exp-time-unit' | translate}})</span>
+                                    <span *ngIf="!last">, </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (click)="resetForm()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+    <div class="btn-fun text-right">
+        <button *ngIf="authButton.CREATE" type="button" class="btn  btn-primary btn-sm mr-1"
+            [routerLink]="['/employee/create']">
+            <i class="feather icon-plus"></i>
+            {{'button.create'| translate}}
+        </button>
+        <button *ngIf="authButton.DELETE" type="button" (click)="deleteEmployee()" class="btn  btn-danger btn-sm mr-1"
+            data-toggle="modal" data-target="#exampleModalCenter">
+            <i class="feather icon-trash"></i>
+            {{'button.delete'| translate}}
+        </button>
+        <div class="btn-group dropdown" ngbDropdown placement="auto">
+            <button *ngIf="authButton.EXPORT || authButton.EXPORT_HISTORY" type="button" class="btn  btn-primary btn-sm"
+                ngbDropdownToggle type="button">
+                <i class="fas fa-file-export"></i>
+                {{'button.export-excel'| translate}}
+            </button>
+            <div ngbDropdownMenu>
+                <a class="dropdown-item" type="button" (click)="createEmployeeProfileExcelFiles()">
+                    <i class="fas fa-user-tie"></i>
+                    {{'button.export-excel-profile'| translate}}
+                </a>
+                <a class="dropdown-item" type="button" (click)="createEmployeeHistoryExcelFiles()">
+                    <i class="fas fa-user-clock"></i>
+                    {{'button.export-excel-history'| translate}}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" *ngIf="employeeList?.length !== 0 && employeeList !== undefined  ; else loading">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">
+                        {{'p.display'| translate}}
+                    </p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of screenProps.pageOpiton"
+                                [selected]="option === screenProps.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex" *ngIf="employeeList.length > 1; else oneRecord">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (employeeList.length + (screenProps.pageNum !== 0 ? screenProps.pageNum *
+                        screenProps.pageSize : 0)) || 0}} {{'p.of'|
+                        translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+                <ng-template #oneRecord>
+                    <div class="d-flex" *ngIf="employeeList.length === 1">
+                        <p class="text-panigator">
+                            {{'p.from'| translate}}
+                            {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                            {{'p.to'| translate}}
+                            {{ (employeeList.length + (screenProps.pageNum !== 0 ? screenProps.pageNum *
+                            screenProps.pageSize : 0)) || 0}} {{'p.of'|
+                            translate}} {{screenProps.totalRecord || 0}} {{'p.record-singular'| translate}}
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="screenProps.totalRecord" (pageChange)="pageChangeOutput($event)"
+                    [(page)]="screenProps.page" [pageSize]="screenProps.pageSize" [maxSize]="screenProps.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr appSort [data]="employeeList" (sorted)="sortData($event)">
+                        <th *ngIf="authButton.DELETE" class="remove-th th-5 text-center">
+                            <label
+                                class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                <input type="checkbox" class="custom-control-input" (click)="onAllChecked($event)"
+                                    (change)="onAllChecked($event)" [checked]="checked">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </th>
+                        <th class="th-5">{{'p.no'| translate}} </th>
+                        <!-- <th appDataOrder sortProp="employeeCode" sortType="string" sortable="employeeCode"
+                            sort-direction="desc" class="th-10 text-center sort-column" (sort)="onSortNew($event)"> -->
+                        <th sortable="employeeCode" class="th-10 text-center sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.code'| translate}}
+                            <div class='direction'>
+                                <!-- <div class="asc">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div class="desc">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div> -->
+                                <div [className]="direction === 'desc' && column === 'employeeCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeName" class="sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.name'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="listSkill" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.skill'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'listSkill' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'listSkill' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="listProject" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.project'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'listProject' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'listProject' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeDepartment" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.department'| translate}}
+                            <div class='direction'>
+                                <div
+                                    [className]="direction === 'desc' && column === 'employeeDepartment' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div
+                                    [className]="direction === 'asc' && column === 'employeeDepartment' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeePhone" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.phone'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeePhone' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeePhone' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeSkype" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.skype'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeSkype' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeSkype' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="listLanguage" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.foreign-language'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'listLanguage' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'listLanguage' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeContract" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'employee.list.table_th.contract_type'| translate}}
+                            <div class='direction'>
+                                <div
+                                    [className]="direction === 'desc' && column === 'employeeContract' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div
+                                    [className]="direction === 'asc' && column === 'employeeContract' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="employeeList.length > 0">
+                    <ng-container *ngFor="let item of employeeList, let i = index">
+                        <tr *ngIf="item">
+                            <td *ngIf="authButton.DELETE" class="text-center">
+                                <div class="chk-option">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            (change)="onItemChecked(item.employeeID, $event)"
+                                            [checked]="screenProps.setOfCheckedId.has(item.employeeID)"
+                                            (click)="onItemChecked(item.employeeID,$event)">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-right">{{i + (screenProps.pageNum * screenProps.pageSize) + 1}}</td>
+                            <td class="text-center"><a
+                                    [routerLink]="['/employee/detail', item.employeeID]">{{item.employeeCode}}</a></td>
+                            <td><a [routerLink]="['/employee/detail', item.employeeID]">{{item.employeeName}}</a></td>
+                            <td>
+                                <ng-template #skillTipContent>
+                                    <div class="row" *ngFor="let itemskill of employeeList[i].listSkill">
+                                        <div class="col-sm-7">
+                                            <span class="badge badge-pill badge-light-primary float-left"
+                                                *ngIf="itemskill.skillID"
+                                                [ngClass]="{'customize-tooltip-skill': isSearchedElement(itemskill.skillID, 'skill') === true}">
+                                                {{itemskill.skillName}}
+                                            </span>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <span class="badge badge-pill badge-danger float-left"
+                                                *ngIf="itemskill.skillExperience > 1">
+                                                {{itemskill.skillExperience}}
+                                                {{'employee.create.form.years'| translate}}
+                                            </span>
+                                            <span class="badge badge-pill badge-danger float-left"
+                                                *ngIf="itemskill.skillExperience <= 1">
+                                                {{itemskill.skillExperience}}
+                                                {{'employee.create.form.year'| translate}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <div placement="top" [ngbTooltip]="skillTipContent" tooltipClass="skill-tooltip">
+                                    <ng-container *ngFor="let itemskill of employeeList[i].listSkill index as i">
+                                        <ng-container *ngIf="i >= 0 && i < 3">
+                                            <span class="badge badge-pill badge-light-primary" *ngIf="itemskill.skillID"
+                                                style="margin-left:1px">
+                                                {{itemskill.skillName}}
+                                                <span class="badge badge-pill badge-danger"
+                                                    *ngIf="itemskill.skillExperience > 1">
+                                                    {{itemskill.skillExperience}}
+                                                    {{'employee.list.table-td.multi-years'| translate}}
+                                                </span>
+                                                <span class="badge badge-pill badge-danger"
+                                                    *ngIf="itemskill.skillExperience <= 1">
+                                                    {{itemskill.skillExperience}}
+                                                    {{'employee.list.table-td.single-year'| translate}}
+                                                </span>
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td>
+                                <ng-template #projectTipContent>
+                                    <ng-container *ngFor="let itemproject of employeeList[i].listProject">
+                                        <span class="badge badge-pill badge-info" *ngIf="itemproject.projectID"
+                                            [ngClass]="{'customize-tooltip-project': isSearchedElement(itemproject.projectID, 'project') === true}">
+                                            {{itemproject.projectName}}
+                                        </span>
+                                    </ng-container>
+                                </ng-template>
+                                <div placement="top" [ngbTooltip]="projectTipContent" tooltipClass="skill-tooltip">
+                                    <ng-container *ngFor="let itemproject of employeeList[i].listProject index as i">
+                                        <ng-container *ngIf="i >= 0 && i < 3">
+                                            <span class="badge badge-pill badge-info" *ngIf="itemproject.projectID"
+                                                style="margin-left:1px">
+                                                {{itemproject.projectName}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td>{{item.employeeDepartment?.departmentName}}</td>
+                            <td class="text-right">{{item.employeePhone}}</td>
+                            <td>{{item.employeeSkype}}</td>
+                            <td>
+                                <ng-template #languageTipContent>
+                                    <div class="row" *ngFor="let iteamlanguage of employeeList[i].listLanguage">
+                                        <div class="col-md-6">
+                                            <span class="badge badge-pill badge-info float-left"
+                                                *ngIf="iteamlanguage.languageID">
+                                                {{iteamlanguage.languageName}}
+                                            </span>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="badge badge-pill badge-danger float-left"
+                                                *ngIf="iteamlanguage.languageCertificate">
+                                                {{iteamlanguage.languageCertificate}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <div placement="top" [ngbTooltip]="languageTipContent" tooltipClass="language-tooltip">
+                                    <ng-container *ngFor="let iteamlanguage of employeeList[i].listLanguage index as i">
+                                        <ng-container *ngIf="i >= 0 && i < 3">
+                                            <span class="badge badge-pill badge-info" *ngIf="iteamlanguage.languageID"
+                                                style="margin-left:1px">
+                                                {{iteamlanguage.languageName}}
+                                            </span>
+                                        </ng-container>
+                                    </ng-container>
+                                </div>
+                            </td>
+                            <td>{{item.employeeContract?.contractTypeName}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="col-md-12" *ngIf="employeeList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

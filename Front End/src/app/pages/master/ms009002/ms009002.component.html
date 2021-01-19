@@ -1,0 +1,111 @@
+<ng-container *ngIf="isUpdate; else createBreabcrumb">
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.customer'" [childBreabcrumb]="'breadcrumb.child.update'"
+    [parrentBreabcrumbUrl]="'/customer'">
+</app-breadcrumb-share>
+</ng-container>
+<ng-template #createBreabcrumb>
+    <app-breadcrumb-share [parrentBreabcrumb]="'Customer'" [childBreabcrumb]="'breadcrumb.child.create'"
+    [parrentBreabcrumbUrl]="'/customer'">
+</app-breadcrumb-share>
+</ng-template>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.customer.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.customer.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="customerID">
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.customer.detail.label.customer-code'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="customerCode"
+                            [ngClass]="{ 'is-invalid': (submitted && f.customerCode.errors && f.customerCode.pristine) || f.customerCode.errors?.serverError}">
+                        
+                        <div *ngIf="submitted && f.customerCode.errors && f.customerCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.customerCode.errors.required">
+                                {{'master.customer.detail.label.customer-code'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.customerCode.errors.pattern; else checkLength">
+                                {{'master.customer.detail.label.customer-code'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.customerCode.errors.maxlength">
+                                    {{'master.customer.detail.label.customer-code'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+                        <div  class="invalid-feedback" *ngIf="f.customerCode.errors?.serverError">
+                            <div>{{'master.customer.detail.label.customer-code'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.customer.detail.label.customer-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder
+                            formControlName="customerName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.customerName.errors && f.customerName.pristine) || f.customerName.errors?.serverError}">
+                        <div *ngIf="submitted && f.customerName.errors && f.customerName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.customerName.errors.required">
+                                {{'master.customer.detail.label.customer-name'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.customerName.errors.maxlength">
+                                {{'master.customer.detail.label.customer-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.customerName.errors?.serverError">
+                            <div>{{'master.customer.detail.label.customer-name'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <label>
+                            {{'master.customer.detail.label.description'| translate}}
+                        </label>
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm" formControlName="customerDescription"
+                            [ngClass]="{ 'is-invalid': (submitted && f.customerDescription.errors && f.customerDescription.pristine) || f.customerDescription.errors?.serverError} ">
+                        </textarea>
+                        <div *ngIf="submitted && f.customerDescription.errors && f.customerDescription.pristine" class="invalid-feedback">
+                            <div *ngIf="f.customerDescription.errors.maxlength">
+                                {{'master.customer.detail.label.description'| translate}}
+                                {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.customerDescription.errors?.serverError">
+                            <div>{{'master.customer.detail.label.description'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master" type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()"
+                            class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

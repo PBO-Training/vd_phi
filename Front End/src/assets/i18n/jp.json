@@ -1,0 +1,1232 @@
+{
+    "server-error": {
+        "001": "必要とされている",
+        "002": "不明な値",
+        "003": "時間の形式が不正です",
+        "004": "時間が範囲です",
+        "005": "番号は違法です",
+        "006": "数値サイズは不正です",
+        "007": "形式が違法です",
+        "008": "{{value}}文字を超えています",
+        "009": "値はすでに存在しています",
+        "010": "過剰の場合",
+        "011": "{{value}}文字以上必要です",
+        "012": "より小さくなければなりません",
+        "013": "今日",
+        "014": "今年",
+        "015": "アバターのみのサポート：{{value}}",
+        "016": "より大きい必要があります",
+        "801": "間違があります",
+        "802": "間違ったポリシーです",
+        "851": "休日リストまたは週末に複製されます",
+        "852": "別のリクエストと重複しています",
+        "853": "開始日から1ヶ月以上",
+        "903": "内容が不正です",
+        "904": "データサイズ超過",
+        "910": "エラー",
+        "911": "今年よりも大きい",
+        "912": "1950より大きくなければなりません",
+        "message-plus": {
+            "today": "今日",
+            "current-year": "今年"
+        }
+    },
+    "notification": {
+        "500": "システムはメンテナンスです",
+        "504": "システムのタイムアウト"
+    },
+    "button": {
+        "search": "探す",
+        "create": "新規作成",
+        "delete": "削除",
+        "refresh": "リセット",
+        "save": "保存する",
+        "unSave": "保存しない",
+        "back": "戻り",
+        "export-excel": "エクセル輸出する",
+        "close": "クローズ",
+        "dismiss": "退出させる",
+        "add": "追加",
+        "skip": "スキップ",
+        "approve": "承認する",
+        "reject": "拒否する",
+        "edit": "編集",
+        "download": "ダウンロード",
+        "default-employee-create": "デフォルト社員作成",
+        "cancel": "キャンセル",
+        "export-excel-profile": "プロフィール輸出する",
+        "export-excel-history": "履歴輸出する",
+        "reviews":"レビュー",
+        "remove":"削除する",
+        "more":"もっと",
+        "interim-assessment":"中間評価",
+        "complete-review":"完全なレビュー",
+        "ok": "OK"
+    },
+    "p": {
+        "no": "数.",
+        "display": "表示",
+        "of": "まで、の",
+        "record": "レコード",
+        "record-singular": "レコード",
+        "from": "",
+        "to": "から"
+    },
+    "table": {
+        "no-data": "レコードがありません"
+    },
+    "dashboard": {
+        "title": {
+            "employee-statistics": "部門別の従業員統計",
+            "employee-over-month": "従業員は数ヶ月にわたって参加しました",
+            "total":"合計"
+        }
+    },
+    "employee": {
+        "list": {
+            "title": {
+                "title_parent": "会社員",
+                "title_name": "リスト",
+                "title_search": "探す"
+            },
+            "formsearch": {
+                "full_name": "名前",
+                "department": "部",
+                "contract": "契約タイプ",
+                "project": "プロジェクト",
+                "employee_code": "コード",
+                "gender": "性別",
+                "start_date": "(日)から",
+                "experience": "経験",
+                "foreign-language": "外国語",
+                "end_date": "(日)まで",
+                "skill": "スキル",
+                "info-label": "スキルで検索:",
+                "exp-time-unit": "年",
+                "skill-title": "スキルに応じた経験年数を入力してください",
+                "skill-name": "スキル名",
+                "skill-experience": "経験"
+            },
+            "table_th": {
+                "code": "コード",
+                "name": "名前",
+                "phone": "電話番号",
+                "skype": "スカイプ",
+                "department": "部",
+                "project": "プロジェクト",
+                "skill": "スキル",
+                "foreign-language": "外国語",
+                "contract_type": "契約タイプ"
+            },
+            "export": {
+                "profile-header": {
+                    "no": "数",
+                    "employeeCode": "コード",
+                    "fullName": "名前",
+                    "biography": "バイオグラフィー",
+                    "birthday": "お誕生日",
+                    "gender": "性別",
+                    "email": "メール",
+                    "phone": "電話番号",
+                    "address": "アドレス",
+                    "identityCard": "IDカード",
+                    "graduateYear": "卒業年",
+                    "university": "大学",
+                    "skype": "スカイプ",
+                    "dateJoinCompany": "会社に入る日",
+                    "numOfChild": "子ども",
+                    "emergency": "緊急",
+                    "dateOfIssueOfIDCard": "問題の日",
+                    "description": "説明する",
+                    "married": "夫婦",
+                    "departmentName": "部",
+                    "statusEmployeeName": "状態",
+                    "positionEmployeeName": "ポジション",
+                    "nationalityName": "お国",
+                    "degreeName": "程度",
+                    "listEmpSkillName": "スキル",
+                    "listEmpLanguageName": "言語",
+                    "listEmpProjectName": "プロジェクト",
+                    "contractTypeName": "契約タイプ"
+                },
+                "data": {
+                    "male": "男",
+                    "female": "女",
+                    "married": "既婚",
+                    "single": "独身"
+                }
+            },
+            "table-td": {
+                "multi-years": "年",
+                "single-year": "年"
+            }
+        },
+        "create": {
+            "tab": {
+                "personal": "個人",
+                "skill": "スキル",
+                "history": "履歴",
+                "contract": "契約",
+                "language": "言語"
+            },
+            "title": {
+                "title_parent": "会社員",
+                "title_name": "詳細",
+                "title_search": "探し",
+                "title_profile": "プロフィール",
+                "title_technical": "テクニカル",
+                "title_language": "会社員 言語",
+                "title_history": "履歴",
+                "title_contract": "契約",
+                "title_skill": "スキル"
+            },
+            "form": {
+                "employee_code": "コード",
+                "firstName": "ファースト名前",
+                "lastName": "ラスト名前",
+                "marital": "夫婦",
+                "maritaled": "既婚",
+                "status": "状態",
+                "avataUrl": "写真",
+                "gender": "性別",
+                "birthday": "お誕生日",
+                "nationality": "お国",
+                "email": "メール",
+                "phone": "電話番号",
+                "address": "アドレス",
+                "dateJoinCompany": "会社に入る日",
+                "skype": "スカイプ",
+                "degree": "程度",
+                "graduateYear": "卒業年",
+                "university": "大学",
+                "employeenum": "子ども",
+                "emergency": "緊急",
+                "identitycard": "IDカード",
+                "dateOfIssue": "問題の日",
+                "nameskill": "スキル名前",
+                "levelskill": "レベル",
+                "Experience": "経験(月)",
+                "action": "アクション",
+                "namelanguage": "名前 言語",
+                "category": "外国語タイプ",
+                "certificate": "証明書",
+                "levellanguage": "レベル",
+                "points": "ポイント",
+                "expiration_day": "満了",
+                "department_name": "部",
+                "project_name": "プロジェクトの名前",
+                "company_name": "会社の名前",
+                "role": "役割",
+                "in_brycen": "ブライセン",
+                "description": "説明する",
+                "start_date": "から",
+                "end_date": "まで",
+                "operation_system": "オペレーションシステム",
+                "processProjectID": "スコープワーク",
+                "database": "データベース",
+                "language": "スキルの名前",
+                "tools": "ツール",
+                "evaluate": "評価する",
+                "type": "タイプ",
+                "position": "ポジション",
+                "attachments": "付属品",
+                "type-skill": "スキルタイプ",
+                "experience": "経験",
+                "work-experience": "実務経験",
+                "total": "合計",
+                "in": "に",
+                "month": "月",
+                "months": "月",
+                "year": "年",
+                "years": "年",
+                "education": "教育",
+                "biography": "バイオグラフィー",
+                "no-experience": "いいえ",
+                "contact": "連絡先",
+                "male": "男",
+                "female": "女",
+                "married": "既婚",
+                "single": "独身",
+                "language-placeholder": "スキルを選択",
+                "skill-exp": "経験",
+                "skill-placeholder": "スキルを選択",
+                "skill-type-placeholder": "スキルタイプを選択",
+                "scopework-placeholder": "スコープワークを選択",
+                "role-placeholder": "役割を選択",
+                "evaluate-placeholder": "評価を選択",
+                "operation-system-placeholder": "システムを選択",
+                "database-placeholder": "データベースを選択",
+                "languageID-placeholder": "言語を選択",
+                "language-categoryID-placeholder": "言語タイプを選択",
+                "level-project-placeholder": "プロジェクトのレベルを選択",
+                "language-certificate-placeholder": "証明書-ポイント",
+                "contract-type-placeholder": "契約を選択",
+                "position-employee-placeholder": "ポジションを選択",
+                "no-description": "説明なし"
+            },
+            "p": {
+                "display": "表示",
+                "of": "の",
+                "record": "レコード"
+            },
+            "table_th": {
+                "code": "コード",
+                "name": "名前",
+                "phone": "電話番号",
+                "skype": "スカイプ",
+                "department": "部",
+                "project": "プロジェクト",
+                "skill": "スキル",
+                "japanese_level": "言語",
+                "contract_type": "契約タイプ"
+            },
+            "notification": {
+                "full-skill-type": "あなたはすべてのスキルタイプがあります"
+            }
+        },
+        "toast": {
+            "error_code": "会社員のコードはエラー"
+        },
+        "change-password": {
+            "title": "パスワードを更新する",
+            "current": "今パスワード",
+            "new": "新しいパスワード",
+            "confirm": "パスワードを確認する",
+            "show": "パスワードを表示する",
+            "password-guide": "パスワードガイド:",
+            "password-guide-1": "- 長さが8文字以上",
+            "password-guide-2": "- 小文字は少なくとも1回出現する必要があります",
+            "password-guide-3": "- 大文字は少なくとも1回出現する必要があります",
+            "password-guide-4": "- 数字は少なくとも1回出現する必要があります",
+            "password-guide-5": "- 特殊文字（@＃$％^＆+ =）は少なくとも1回出現する必要があります",
+            "password-guide-6": "- 文字列全体に空白を含めることはできません"
+        },
+        "view": {
+            "history-view": {
+                "no": "数.",
+                "company-name": "会社の名前 ",
+                "inside-company": "会社で",
+                "project-name": "プロジェクトの名前",
+                "start-date": "から",
+                "end-date": "まで",
+                "evaluate": "評価する",
+                "scope-work": "スコープワーク",
+                "role": "役割",
+                "os": "オペレーションシステム",
+                "skill": "スキルの名前",
+                "db": "データベース",
+                "tool": "ツール",
+                "history-inside": "プロジェクトの歴史",
+                "history-outside": "ユーザーからの履歴"
+            },
+            "skill-view": {
+                "no": "数.",
+                "skill-type": "スキルタイプ",
+                "skill-name": "スキル名前",
+                "skill-level": "レベル",
+                "skill-exp": "経験"
+            },
+            "language-view": {
+                "no": "数.",
+                "language-category": "外国語タイプ",
+                "language-name": "名前 言語",
+                "language-level": "レベル",
+                "language-certificate": "証明書",
+                "language-point": "ポイント",
+                "language-expiration-date": "満了",
+                "language-header": "外国語"
+            }
+        }
+    },
+    "master": {
+        "department": {
+            "list": {
+                "name": "部の名前",
+                "code": "部のコード",
+                "table": {
+                    "derpartment-code": "部のコード",
+                    "description": "説明する",
+                    "derpartment-name": "部の名前",
+                    "derpartment-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-create": "部を作成する",
+                    "title-update": "部を更新する",
+                    "department-name": "部の名前",
+                    "description": "説明する",
+                    "departmentCode": "部のコード"
+                }
+            }
+        },
+        "language": {
+            "list": {
+                "name": "言語の名前",
+                "code": "言語のコード",
+                "category": "言語のカテゴリー",
+                "table": {
+                    "language-code": "言語のコード",
+                    "description": "説明する",
+                    "language-name": "言語の名前",
+                    "language-content": "内容",
+                    "language-category-name": "言語のカテゴリー"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "言語を更新する",
+                    "title-create": "言語を作成する",
+                    "language-name": "言語の名前",
+                    "description": "説明する",
+                    "languageCode": "言語のコード",
+                    "language-category-name": "言語のカテゴリー"
+                }
+            }
+        },
+        "skill": {
+            "list": {
+                "name": "スキルの名前",
+                "code": "スキルのコード",
+                "type": "スキルのタイプ",
+                "table": {
+                    "skill-code": "スキルのコード",
+                    "description": "説明する",
+                    "skill-name": "スキルの名前",
+                    "skill-content": "内容",
+                    "skill-type": "スキルのタイプ"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "スキルを作成する",
+                    "skill-name": "スキルの名前",
+                    "title-update": "スキルの更新 ",
+                    "title-create": "スキルを作成する",
+                    "description": "説明する",
+                    "skillCode": "スキルのコード",
+                    "skill-type": "スキルのタイプ"
+                }
+            }
+        },
+        "user": {
+            "list": {
+                "username": "ユーザー名",
+                "role": "役割",
+                "table": {
+                    "username": "ユーザー名",
+                    "role": "役割",
+                    "employee-name": "会社員"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "ユーザーを作成する",
+                    "title-update": "ユーザーを更新する",
+                    "username": "ユーザー名",
+                    "password": "新しいパスワード",
+                    "confirm": "パスワードを確認する",
+                    "role": "役割",
+                    "employee": "会社員",
+                    "assign-to": "に割り当てます"
+                }
+            }
+        },
+        "customer": {
+            "list": {
+                "name": "お顧客名前",
+                "code": "お顧客コード",
+                "table": {
+                    "customer-name": "お顧客名前",
+                    "customer-code": "お顧客コード",
+                    "description": "説明する"
+                }
+            },
+            "detail": {
+                "label": {
+                    "customer-name": "お顧客名前",
+                    "customer-code": "お顧客コード",
+                    "description": "説明する",
+                    "title-name": "お顧客を作成",
+                    "title-update": "お顧客を更新する",
+                    "title-create": "お顧客を作成する"
+                }
+            }
+        },
+        "skill-level": {
+            "list": {
+                "name": "レベル スキル 名前",
+                "code": "レベル スキル コード",
+                "table": {
+                    "skill-level-code": "レベル スキル コード",
+                    "description": "説明する",
+                    "skill-level-name": "レベル スキル 名前",
+                    "skill-level-value": "レベル スキル 値",
+                    "skill-level-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-create": "を作成する",
+                    "title-update": "スキルのレベルを更新する",
+                    "skill-level-name": "スキルのレベル名前",
+                    "skill-level-value": "レベル スキル 値",
+                    "skill-level-code": "スキルのレベルのコード",
+                    "description": "説明する"
+                }
+            }
+        },
+        "status-employee": {
+            "list": {
+                "name": "会社員の状態の名前",
+                "code": "会社員の状態のコード",
+                "table": {
+                    "status-employee-code": "会社員の状態のコード",
+                    "status-employee-name": "会社員の状態の名前",
+                    "status-employee-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "会社員の状態を作成する",
+                    "title-create": "会社員の状態を作成する",
+                    "title-update": "会社員の状態を更新する",
+                    "status-employee-name": "会社員の状態の名前",
+                    "statusEmployeeCode": "会社員の状態のコード"
+                }
+            }
+        },
+        "login": {
+            "signin": "サインイン",
+            "username": "ユーザー名",
+            "password": "パスワード",
+            "save-credentials": "資格情報を保存する",
+            "badcredential": "ユーザー名またはパスワードが間違っています",
+            "username-is-required": "ユーザー名は必須です",
+            "password-is-required": "パスワード は必須です"
+        },
+        "level-language": {
+            "list": {
+                "name": "言語のレベル名前",
+                "code": "言語のレベルコード",
+                "table": {
+                    "level-language-code": "言語のレベルコード",
+                    "description": "説明する",
+                    "level-language-name": "言語のレベル名前",
+                    "level-language-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "言語のレベルを更新する",
+                    "title-create": "言語のレベルを作成する",
+                    "level-language-name": "言語のレベル名前",
+                    "level-language-value": "言語のレベル値",
+                    "description": "説明する",
+                    "level-language-Code": "言語のレベルコード"
+                }
+            }
+        },
+        "employeePosition": {
+            "list": {
+                "name": "会社員のポジション名前",
+                "code": "会社員のポジションコード",
+                "table": {
+                    "employeePosition-code": "会社員のポジションコード",
+                    "description": "説明する",
+                    "employeePosition-name": "会社員のポジション名前",
+                    "employeePosition-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "会社員のポジションを更新する",
+                    "title-create": "会社員のポジションを作成する",
+                    "employeePosition-name": "会社員のポジション名前",
+                    "description": "説明する",
+                    "employeePosition-code": "会社員のポジションコード"
+                }
+            }
+        },
+        "projectPosition": {
+            "list": {
+                "name": "プロジェクトのポジション名前",
+                "code": "プロジェクトのポジションコード",
+                "table": {
+                    "projectPosition-code": "プロジェクトのポジションコード",
+                    "description": "説明する",
+                    "projectPosition-name": "プロジェクトのポジション名前",
+                    "projectPosition-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": " プロジェクトのポジションを更新する",
+                    "title-create": " プロジェクトのポジションを作成する",
+                    "projectPosition-name": "プロジェクトのポジション名前",
+                    "description": "説明する",
+                    "projectPosition-code": "プロジェクトのポジションコード"
+                }
+            }
+        },
+        "vacationType": {
+            "list": {
+                "name": "休みのタイプ名前",
+                "code": "休みのタイプコード",
+                "table": {
+                    "vacationType-code": "休みのタイプコード",
+                    "description": "説明する",
+                    "vacationType-name": "休みのタイプ名前",
+                    "vacationType-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "休みのタイプを更新する",
+                    "title-create": "休みのタイプを作成する",
+                    "vacationType-name": "休みのタイプ名前",
+                    "description": "説明する",
+                    "vacationType-code": "休みのタイプコード"
+                }
+            }
+        },
+        "holiday": {
+            "list": {
+                "name": "年の休み名前",
+                "year": "年の休み",
+                "table": {
+                    "holiday-year": "休みの年",
+                    "holiday-name": "年の休み名前",
+                    "holiday-content": "内容"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "を更新する",
+                    "title-create": "年の休みを作成する",
+                    "title-update-detail": "年の休み更新する",
+                    "title-create-detail": "年の休み作成する",
+                    "holiday-name": "年の休み名前",
+                    "holiday-year": "年の休み"
+                }
+            },
+            "create": {
+                "form": {
+                    "holidayDetailName": "説明する",
+                    "holidayDetailDate": "休みの日"
+                }
+            }
+        },
+        "role": {
+            "list": {
+                "name": "役割名前",
+                "code": "役割コード",
+                "table": {
+                    "role-code": "役割コード",
+                    "role-name": "役割名前"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "を更新する",
+                    "title-create": "を作成する",
+                    "role-code": "役割コード",
+                    "role-name": "役割名前",
+                    "role-value": "役割の値"
+                }
+            }
+        },
+        "scopeWork": {
+            "list": {
+                "name": "スコープワーク名前",
+                "code": "スコープワークコード",
+                "table": {
+                    "scope-work-name": "スコープワーク名前",
+                    "scope-work-code": "スコープワークコード",
+                    "description": "説明する",
+                    "scope-work-description": "説明する"
+                }
+            },
+            "detail": {
+                "label": {
+                    "scope-work-name": "スコープワーク名前",
+                    "scope-work-code": "スコープワークコード",
+                    "scope-work-description": "説明する",
+                    "title-update": "スコープワークを更新する",
+                    "title-create": "スコープワークを作成する"
+                }
+            }
+        },
+        "degree": {
+            "list": {
+                "name": "程度 名前",
+                "code": "程度 コード",
+                "table": {
+                    "degree-code": "程度 コード",
+                    "description": "説明する",
+                    "degree-name": "程度 名前"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "程度を更新する",
+                    "title-create": "程度を作成する",
+                    "degree-name": "程度 名前",
+                    "description": "説明する",
+                    "degree-code": "程度 コード"
+                }
+            }
+        },
+        "screen": {
+            "list": {
+                "name": "スクリーン名前",
+                "code": "スクリーンコード"
+            }
+        },
+        "role-screen": {
+            "detail": {
+                "title-update": "役割を更新 する",
+                "role": "役割",
+                "screen": "スクリーン"
+            }
+        }
+    },
+    "notification-message": {
+        "unchecked": "削除するレコードを選択してください",
+        "delete-success": "削除します",
+        "delete-fail": "削除できませんでした",
+        "save-success": "保存しました",
+        "save-fail": "保存できませんでした",
+        "question-delete": "これレコードを削除しますか？",
+        "update-success": "更新しました",
+        "update-fail": "更新しませんでした",
+        "question-changeTab": "データがリセットされます。保存しますか？",
+        "add-member-unchecked": "メンバーをお選びください！",
+        "export-unchecked": "メンバーをお選びください！",
+        "employee-unUse": "今すぐ従業員を使用しない!"
+    },
+    "confirm-message": {
+        "delete": "これレコードを削除しますか？",
+        "update": "この変更を保存しますか？"
+    },
+    "title-modal": {
+        "reviews-member": "メンバーレビュー"
+    },
+    "project": {
+        "list": {
+            "name": "プロジェクト",
+            "table": {
+                "project-code": "コード",
+                "project-status": "状態",
+                "project-name": "名前",
+                "project-level": "レベル",
+                "project-department": "部",
+                "project-cost": "費用",
+                "project-member": "メンバー",
+                "project-start-date-from": "から(日)",
+                "project-start-date-to": "まで(日)",
+                "project-start-date": "から(日)",
+                "project-end-date": "まで(日)",
+                "project-evaluate": "評価する",
+                "project-customer": "お客様",
+                "project-description": "説明する",
+                "project-issueAmountDifferenceAverage": "違いの数",
+                "project-issueQualityDifferenceAverage": "違いの質",
+                "project-issuePercentDoneAverage": "完了(%)",
+                "issue-tracker": "トラッカー",
+                "issue-status": "状態",
+                "issue-project": "プロジェクト",
+                "issue-name": "名前",
+                "issue-subject": "課題",
+                "issue-startDatePlan": "予定の日から",
+                "issue-endDatePlan": "予定の日まで",
+                "issue-startDateActual": "実施の開始日",
+                "issue-endDateActual": "実施の終了日",
+                "issue-amountPlan": "予定の量",
+                "issue-qualityPlan": "予定の品質",
+                "issue-amountActual": "実施の量",
+                "issue-qualityActual": "実施の品質",
+                "issue-DifferenceAverage": "差対象",
+                "issue-AmountDifference": "差額",
+                "issue-QualityDifference": "品質の違い",
+                "issue-StartDateDifference": "開始日の違い",
+                "issue-EndDateDifference": "差額終了日",
+                "issue-plan": "予定",
+                "issue-actual": "実際",
+                "issue-efficiency": "計画と比較して達成された効率",
+                "issue-id": "チケット",
+                "member-code": "メンバーコード",
+                "member-name": "メンバー名前",
+                "member-dateJoinProject": "参加する(日)",
+                "member-dateOutProject": "終わった(日)",
+                "member-role": "役割",
+                "member-action": "アクション",
+                "member-evaluate": "ランク",
+                "member-comment": "コメント",
+                "document-name": "名前",
+                "document-url": "ダウンロードリンク",
+                "document-description": "説明する"
+            }
+        },
+        "detail": {
+            "tabs": {
+                "tab-info": "プロジェクトの情報",
+                "tab-overview": "概要",
+                "tab-issue": "問題",
+                "tab-document": "資料",
+                "tab-member": "メンバー"
+            },
+            "title": {
+                "title-name": "詳細",
+                "title-projectInfo-info-project": "情報",
+                "title-projectInfo-evaluate-project": "評価する",
+                "title-projectMember-activity": "活動"
+            },
+            "label": {
+                "no-activity": "活動なし",
+                "no-evaluate" : "評価が設定されていません",
+                "no-level" : "レベルが設定されていません",
+                "project-code": "プロジェクトコード",
+                "project-name": "プロジェクト名前",
+                "start-date": "から(日)",
+                "end-date": "まで(日)",
+                "project-effort": "努力(MM)",
+                "cost": "費用",
+                "level": "レベル",
+                "department": "部",
+                "evaluate": "評価する",
+                "description": "説明する",
+                "customer": "お客様",
+                "status": "状態",
+                "employee-code": "従業員コード",
+                "employee-name": "従業員名",
+                "role": "役割",
+                "notes": "ノート",
+                "issue-tracker": "トラッカー",
+                "issue-status": "状態",
+                "issue-project": "プロジェクト",
+                "issue-name": "名前",
+                "issue-subject": "課題",
+                "issue-startDatePlan": "予定の開始の日",
+                "issue-endDatePlan": "予定の終了日の日",
+                "issue-startDateActual": "実施のから(日)",
+                "issue-endDateActual": "実施のまで(日)",
+                "issue-amountPlan": "予定の番号",
+                "issue-qualityPlan": "予定の品質",
+                "issue-amountActual": "実施の数",
+                "issue-qualityActual": "実施の品質",
+                "issue-percentDone": "終る",
+                "issue-description": "説明する",
+                "issue-estimatedTime": "見積もりのタイム",
+                "issue-priority": "優先",
+                "issue-plan": "予定",
+                "issue-actual": "現実",
+                "issue-assigned": "担当しているチケット",
+                "issue-closed": "クローズドチケット",
+                "document-file": "ファイル",
+                "choose-file": "ファイルを選ぶ",
+                "choose-other-file": "他のファイルを選択",
+                "file-message":"ファイルが選択されていません",
+                "document-description": "説明する",
+                "document-maxSize": "最大: 25MB",
+                "closed":"Closed",
+                "open":"Open",
+                "total":"トータル",
+                "target":"Target",
+                "issue-added-by": {
+                    "added-by": "追加される",
+                    "about": "約",
+                    "hour-ago": "時間前",
+                    "munite-ago": "分前",
+                    "day-ago": "前日",
+                    "second-ago": "番目前"
+                },
+                "issue-updated-by": {
+                    "updated-by": "によって更新されました",
+                    "about": "約",
+                    "hour-ago": "時間前",
+                    "munite-ago": "分前",
+                    "day-ago": "前日",
+                    "second-ago": "番目前"
+                },
+                "date-from": "デートから",
+                "date-to": "日付"
+            },
+            "form": {
+                "customer-name": "お客様",
+                "department-name": "部",
+                "level-name": "レベル",
+                "evaluate-name": "評価する",
+                "start-date-name": "から",
+                "end-date-name": "まで",
+                "status-name": "状態",
+                "role-placeholder":"-- 役割を選択 --",
+                "rank-placeholder":"-- ランクを選択 --"
+            }
+        }
+    },
+    "vacation": {
+        "list": {
+            "name": "休暇",
+            "table": {
+                "vacation-employeeID": "従業員ID",
+                "vacation-employeeName": "従業員名",
+                "vacation-employeeCode": "従業員コード",
+                "vacation-department": "部門",
+                "vacation-start-date": "開始日",
+                "vacation-end-date": "終了日",
+                "vacation-type": "タイプ",
+                "vacation-option": "オプション",
+                "vacation-status": "状態",
+                "vacation-leave-hour": "時間を残す",
+                "vacation-reason": "理由",
+                "vacation-unit": "時間",
+                "vacation-day-unit": "日々",
+                "vacation-unit-1": "時間",
+                "vacation-day-unit-1": "日",
+                "vacation-total-vacation": "トータルバケーション",
+                "vacation-total-leave": "離れる",
+                "vacation-total-bonus": "ボーナス",
+                "vacation-remain": "残ります",
+                "vacation-year": "年",
+                "vacation-send-date": "送信先",
+                "violation-salary": "違反給与控除",
+                "violation-un-salary": "違反休暇控除"
+            }
+        },
+        "form": {
+            "vacation-employeeCode": "従業員コード",
+            "vacation-employeeName": "従業員名",
+            "vacation-department": "部門",
+            "vacation-type": "タイプ",
+            "vacation-option": "オプション",
+            "vacation-status": "状態",
+            "vacation-start-date": "開始日",
+            "vacation-end-date": "終了日",
+            "vacation-reason": "理由",
+            "vacation-title": "予約情報",
+            "vacation-assign": "情報の割り当て",
+            "vacation-year": "年"
+        },
+        "tabpanel": {
+            "vacation-tab1": "リストを受け取る",
+            "vacation-tab2": "リストを送信",
+            "vacation-tab3": "履歴リスト"
+        },
+        "detail": {
+            "vacation-assign": "情報の割り当て",
+            "vacation-start-date": "開始日",
+            "vacation-end-date": "開始日",
+            "vacation-reason": "理由",
+            "vacation-title": "予約情報",
+            "vacation-type": "タイプ",
+            "vacation-option": "オプション",
+            "vacation-option1": "丸1日",
+            "vacation-option2": "半日",
+            "vacation-option3": "特殊",
+            "vacation-status": "状態",
+            "vacation-start-time": "始まる時間",
+            "vacation-end-time": "終了時間",
+            "vacation-period": "限目",
+            "vacation-leader": "プロジェクトリーダー",
+            "vacation-manager": "チームマネージャー",
+            "vacation-forward": "チームGA",
+            "vacation-title-create": "休暇を作成する",
+            "vacation-title-update": "休職の更新",
+            "vacation-locale-AM": "AM",
+            "vacation-locale-PM": "PM",
+            "vacation-min-unit": "分",
+            "vacation-hour-unit": "時間",
+            "shift-work-option1": "シフト 1: 7:30-11:30 13:00-17:00",
+            "shift-work-option2": "シフト 2: 7:00-11:30 13:00-16:30"
+        },
+        "approve": {
+            "vacation-start-time": "開始 t=時間",
+            "vacation-end-time": "休職",
+            "vacation-leader": "プロジェクトリーダー",
+            "vacation-manager": "チームマネージャー",
+            "vacation-forward": "チームGA",
+            "vacation-title-approve": "休暇の不在を承認する",
+            "vacation-role": "役割の許可",
+            "vacation-approver": "承認者",
+            "vacation-result": "結果の確認",
+            "vacation-comment": "コメント",
+            "vacation-datetime": "日付時刻",
+            "vacation-locale-AM": "AM",
+            "vacation-locale-PM": "PM",
+            "vacation-title": "予約情報",
+            "vacation-approve-process": "プロセスを承認する"
+        },
+        "timekeeping": {
+            "start-timekeeping": "時間管理の開始",
+            "end-timekeeping": "終了時間の維持",
+            "description": "説明",
+            "is-active": "アクティブ",
+            "year": "年",
+            "action": "行動",
+            "activated": "既に",
+            "non-activated": "なし-アクティブ化",
+            "import": "インポート",
+            "save": "保存済み",
+            "report": "報告する",
+            "view": "見る",
+            "reset": "リセット"
+        },
+        "import-timekeeping": {
+            "employee-code": "従業員コード",
+            "employee-name": "従業員名",
+            "date": "日付",
+            "violation": "違反",
+            "checkin-am": "チェックインAM",
+            "checkout-am": "AMをチェックアウト",
+            "checkin-pm": "PMにチェックイン",
+            "checkout-pm": "PMをチェックアウト",
+            "import": "追加",
+            "process-data": "プロセスデータ",
+            "status": "状態",
+            "fail": "不合格",
+            "status-good": "良い",
+            "status-fail": "不合格",
+            "status-unknown": "わからない",
+            "format-fail": " ファイルのインポートが間違った形式であるため",
+            "times": "違反の数",
+            "minushour": "マイナス (時間)"
+        },
+        "detail-timekeeping": {
+            "employee-code": "従業員コード",
+            "employee-name": "従業員名",
+            "date": "日付",
+            "violation": "違反",
+            "checkin-am": "チェックインAM",
+            "checkout-am": "AMをチェックアウト",
+            "checkin-pm": "PMにチェックイン",
+            "checkout-pm": "PMをチェックアウト",
+            "start-date": "開始日",
+            "end-date": "終了日",
+            "am": "朝",
+            "pm": "午後",
+            "time-locale":"時間" ,
+            "all": "すべて" ,
+            "check-in": "遅くまで働く",
+            "check-out": "早く働く",
+            "check-in-missing": "省略チェックイン",
+            "check-out-missing": "省略チェックアウト",
+            "bypass": "バイパス",
+            "times": "違反の数",
+            "minushour": "マイナス (時間)",
+            "status": "状態",
+            "minus-salary": "給与控除",
+            "minus-un-salary": "マイナスの休日"
+        },
+        "report-timekeeping": {
+            "employee-code": "従業員コード",
+            "employee-name": "従業員名",
+            "department": "部門",
+            "check_in": "遅くまで働く",
+            "check_out": "早く働く",
+            "missing_check_in": "省略チェックイン",
+            "missing_check_out": "省略チェックアウト",
+            "start_report_date": "レポート開始日",
+            "end_report_date": "レポート終了日",
+            "unit" : "タイムズ",
+            "minus-salary": "給与控除",
+            "minus-un-salary": "マイナスの休日",
+            "unit-hour" : "時間"
+        },
+        "violation-error-code": {
+            "check-in-am": "午前遅くに働く",
+            "check-out-am": "早朝に働く",
+            "check-in-pm": "午後遅くに働く",
+            "check-out-pm": "午後早く働く",
+            "missing-check-in-am": "AMでの省略チェック",
+            "missing-check-out-am": "省略チェックアウトAM",
+            "missing-check-in-pm": "PMでの省略チェック",
+            "missing-check-out-pm": "省略チェックアウトPM",
+            "all": "すべて"
+        }
+    },
+    "error": {
+        "forbidden403": {
+            "back-to-home": "ホームを戻りする",
+            "permission-denied": "拒否された"
+        },
+        "notfound404": {
+            "back-to-home": "ホームを戻りする",
+            "not-found": "エラー404が見つかりません"
+        }
+    },
+    "left-menu": {
+        "group-menu": {
+            "dashboard": "計器盤",
+            "profile": "プロフィール",
+            "employee": "会社員",
+            "project": "プロジェクト",
+            "vacation": "休み",
+            "master": "達人"
+        },
+        "menu-item": {
+            "dashboard": {
+                "dashboard": "計器盤"
+            },
+            "profile": {
+                "profile": "プロフィール",
+                "update-password": "パスワードの更新する"
+            },
+            "employee": {
+                "employee": "会社員"
+            },
+            "project": {
+                "project": "プロフィール"
+            },
+            "vacation": {
+                "history-request": "休暇の歴史",
+                "receive-request": "休暇の受け取り",
+                "send-request": "休暇申請",
+                "vacation": "休み",
+                "vacation-summary": "休暇の概要",
+                "timekeeping": "時間管理",
+                "tracking-timekeeping": "追跡-時間管理",
+                "shift-work-request": "シフト勤務リクエスト",
+                "shift-work-receive": "シフト勤務受信",
+                "shift-work-history": "シフト勤務履歴"
+            },
+            "master": {
+                "customer": "顧客",
+                "department": "部",
+                "employee-position": "会社員のポジション",
+                "employee-status": "会社員の状態",
+                "holiday": "休日",
+                "language": "言語",
+                "level-language": "言語のレベル",
+                "level-skill": "スキルのレベル",
+                "permission": "許可",
+                "project-position": "プロフィールのポジション",
+                "role": "役割",
+                "skill": "スキル",
+                "user": "ユーザー",
+                "vacation-type": "休みのタイプ",
+                "degree": "程度",
+                "scope-work": "責任者"
+            }
+        }
+    },
+    "breadcrumb": {
+        "parrent": {
+            "dashboard": {
+                "dashboard": "計器盤"
+            },
+            "profile": {
+                "profile": "プロフィール",
+                "update-password": "パスワードの更新する"
+            },
+            "employee": {
+                "employee": "会社員"
+            },
+            "project": {
+                "project": "プロフィール"
+            },
+            "vacation": {
+                "history-request": "休暇の歴史",
+                "receive-request": "休暇の受け取り",
+                "send-request": "休暇申請",
+                "vacation": "休み",
+                "vacation-summary": "休暇の概要",
+                "vacation-detail": "詳細",
+                "vacation-approve": "承認する",
+                "vacation-history-detail": "詳細",
+                "timekeeping": "時間管理",
+                "import-timekeeping": "インポート 時間管理",
+                "detail-timekeeping": "詳細な時間管理",
+                "report-timekeeping": "タイムキーピングを報告する",
+                "tracking-timekeeping": "時間管理の追跡",
+                "shift-work-request": "シフト勤務リクエスト",
+                "shift-work-detail": "シフト勤務の詳細",
+                "shift-work-receive": "シフト勤務受信",
+                "shift-work-approve": "詳細",
+                "shift-work-history": "シフト勤務履歴",
+                "shift-work-history-detail": "詳細"
+            },
+            "master": {
+                "customer": "顧客",
+                "department": "部",
+                "employee-position": "会社員のポジション",
+                "employee-status": "会社員の状態",
+                "holiday": "休日",
+                "language": "言語",
+                "level-language": "言語のレベル",
+                "level-skill": "スキルのレベル",
+                "permission": "許可",
+                "project-position": "プロフィールのポジション",
+                "role": "役割",
+                "skill": "スキル",
+                "user": "ユーザー",
+                "vacation-type": "休みのタイプ",
+                "degree": "程度",
+                "scope-work": "責任者"
+            }
+        },
+        "child": {
+            "update": "更新する",
+            "create": "作成する"
+        }
+    },
+    "ng-select": {
+        "not-found-text": "見つかりません",
+        "place-holder-all": "全て"
+    },
+    "title": {
+        "dashboard": {
+            "dashboard": "計器盤"
+        },
+        "profile": {
+            "profile": "プロフィール",
+            "update-password": "パスワードの更新する"
+        },
+        "employee": {
+            "employee": "会社員-会社員管理"
+        },
+        "project": {
+            "project": "プロフィール-プロフィール管理"
+        },
+        "vacation": {
+            "history-request": "休暇の歴史-休み管理",
+            "receive-request": "休暇の受け取り-休み管理",
+            "send-request": "休暇申請-休み管理",
+            "vacation": "休み-休み管理",
+            "vacation-summary": "休暇の概要-休み管理",
+            "vacation-detail": "詳細-休み管理",
+            "vacation-approve": "承認する-休み管理",
+            "vacation-history-detail": "詳細-休み管理",
+            "timekeeping": "時間管理-休み管理",
+            "import-timekeeping": "インポート 時間管理-休み管理",
+            "detail-timekeeping": "詳細な時間管理-休み管理",
+            "report-timekeeping": "タイムキーピングを報告する-休み管理",
+            "tracking-timekeeping": "時間管理の追跡-休み管理",
+            "shift-work-request": "シフト勤務リクエスト-休み管理",
+            "shift-work-detail": "シフト勤務の詳細-休み管理",
+            "shift-work-receive": "シフト勤務受信-休み管理",
+            "shift-work-approve": "詳細-休み管理",
+            "shift-work-history": "シフト勤務履歴-休み管理",
+            "shift-work-history-detail": "詳細-休み管理"
+        },
+        "master": {
+            "customer": "顧客-マスターマ管理",
+            "department": "部-マスターマ管理",
+            "employee-position": "会社員のポジション-マスターマ管理",
+            "employee-status": "会社員の状態-マスターマ管理",
+            "holiday": "休日-マスターマ管理",
+            "language": "言語-マスターマ管理",
+            "level-language": "言語のレベル-マスターマ管理",
+            "level-skill": "スキルのレベル-マスターマ管理",
+            "permission": "許可-マスターマ管理",
+            "project-position": "プロフィールのポジション-マスターマ管理",
+            "role": "役割-マスターマ管理",
+            "skill": "スキル-マスターマ管理",
+            "user": "ユーザー-マスターマ管理",
+            "vacation-type": "休みのタイプ-マスターマ管理",
+            "degree": "程度-マスターマ管理",
+            "scope-work": "責任者-マスターマ管理"
+
+        }
+    }
+}

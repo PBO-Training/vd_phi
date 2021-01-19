@@ -1,0 +1,83 @@
+<form [formGroup]="formSkill" novalidate>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">{{'button.add'| translate}} {{'employee.create.tab.skill'| translate }}</h4>
+            <div class="close" (click)="activeModal.close('close')"><i class="fas fa-times"></i></div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-4 col-md-4 mb-2">
+                    <!-- <div class="mb-2"> -->
+                    <label class="floating-label"> {{'employee.create.form.type-skill'| translate}}<i
+                            class="color-red">*</i></label>
+                    <ng-select formControlName="skillTypeID"
+                        placeholder="-- {{'employee.create.form.skill-type-placeholder' | translate}} --"
+                        [clearable]="false" [multiple]="false" bindLabel="skillTypeID" bindValue="skillTypeName"
+                        [ngClass]="{'is-invalid': skills['skillTypeID'].status === 'INVALID' && formSubmit}">
+                        <ng-option *ngFor="let item of listSkillType" [value]='item.skillTypeID'>
+                            {{item.skillTypeName}}
+                        </ng-option>
+                    </ng-select>
+                    <div *ngIf="skills['skillTypeID'].status === 'INVALID' && formSubmit"
+                        class="invalid-feedback d-block ">
+                        {{'employee.create.form.nameskill'| translate}}
+                        {{'server-error.001'| translate}}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-4 mb-2">
+                    <!-- <div class="mb-2"> -->
+                    <label class="floating-label">{{'employee.create.form.nameskill'| translate}}<i
+                            class="color-red">*</i></label>
+                    <ng-select formControlName="skillID"
+                        placeholder="-- {{'employee.create.form.skill-placeholder' | translate}} --" [clearable]="false"
+                        [multiple]="false" bindLabel="skillName" bindValue="skillID"
+                        [ngClass]="{'is-invalid': skills['skillID'].status === 'INVALID' && formSubmit}">
+                        <ng-container *ngFor="let item of listSkill index as in">
+                            <ng-option *ngIf="+formSkill.value.skillTypeID === +item.skillTypeID"
+                                [value]='item.skillID'>
+                                {{item.skillName}}
+                            </ng-option>
+                        </ng-container>
+                    </ng-select>
+                    <div *ngIf="skills['skillID'].status === 'INVALID' && formSubmit" class="invalid-feedback d-block ">
+                        {{'employee.create.form.nameskill'| translate}}
+                        {{'server-error.001'| translate}}
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-2 mb-2">
+                    <!-- <div class="mb-2"> -->
+                    <label class="floating-label">{{'employee.create.form.levelskill'| translate}}
+                        <i class="color-red">*</i></label>
+                    <ng-select [multiple]="false" [clearable]="false" bindLabel="levelSkillName"
+                        bindValue="levelSkillID" formControlName="levelSkillID">
+                        <ng-option *ngFor="let item of listLevelSkill" [value]='item.levelSkillID'>
+                            {{item.levelSkillName}}
+                        </ng-option>
+                    </ng-select>
+                </div>
+                <div class="col-sm-4 col-md-2 mb-2">
+                    <label class="floating-label">{{'employee.create.form.skill-exp'| translate}}
+                        ({{'employee.create.form.year' | translate}})<i class="color-red">*</i></label>
+                    <input type="number" class="form-control form-control form-control-sm" maxlength="2" min="0"
+                        [ngClass]="{'is-invalid': skills['skillExperience'].status === 'INVALID' && formSubmit}"
+                        formControlName="skillExperience" (keydown)="onKeyDownExp($event)">
+                    <div *ngIf="skills['skillExperience'].status === 'INVALID' && formSubmit"
+                        class="invalid-feedback d-block ">
+                        {{'employee.create.form.skill-exp'| translate}}
+                        {{'server-error.001'| translate}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row justify-content-md-right">
+                <button type="button" class="btn btn-primary btn-sm btn-master" (click)="addSkill()">
+                    <i class="feather icon-plus"></i> {{'button.add'| translate}}
+                </button>
+                <button type="button" class="btn  btn-secondary btn-sm"
+                    (click)="activeModal.close('close')"> <i class="feather icon-x"></i>{{'button.close'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</form>

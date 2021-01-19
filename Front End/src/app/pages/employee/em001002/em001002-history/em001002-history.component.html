@@ -1,0 +1,327 @@
+<form class="create-form" [formGroup]="formHistory" (ngSubmit)="submit(formHistory.value)" autocomplete="off" appFocus>
+  <!--Row Add History -->
+  <div class="row">
+    <div class="col-sm-12 btn-fun">
+      <!--  -->
+      <button [hidden]="isProfile" type="button" (click)="openPopup()" class="btn   btn-secondary  btn-sm btn-master">
+        <i class="feather icon-rotate-ccw"></i>
+        {{'button.back'| translate}}
+      </button>
+      <button type="button" *ngIf="authButton.UPDATE" class="btn btn-primary btn-sm btn-master"
+        (click)="addHistory()"><i class="feather icon-plus"></i>
+        {{'button.add'| translate}}
+      </button>
+      <button *ngIf="authButton.UPDATE" type="submit" class="btn  btn-primary btn-sm btn-master">
+        <i class="feather icon-save"></i>
+        {{'button.save'| translate}}
+      </button>
+      <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+        (click)="openPopupHistory()">
+        <i class="feather icon-x-square"></i>
+        {{'button.cancel'| translate}}
+      </button>
+    </div>
+  </div>
+  <ng-container formArrayName="listHistory">
+    <div class="row" *ngFor="let history of histories.controls; index as i;" [formGroupName]="i">
+      <div class="col-md-12" *ngIf="history.value.projectID === null">
+        <div class="card ">
+          <div class="card-body emp-tab">
+
+            <!-- Row (Companyname,Start date,End Date,InOutBrycen)-->
+            <!-- <div class="index-el">
+              <p style="font-weight: 600;">{{i + 1}}</p>
+            </div> -->
+            <div class="close btn-el" (click)="deleteHistory(i)">
+              <i class="feather icon-x"></i>
+            </div>
+            <div class="row">
+
+              <!--History Companyname -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Company">{{'employee.create.form.company_name'| translate}}
+                    <i class="color-red">*</i></label>
+                  <input #appHistory type="text" class="form-control form-control form-control-sm "
+                    [ngClass]="{ 'is-invalid': history.get('historyCompanyName').invalid && !history.get('historyCompanyName').pristine }"
+                    formControlName="historyCompanyName">
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('historyCompanyName').errors?.required">
+                      {{'employee.create.form.company_name'| translate}}
+                      {{'server-error.001'| translate}}</div>
+                    <div *ngIf="history.get('historyCompanyName').errors?.maxlength">
+                      {{'employee.create.form.company_name'| translate}}
+                      {{'server-error.008'| translate:maxLenghtInput}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Companyname-->
+
+              <!--History Start date -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Start">
+                    {{'employee.create.form.start_date'| translate}} <i class="color-red">*</i></label>
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d4" ngbDatepicker
+                      #d4="ngbDatepicker"
+                      [ngClass]="{ 'is-invalid': (histories.controls[i].get('historyStartDate').errors && !history.get('historyStartDate').pristine) }"
+                      formControlName="historyStartDate" [minDate]='config.minDate' [maxDate]='config.maxDate'>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()" type="button"><i
+                          class="icon-calendar far fa-calendar-alt"></i></button>
+                    </div>
+                    <div *ngIf="history.invalid" class="invalid-feedback">
+                      <div *ngIf="!history.get('historyStartDate')?.errors?.required && !history.hasError('dates') ">
+                        {{'employee.create.form.start_date'| translate}}
+                        {{'server-error.003'| translate}}
+                      </div>
+                      <div *ngIf="history.get('historyStartDate')?.errors?.required">
+                        {{'employee.create.form.start_date'| translate}}
+                        {{'server-error.001'| translate}}
+                      </div>
+                      <div *ngIf="history.get('historyStartDate')?.errors?.serverError">
+                        {{'employee.create.form.start_date'| translate}}
+                        {{'server-error.003'| translate}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Start date -->
+
+              <!--History End Date -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="End">{{'employee.create.form.end_date'| translate}} <i
+                      class="color-red">*</i></label>
+                  <div class="input-group">
+                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d5" ngbDatepicker
+                      #d5="ngbDatepicker"
+                      [ngClass]="{ 'is-invalid':  (history.get('historyEndDate')?.errors && !history.get('historyEndDate').pristine )|| history.hasError('dates') }"
+                      formControlName="historyEndDate" [minDate]='config.minDate' [maxDate]='config.maxDate'>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar" (click)="d5.toggle()" type="button"><i
+                          class="icon-calendar far fa-calendar-alt"></i></button>
+                    </div>
+                    <div *ngIf="history.invalid" class="invalid-feedback">
+                      <div *ngIf="history.get('historyEndDate')?.errors?.required && !history.hasError('dates') ">
+                        {{'employee.create.form.end_date'| translate}}
+                        {{'server-error.001'| translate}}
+                      </div>
+                      <div *ngIf="!history.get('historyEndDate')?.errors?.required && history.hasError('dates') ">
+                        <span>
+                          {{'employee.create.form.end_date'| translate}}
+                          {{'server-error.004'| translate}}
+                          {{'employee.create.form.start_date'| translate}}
+                        </span>
+                      </div>
+                      <div *ngIf="!history.get('historyEndDate')?.errors?.required && !history.hasError('dates')">
+                        {{'employee.create.form.end_date'| translate}}
+                        {{'server-error.003'| translate}}
+                      </div>
+                      <div *ngIf="history.get('historyEndDate')?.errors?.serverError">
+                        {{'employee.create.form.end_date'| translate}}
+                        {{'server-error.003'| translate}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End End Date-->
+
+              <!--History InOutBrycen-->
+              <div class="col-sm-3 mb-2">
+                <label for="inbrycen{{i}}"> {{companyName}}
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="inbrycen{{i}}"
+                      formControlName="historyInCompany">
+                    <span class="custom-control-label"></span>
+                  </div>
+                </label>
+              </div>
+              <!--End-->
+            </div>
+            <!-- End Row 1-->
+
+            <!-- Row (Projectname, Evaluate,Role,scopework)-->
+            <div class="row">
+              <!--History Projectname -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Project">{{'employee.create.form.project_name'| translate}}</label>
+                  <input type="text" class="form-control form-control form-control-sm"
+                    [ngClass]="{ 'is-invalid': history.get('historyProjectName').invalid}" placeholder=""
+                    formControlName="historyProjectName">
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('historyProjectName').errors?.maxlength">
+                      {{'employee.create.form.project_name'| translate}}
+                      {{'server-error.008'| translate:maxLenghtInput}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--End Projectname-->
+
+              <!--History ValuateEmployeeProject -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="ValuateEmployeeProject">{{'employee.create.form.evaluate'|
+                    translate}}<i class="color-red">*</i>
+                  </label>
+                  <ng-select formControlName="evaluateEmployeeProjectID"
+                    placeholder="-- {{'employee.create.form.evaluate-placeholder' | translate}} --"
+                    [ngClass]="{ 'is-invalid': history.get('evaluateEmployeeProjectID').errors}"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listEvaluateEmployeeProject"
+                      [value]="item.evaluateEmployeeProjectID">
+                      {{item.evaluateEmployeeProjectName}}
+                    </ng-option>
+                  </ng-select>
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('evaluateEmployeeProjectID').errors?.required && submited">
+                      {{'employee.create.form.evaluate'| translate}}
+                      {{'server-error.001'| translate}}</div>
+                  </div>
+                </div>
+              </div>
+              <!--End ValuateEmployeeProject-->
+
+              <!--History role -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Role">{{'employee.create.form.role'| translate}}
+                    <i class="color-red">*</i>
+                  </label>
+                  <ng-select formControlName="positionProjectID"
+                    placeholder="-- {{'employee.create.form.role-placeholder' | translate}} --"
+                    [ngClass]="{ 'is-invalid': history.get('evaluateEmployeeProjectID').errors}"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listPositionProject" [value]="item.positionProjectID">
+                      {{item.positionProjectName}}
+                    </ng-option>
+                  </ng-select>
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('positionProjectID').errors?.required && submited">
+                      {{'employee.create.form.role'| translate}}
+                      {{'server-error.001'| translate}}</div>
+                  </div>
+                </div>
+              </div>
+              <!-- End History Role -->
+
+              <!--Scope work-->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label">{{'employee.create.form.processProjectID'| translate}}
+                  </label>
+                  <ng-select formControlName="listScopeWork"
+                    placeholder="-- {{'employee.create.form.scopework-placeholder' | translate}} --" [multiple]="true"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listScopeWork" [value]="item.scopeWorkID">
+                      {{item.scopeWorkName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Scope work-->
+            </div>
+            <!-- End row 2-->
+
+            <!--Row 3 Skill, Operation System, Database, Tools -->
+            <div class="row">
+
+              <!--History ListSkills -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="listSkill">{{'employee.create.form.language'| translate}}</label>
+                  <ng-select bindLabel="name"
+                    placeholder="-- {{'employee.create.form.skill-placeholder' | translate}} --" [multiple]="true"
+                    bindValue="skill" formControlName="listSkill"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listSkill" [value]="item.skillID">
+                      {{item.skillName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End ListSkills-->
+
+              <!--History Operation system -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Operation">{{'employee.create.form.operation_system'|
+                    translate}}</label>
+                  <ng-select formControlName="operationSystemID"
+                    placeholder="-- {{'employee.create.form.operation-system-placeholder' | translate}} --"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listOperationSystem" [value]="item.operationSystemID">
+                      {{item.operationSystemName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <!-- End Operation system-->
+
+              <!--History Database -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Database">{{'employee.create.form.database'| translate}}
+                  </label>
+                  <ng-select formControlName="databaseID"
+                    placeholder="-- {{'employee.create.form.database-placeholder' | translate}} --"
+                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                    <ng-option *ngFor="let item of listDatabase" [value]="item.databaseHistoryID">
+                      {{item.databaseHistoryName}}
+                    </ng-option>
+                  </ng-select>
+                </div>
+              </div>
+              <!--End Database-->
+
+              <!-- History Tools -->
+              <div class="col-sm-3">
+                <div class="mb-2">
+                  <label class="floating-label" for="Tools">{{'employee.create.form.tools'| translate}}</label>
+                  <input type="text" class="form-control form-control form-control-sm"
+                    [ngClass]="{ 'is-invalid': history.get('tool').invalid}" placeholder="" formControlName="tool">
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('tool').errors?.maxlength">
+                      {{'employee.create.form.tools'| translate}}
+                      {{'server-error.008'| translate:maxLenghtInput}}
+                    </div>
+                  </div>
+                </div>
+                <!-- End Tools-->
+              </div>
+              <!-- End Row2-->
+            </div>
+
+            <!-- Row Line 3-->
+            <div class="row">
+              <!-- History Description -->
+              <div class="col-sm-12">
+                <div class="mb-2">
+                  <label class="floating-label" for="Description">{{'employee.create.form.description'|
+                    translate}}</label>
+                  <textarea type="text" class="form-control form-control form-control-sm  " placeholder=""
+                    [ngClass]="{ 'is-invalid': history.get('historyDescription').invalid}"
+                    formControlName="historyDescription" rows="3"></textarea>
+                  <div *ngIf="history.invalid" class="invalid-feedback">
+                    <div *ngIf="history.get('historyDescription').errors?.maxlength">
+                      {{'employee.create.form.description'| translate}}
+                      {{'server-error.008'| translate:maxLenghtNotes}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End  Description-->
+            </div>
+            <!-- End Row 3-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

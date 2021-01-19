@@ -1,0 +1,22 @@
+button[class*="calendar"] {
+    padding: 0rem 0rem;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.icon-calendar {
+    padding: 0.325rem 0.675rem;
+}
+.custom-checkbox {
+    height: 2rem;
+    width: 13rem;
+    overflow: hidden;
+}
+hr {
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+}
+.frame {
+    height: 40vh;
+    overflow-y: auto;
+    padding-bottom: 0.5rem;
+}

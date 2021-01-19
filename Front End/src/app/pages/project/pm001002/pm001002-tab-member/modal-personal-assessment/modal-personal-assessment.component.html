@@ -1,0 +1,167 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <div class="modal-title">{{'title-modal.reviews-member'| translate }}</div>
+        <div class="close" (click)="activeModal.close('close')"><i class="fas fa-times"></i></div>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-1">
+            <!-- Member code -->
+            <div class="col-3 col-lg-3">
+                <label>
+                    {{'project.list.table.member-code'| translate}}
+                </label>
+            </div>
+            <div class="col-9 col-lg-3">
+                <span>
+                    {{member?.employeeCode}}
+                </span>
+            </div>
+            <!-- Member name -->
+            <div class="col-3 col-lg-3">
+                <label>
+                    {{'project.list.table.member-name'| translate}}
+                </label>
+            </div>
+            <div class="col-9 col-lg-3">
+                <span>
+                    {{member?.employeeName}}
+                </span>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <!-- Role in the project -->
+            <div class="col-3 col-lg-3">
+                <label>
+                    {{'project.list.table.member-role'| translate}}
+                </label>
+            </div>
+            <div class="col-9 col-lg-3">
+                <div *ngFor="let itemPositionProject of dropdownData?.listPositionProject">
+                    <span *ngIf="member?.positionProjectID == itemPositionProject.positionProjectID">
+                        {{itemPositionProject.positionProjectName}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="memberForm" class="needs-validation tab-container" novalidate>
+            <div class="row">
+                <div class="col-12 col-lg-6">
+                    <div class="row mb-1">
+                        <div class="col-3 col-lg-6">
+                            <label>{{'project.detail.label.date-from'| translate}}</label><i class="color-red">*</i>
+                        </div>
+                        <div class="col-3 col-lg-6">
+                            <div class="input-group input-group-picker">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    formControlName="dateJoinProject" ngbDatepicker #d1="ngbDatepicker" placement="bottom"
+                                    [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                    [ngClass]="{ 'is-invalid': f.dateJoinProject.errors?.ngbDate || (submitted && f.dateJoinProject.errors?.required)}">
+                                <button type="button" class="calendar input-group-append btn btn-outline-secondary"
+                                    (click)="d1.toggle()">
+                                    <i class="icon-calendar far fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                            <div *ngIf="submitted && f.dateJoinProject.errors?.required">
+                                <div class="invalid-feedback" style="display: block;">
+                                    <span>{{'project.detail.label.date-from'| translate}}
+                                        {{'server-error.001'| translate}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf="f.dateJoinProject.errors?.ngbDate">
+                                <div class="invalid-feedback" style="display: block;">
+                                    <span>{{'project.detail.label.date-from'| translate}} {{'server-error.003'|
+                                        translate}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="row mb-1">
+                        <div class="col-3 col-lg-6">
+                            <!-- Datetime picker end day -->
+                            <label>{{'project.detail.label.date-to'| translate}}</label><i class="color-red">*</i>
+                        </div>
+                        <div class="col-3 col-lg-6">
+                            <div class="input-group input-group-picker">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2" formControlName="dateOutProject"
+                                    ngbDatepicker #d2="ngbDatepicker" placement="bottom" [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                    [ngClass]="{ 'is-invalid':(submitted && f.dateOutProject.errors?.required) || (f.dateOutProject.errors?.ngbDate) || memberForm.errors?.dates}">
+                                <button type="button" class="calendar input-group-append btn btn-outline-secondary" (click)="d2.toggle()">
+                                    <i class="icon-calendar far fa-calendar-alt"></i>
+                                </button>
+                            </div>
+                            <div *ngIf="submitted && f.dateOutProject.errors?.required">
+                                <div class="invalid-feedback" style="display: block;">
+                                    <span>{{'project.detail.label.date-to'| translate}}
+                                        {{'server-error.001'| translate}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf="f.dateOutProject.errors?.ngbDate">
+                                <div class="invalid-feedback" style="display: block;">
+                                    <span>{{'project.detail.label.date-to'| translate}} {{'server-error.003'|
+                                        translate}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf="!f.dateOutProject.errors?.ngbDate && memberForm.errors?.dates">
+                                <div class="invalid-feedback" style="display: block;">
+                                    <span>
+                                        {{'project.detail.label.date-to'| translate}}
+                                        {{'server-error.004'| translate}}
+                                        {{'project.detail.label.date-from'| translate}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-3 col-lg-3">
+                    <label>{{'project.list.table.member-evaluate'| translate}}</label><i class="color-red">*</i>
+                </div>
+                <div class="col-3 col-lg-3">
+                    <select class="form-control form-control-sm" name="evaluateEmployeeProjectID"
+                        formControlName="evaluateEmployeeProjectID"
+                        [ngClass]="{ 'is-invalid': submitted && f.evaluateEmployeeProjectID.errors}">
+                        <option value='null' hidden>{{'project.detail.form.rank-placeholder'| translate}}</option>
+                        <option *ngFor="let item of dropdownData?.listEvaluateEmployeeProject"
+                            [value]="item.evaluateEmployeeProjectID">
+                            {{item.evaluateEmployeeProjectName}}</option>
+                    </select>
+                    <div class="invalid-feedback" style="display: block;"
+                        *ngIf="submitted && f.evaluateEmployeeProjectID.errors?.required">
+                        {{'project.list.table.member-evaluate'| translate}} {{'server-error.001'| translate}}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-3 col-lg-3">
+                    <label>
+                        {{'project.list.table.member-comment'| translate}}
+                    </label>
+                </div>
+                <div class="col-9 col-lg-9">
+                    <textarea type="text" name="note" cols="45" rows="3" class="form-control form-control-sm" formControlName="note"
+                        [ngClass]="{ 'is-invalid': f.note.errors }"></textarea>
+                    <div *ngIf="f.note?.errors?.maxlength" class="invalid-feedback" style="display: block;">
+                        {{'project.list.table.member-comment'| translate}}
+                        {{'server-error.008'| translate:maxLenghtString}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <div class="row justify-content-md-right">
+            <button class="btn  btn-primary btn-sm btn-master" (click)="reviewMember(interimAssessment)">
+                <i class="feather icon-save"></i>
+                {{'button.interim-assessment'| translate}}
+            </button>
+            <button type="button" class="btn btn-danger btn-sm btn-master" (click)="reviewMember(completeReview)">
+                <i class="feather icon-trash"></i>
+                {{'button.complete-review'| translate}}
+            </button>
+        </div>
+    </div>
+</div>

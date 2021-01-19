@@ -1,0 +1,92 @@
+<ng-container *ngIf="isUpdate; else createBreabcrumb">
+    <app-breadcrumb-share [parrentBreabcrumb]="'Employee Status'" [childBreabcrumb]="'breadcrumb.child.update'"
+        [parrentBreabcrumbUrl]="'/employee-status'">
+    </app-breadcrumb-share>
+</ng-container>
+<ng-template #createBreabcrumb>
+    <app-breadcrumb-share [parrentBreabcrumb]="'Employee Status'" [childBreabcrumb]="'breadcrumb.child.create'"
+        [parrentBreabcrumbUrl]="'/employee-status'">
+    </app-breadcrumb-share>
+</ng-template>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.status-employee.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.status-employee.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-center">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="statusEmployeeID">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="floating-label">
+                            {{'master.status-employee.detail.label.statusEmployeeCode'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm"
+                            formControlName="statusEmployeeCode" 
+                            [ngClass]="{ 'is-invalid': (submitted && f.statusEmployeeCode.errors && f.statusEmployeeCode.pristine) || f.statusEmployeeCode.errors?.serverError}">
+                            
+                        <div *ngIf="submitted && f.statusEmployeeCode.errors && f.statusEmployeeCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.statusEmployeeCode.errors.required">
+                                {{'master.status-employee.detail.label.statusEmployeeCode'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.statusEmployeeCode.errors.pattern; else checkLength">
+                                {{'master.status-employee.detail.label.statusEmployeeCode'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.statusEmployeeCode.errors.maxlength">
+                                    {{'master.status-employee.detail.label.statusEmployeeCode'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.statusEmployeeCode.errors?.serverError">
+                            <div>{{'master.status-employee.detail.label.statusEmployeeCode'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="floating-label">
+                            {{'master.status-employee.detail.label.status-employee-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder
+                            formControlName="statusEmployeeName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.statusEmployeeName.errors && f.statusEmployeeName.pristine) || f.statusEmployeeName.errors?.serverError}">
+                        <div *ngIf="submitted && f.statusEmployeeName.errors && f.statusEmployeeName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.statusEmployeeName.errors.required">
+                                {{'master.status-employee.detail.label.status-employee-name'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.statusEmployeeName.errors.maxlength">
+                                {{'master.status-employee.detail.label.status-employee-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.statusEmployeeName.errors?.serverError">
+                            <div>{{'master.status-employee.detail.label.status-employee-name'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+                    type="submit">
+                    <i class="feather icon-save"></i>
+                    {{'button.save'| translate}}
+                </button>
+                <button (click)="back()"
+                    class="btn btn btn-secondary btn-sm btn-master" type="button">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

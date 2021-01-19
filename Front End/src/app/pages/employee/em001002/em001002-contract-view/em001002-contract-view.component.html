@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-fun row">
+            <div class="col-sm-10">
+                <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                    class="btn   btn-secondary  btn-sm btn-master">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+                <button *ngIf="authButton.UPDATE && (isContractExisted() === true)"
+                    class="btn  btn-info btn-sm btn-master" (click)="onEditContract()">
+                    <!-- <i class="feather icon-save"></i> -->
+                    <i class="feather icon-edit"></i>
+                    {{'button.edit'| translate}}
+                </button>
+                <button *ngIf="authButton.UPDATE && (isContractExisted() === false)"
+                    class="btn btn-primary btn-sm btn-master" (click)="addContract()">
+                    <!-- <i class="feather icon-save"></i> -->
+                    <i class="feather icon-plus"></i>
+                    {{'button.add'| translate}}
+                </button>
+                <button type="button" *ngIf="authButton.UPDATE && canDownload() === true"
+                    class="btn  btn-primary btn-sm btn-master" (click)="downloadAttachment()">
+                    <i class="fas fa-download"></i>
+                    {{'button.download'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="isContractExisted() === true">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="row">
+                            <label class="col-md-12">
+                                {{'employee.create.form.type'| translate}}
+                                <span class="font-weight-normal"> : {{contractTypeName}} </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <label class="col-md-12">
+                                {{'employee.create.form.position'| translate}}
+                                <span class="font-weight-normal"> : {{positionName}}</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <label class="col-md-12">
+                                {{'employee.create.form.start_date'| translate}}
+                                <span class="font-weight-normal"> : {{startDate | date:'dd-MM-yyyy'}} </span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="row">
+                            <label class="col-md-12">
+                                {{'employee.create.form.end_date'| translate}}
+                                <span class="font-weight-normal"> : {{endDate | date:'dd-MM-yyyy'}} </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

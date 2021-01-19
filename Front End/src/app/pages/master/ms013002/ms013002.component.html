@@ -1,0 +1,182 @@
+<ng-container *ngIf="isUpdate; else createBreabcrumb">
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.holiday'" [childBreabcrumb]="'breadcrumb.child.update'"
+        [parrentBreabcrumbUrl]="'/holiday'">
+    </app-breadcrumb-share>
+</ng-container>
+<ng-template #createBreabcrumb>
+    <app-breadcrumb-share [parrentBreabcrumb]="'Holiday'" [childBreabcrumb]="'breadcrumb.child.create'"
+        [parrentBreabcrumbUrl]="'/holiday'">
+    </app-breadcrumb-share>
+</ng-template>
+<div class="col-sm-12">
+    <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+        <div class="card">
+            <div class="card-header">
+                <h5 *ngIf="isUpdate; else createTitle">
+                    {{'master.holiday.detail.label.title-update'| translate}} </h5>
+            </div>
+            <ng-template #createTitle>
+                <h5>{{'master.holiday.detail.label.title-create'| translate}}</h5>
+            </ng-template>
+            <div class="card-body" *ngIf="!loading">
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="holidayID">
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.holiday.detail.label.holiday-year'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="holidayYear" onlyNumber
+                            (keyup)="commonFunctionService.removeSpecWord($event)"
+                            [ngClass]="{ 'is-invalid': (submitted && f.holidayYear.errors && f.holidayYear.pristine) || f.holidayYear.errors?.serverError}">
+                        <div *ngIf="submitted && f.holidayYear.errors && f.holidayYear.pristine"
+                            class="invalid-feedback">
+                            <div *ngIf="f.holidayYear.errors.required">
+                                {{'master.holiday.detail.label.holiday-year'| translate}}
+                                {{'server-error.001'| translate}}
+                            </div>
+                            <div *ngIf="f.holidayYear.errors.maxlength">
+                                {{'master.holiday.detail.label.holiday-year'| translate}}
+                                {{'server-error.008'| translate:maxLenghtYear}}
+                            </div>
+                            <div *ngIf="f.holidayYear.errors.pattern">
+                                {{'master.holiday.detail.label.holiday-year'| translate}}
+                                {{'server-error.007'| translate}}
+                            </div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.holidayYear.errors?.serverError">
+                            <div>{{'master.holiday.detail.label.holiday-year'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.holiday.detail.label.holiday-name'| translate}}
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="holidayName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.holidayName.errors && f.holidayName.pristine) || f.holidayName.errors?.serverError}">
+                        <div *ngIf="submitted && f.holidayName.errors && f.holidayName.pristine"
+                            class="invalid-feedback">
+                            <div *ngIf="f.holidayName.errors.maxlength">
+                                {{'master.holiday.detail.label.holiday-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.holidayName.errors?.serverError">
+                            <div>{{'master.holiday.detail.label.holiday-name'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 *ngIf="f.holidayID.value != '' || null; else createTitleDetail">
+                    {{'master.holiday.detail.label.title-update-detail'| translate}} </h5>
+            </div>
+            <ng-template #createTitleDetail>
+                <h5>{{'master.holiday.detail.label.title-create-detail'| translate}}</h5>
+            </ng-template>
+            <div class="card-body" *ngIf="!loading">
+                <div class="row">
+                    <div class="col-sm-2" style="margin-bottom: 10px;"><button type="button"
+                            class="btn btn-primary btn-sm" (click)="addHoliday()"><i class="feather icon-plus"></i>
+                            {{'button.add'| translate}}</button></div>
+                    <div class="col-sm-10">&nbsp;</div>
+                </div>
+                <ng-container formArrayName="listHolidayDetails">
+                    <div *ngFor="let holiday of holidays.controls; index as i">
+                        <ng-container [formGroupName]="i">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="mb-2">
+                                        <label
+                                            class="floating-label">{{'master.holiday.create.form.holidayDetailDate'| translate}}</label>
+                                        <i class="color-red">*</i>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control form-control-sm"
+                                                placeholder="DD-MM-YYYY" name="holidayDetailsDate"
+                                                formControlName="holidayDetailsDate" ngbDatepicker
+                                                #holidayDetailsDate="ngbDatepicker" [minDate]='config.minDate'
+                                                [maxDate]='config.maxDate'
+                                                [ngClass]="{ 'is-invalid': (submitted && holidays.controls[i].errors?.duplicate) || holiday.get('holidayDetailsDate')?.errors?.required}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar"
+                                                    (click)="holidayDetailsDate.toggle()" type="button">
+                                                    <i class="icon-calendar far fa-calendar-alt"></i>
+                                                </button>
+                                            </div>
+                                            <div class="invalid-feedback d-block"
+                                                *ngIf="holiday.get('holidayDetailsDate')?.errors && !holiday.get('holidayDetailsDate')?.errors?.required">
+                                                {{'master.holiday.create.form.holidayDetailDate'| translate}}
+                                                {{'server-error.003'| translate}}
+                                            </div>
+                                            <div class="invalid-feedback d-block"
+                                                *ngIf="submitted && holidays.controls[i].errors?.duplicate">
+                                                {{'master.holiday.create.form.holidayDetailDate'| translate}}
+                                                {{'server-error.009'| translate}}
+                                            </div>
+                                            <div *ngIf="holiday.get('holidayDetailsDate')?.errors?.required"
+                                                class="invalid-feedback">
+                                                {{'master.holiday.create.form.holidayDetailDate' | translate}}
+                                                {{'server-error.001'| translate}}
+                                            </div>
+                                            <div class="invalid-feedback"
+                                                *ngIf=" holidays.controls[i].hasError('serverError','holidayDetailsDate')">
+                                                {{'master.holiday.create.form.holidayDetailDate'| translate}}
+                                                {{displayMessage}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="mb-2">
+                                        <label
+                                            class="floating-label">{{'master.holiday.create.form.holidayDetailName'| translate}}</label>
+                                        <input type="text" class="form-control form-control-sm"
+                                            formControlName="holidayDetailsName"
+                                            [ngClass]="{ 'is-invalid': holidays.controls[i].errors?.required}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3" style="padding-top: 20px;">
+                                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteHoliday(i)"><i
+                                            class="feather icon-trash"></i>
+                                        {{'button.delete'| translate}}
+                                    </button>
+                                </div>
+                                <div class="col-sm-3">&nbsp;</div>
+                            </div>
+                        </ng-container>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <hr style="border-top: 1px solid rgb(0 0 0 / 52%) !important; margin: 0px;">
+                            </div>
+                            <div class="col-sm-6">&nbsp;</div>
+                        </div>
+                        <!-- Row Line-->
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="mt-2 form-row">
+            <div class="col-12">
+                <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+                    type="submit">
+                    <i class="feather icon-save"></i>
+                    {{'button.save'| translate}}
+                </button>
+                <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

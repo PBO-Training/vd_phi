@@ -1,0 +1,1248 @@
+{
+    "server-error": {
+        "001": "is required",
+        "002": "unknown value",
+        "003": "datetime format is illegal ",
+        "004": "must be greater than",
+        "005": "number is illegal",
+        "006": "number size is illegal",
+        "007": "format is illegal",
+        "008": "is over {{value}} characters",
+        "009": "value already exists.",
+        "010": "number case of excess",
+        "011": "is required {{value}} characters",
+        "012": "must be less than",
+        "015": "only support: {{value}}",
+        "017": "is points  must be smaller {{value}}",
+        "018": "is points must be greater {{value}}",
+        "801": "is incorrect",
+        "802": "is wrong policies",
+        "851": "is duplicated with holiday list or at the weekend",
+        "852": "is duplicated with an another request",
+        "853": "is over than 1 month from start date",
+        "903": "contents type is illegal.",
+        "904": "data size excess",
+        "message-plus": {
+            "today": "today",
+            "current-year": "current year"
+        }
+    },
+    "notification": {
+        "500": "The system is maintenance",
+        "504": "The system timeout"
+    },
+    "button": {
+        "search": "Search",
+        "create": "Create",
+        "delete": "Delete",
+        "refresh": "Reset",
+        "save": "Save",
+        "unSave": "UnSave",
+        "back": "Back",
+        "export-excel": "Export Excel",
+        "close": "Close",
+        "dismiss": "Dismiss",
+        "add": "Add",
+        "skip": "Skip",
+        "approve": "Approve",
+        "reject": "Reject",
+        "edit": "Edit",
+        "download": "Download",
+        "default-employee-create": "Create Default Employee",
+        "cancel": "Cancel",
+        "export-excel-profile": "Export Profile",
+        "export-excel-history": "Export History",
+        "reviews": "Reviews",
+        "remove": "Remove",
+        "more": "More",
+        "interim-assessment": "Interim Assessment",
+        "complete-review": "Complete Review",
+        "ok": "OK"
+    },
+    "p": {
+        "no": "No.",
+        "display": "Display",
+        "of": "of",
+        "record": "records",
+        "record-singular": "record",
+        "from": "From",
+        "to": "To"
+    },
+    "table": {
+        "no-data": "No records found"
+    },
+    "dashboard": {
+        "title": {
+            "employee-statistics": "The employee statistics by department",
+            "employee-over-month": "The employees joined over the months",
+            "total": "Total"
+        }
+    },
+    "employee": {
+        "list": {
+            "title": {
+                "title_parent": "Employee",
+                "title_name": "List",
+                "title_search": "Search"
+            },
+            "formsearch": {
+                "full_name": "Full Name",
+                "department": "Department",
+                "contract": "Contract Type",
+                "project": "Projects",
+                "employee_code": "Code",
+                "gender": "Gender",
+                "start_date": "Start Date",
+                "experience": "Experience",
+                "foreign-language": "Languages",
+                "end_date": "End Date",
+                "skill": "Skills",
+                "info-label": "Searching with skills:",
+                "exp-time-unit": "years",
+                "skill-title": "Please enter the number of years of experience corresponding to the skill",
+                "skill-name": "Skill Name",
+                "skill-experience": "Experience"
+            },
+            "table_th": {
+                "code": "Code",
+                "name": "Full Name",
+                "phone": "Phone",
+                "skype": "Skype",
+                "department": "Department",
+                "project": "Project",
+                "skill": "Skill",
+                "foreign-language": "Language",
+                "contract_type": "Contract type"
+            },
+            "export": {
+                "profile-header": {
+                    "no": "No.",
+                    "employeeCode": "Code",
+                    "fullName": "Full Name",
+                    "biography": "Biography",
+                    "birthday": "Birthday",
+                    "gender": "Gender",
+                    "email": "Email",
+                    "phone": "Phone",
+                    "address": "Address",
+                    "identityCard": "ID Card",
+                    "graduateYear": "Graduated Year",
+                    "university": "University",
+                    "skype": "Skype",
+                    "dateJoinCompany": "Date Join Company",
+                    "numOfChild": "Children",
+                    "emergency": "Emergency",
+                    "dateOfIssueOfIDCard": "Date of ID Card",
+                    "description": "Description",
+                    "married": "Marital",
+                    "departmentName": "Department",
+                    "statusEmployeeName": "Status",
+                    "positionEmployeeName": "Position",
+                    "nationalityName": "Nationality",
+                    "degreeName": "Degree",
+                    "listEmpSkillName": "Skill",
+                    "listEmpLanguageName": "Language",
+                    "listEmpProjectName": "Project",
+                    "contractTypeName": "Contract Type"
+                },
+                "data": {
+                    "male": "Male",
+                    "female": "Female",
+                    "married": "Married",
+                    "single": "Single"
+                }
+            },
+            "table-td": {
+                "multi-years": "yrs",
+                "single-year": "yr"
+            }
+        },
+        "create": {
+            "tab": {
+                "personal": "Personal",
+                "skill": "Skill",
+                "history": "History",
+                "contract": "Contract",
+                "language": "Language"
+            },
+            "title": {
+                "title_parent": "Employee",
+                "title_name": "Details",
+                "title_search": "Search",
+                "title_profile": "Profile",
+                "title_technical": "Technical",
+                "title_language": "Employee Language",
+                "title_history": "History",
+                "title_contract": "Contract",
+                "title_skill": "Skill"
+            },
+            "form": {
+                "employee_code": "Code",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "marital": "Marital",
+                "maritaled": "Married",
+                "status": "Status",
+                "avataUrl": "Avatar",
+                "gender": "Gender",
+                "birthday": "Birthday",
+                "nationality": "Nationality",
+                "email": "Email",
+                "phone": "Phone",
+                "address": "Address",
+                "dateJoinCompany": "Date Join Company",
+                "skype": "Skype",
+                "degree": "Degree",
+                "graduateYear": "Graduate Year",
+                "university": "University",
+                "employeenum": "Child",
+                "emergency": "Emergency",
+                "identitycard": "Identity Card",
+                "dateOfIssue": "Date Of Issue",
+                "nameskill": "Skill Name",
+                "levelskill": "Level",
+                "Experience": "Experience (Month)",
+                "action": "Action",
+                "namelanguage": "Language Name",
+                "category": "Language Category",
+                "certificate": "Language Certificate",
+                "levellanguage": "Level",
+                "points": "Points",
+                "expiration_day": "Expiration Day",
+                "department_name": "Department",
+                "project_name": "Project Name",
+                "company_name": "Company Name",
+                "role": "Role",
+                "in_brycen": "In brycen",
+                "description": "Description",
+                "start_date": "Start Date",
+                "end_date": "End Date",
+                "operation_system": "Operation System",
+                "processProjectID": "Scope Work",
+                "database": "Database",
+                "language": "Name Skill",
+                "tools": "Tools",
+                "evaluate": "Evaluate",
+                "type": "Type",
+                "position": "Position",
+                "attachments": "Attachments",
+                "biography": "Biography",
+                "type-skill": "Skill Type",
+                "experience": "Experience",
+                "work-experience": "work experience",
+                "total": "Total",
+                "in": "In",
+                "month": "month",
+                "months": "months",
+                "year": "year",
+                "years": "years",
+                "education": "Education",
+                "no-experience": "N/A",
+                "contact": "Contact",
+                "male": "Male",
+                "female": "Female",
+                "married": "Married",
+                "single": "Single",
+                "language-placeholder": "Select skill",
+                "skill-exp": "Experience",
+                "skill-placeholder": "Select Skill",
+                "skill-type-placeholder": "Select Skill Type",
+                "scopework-placeholder": "Select Scopework",
+                "role-placeholder": "Select role",
+                "evaluate-placeholder": "Select evaluate",
+                "operation-system-placeholder": "Select system",
+                "database-placeholder": "Select database",
+                "languageID-placeholder": "Select language",
+                "language-categoryID-placeholder": "Select Category Language",
+                "level-project-placeholder": "Select Level of Project",
+                "language-certificate-placeholder": "Certificate - Point",
+                "contract-type-placeholder": "Select Contract Type",
+                "position-employee-placeholder": "Select Position",
+                "no-description": "No description"
+            },
+            "p": {
+                "display": "Display",
+                "of": "of",
+                "record": "record"
+            },
+            "table_th": {
+                "code": "Code",
+                "name": "Full Name",
+                "phone": "Phone",
+                "skype": "Skype",
+                "department": "Department",
+                "project": "Project",
+                "skill": "Skill",
+                "foreign-language": "Language",
+                "contract_type": "Contract type"
+            },
+            "notification": {
+                "full-skill-type": "You are there are all skill type!"
+            }
+        },
+        "toast": {
+            "error_code": "Employee Code Error"
+        },
+        "change-password": {
+            "title": "Update Password",
+            "current": "Current Password",
+            "new": "New Password",
+            "confirm": "Confirm New Password",
+            "show": "Show Password",
+            "password-guide": "Password policies:",
+            "password-guide-1": "- At least 8 characters",
+            "password-guide-2": "- A lower case letter must occur at least once",
+            "password-guide-3": "- An upper case letter must occur at least once",
+            "password-guide-4": "- A digit must occur at least once",
+            "password-guide-5": "- A special character(@#$%^&+=) must occur at least once",
+            "password-guide-6": "- No whitespace allowed in the entire string"
+        },
+        "view": {
+            "history-view": {
+                "no": "No.",
+                "company-name": "Company Name",
+                "inside-company": "In Company",
+                "project-name": "Project Name",
+                "start-date": "Start Date",
+                "end-date": "End Date",
+                "evaluate": "Evaluate",
+                "scope-work": "Scope Work",
+                "role": "Role",
+                "os": "OS",
+                "skill": "Skill",
+                "db": "DB",
+                "tool": "Tool",
+                "history-inside": "History from project",
+                "history-outside": "History from user"
+            },
+            "skill-view": {
+                "no": "No.",
+                "skill-type": "Skill Type",
+                "skill-name": "Skill Name",
+                "skill-level": "Skill Level",
+                "skill-exp": "Experience"
+            },
+            "language-view": {
+                "no": "No.",
+                "language-category": "Language Category",
+                "language-name": "Language Name",
+                "language-level": "Language Level",
+                "language-certificate": "Language Certificate",
+                "language-point": "Language Point",
+                "language-expiration-date": "Expiration Date",
+                "language-header": "Language"
+            }
+        }
+    },
+    "master": {
+        "department": {
+            "list": {
+                "name": "Department Name",
+                "code": "Department Code",
+                "table": {
+                    "derpartment-code": "Department Code",
+                    "description": "Description",
+                    "derpartment-name": "Department Name",
+                    "derpartment-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-create": "Create Department",
+                    "title-update": "Update Department",
+                    "department-name": "Department Name",
+                    "description": "Description",
+                    "departmentCode": "Department Code"
+                }
+            }
+        },
+        "language": {
+            "list": {
+                "name": "Language Name",
+                "code": "Language Code",
+                "category": "Language Category",
+                "table": {
+                    "language-code": "Language Code",
+                    "description": "Description",
+                    "language-name": "Language Name",
+                    "language-content": "Content",
+                    "language-category-name": "Language Category"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Language",
+                    "title-create": "Create Language",
+                    "language-name": "Language Name",
+                    "description": "Description",
+                    "languageCode": "Language Code",
+                    "language-category-name": "Language Category"
+                }
+            }
+        },
+        "skill": {
+            "list": {
+                "name": "Skill Name",
+                "code": "Skill Code",
+                "type": "Skill Type",
+                "table": {
+                    "skill-code": "Skill Code",
+                    "description": "Description",
+                    "skill-name": "Skill Name",
+                    "skill-content": "Content",
+                    "skill-type": "Skill Type"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Skill Add",
+                    "skill-name": "Skill Name",
+                    "title-update": "Update Skill",
+                    "title-create": "Create Skill",
+                    "description": "Description",
+                    "skillCode": "Skill Code",
+                    "skill-type": "Skill Type"
+                }
+            }
+        },
+        "user": {
+            "list": {
+                "username": "Username",
+                "role": "Role",
+                "table": {
+                    "username": "Username",
+                    "role": "Role",
+                    "employee-name": "Employee"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Create User",
+                    "title-update": "Update User",
+                    "username": "Username",
+                    "password": "New Password",
+                    "confirm": "Confirm New Password",
+                    "role": "Role",
+                    "employee": "Employee",
+                    "assign-to": "AssignTo"
+                }
+            }
+        },
+        "customer": {
+            "list": {
+                "name": "Customer Name",
+                "code": "Customer Code",
+                "table": {
+                    "customer-name": "Customer Name",
+                    "customer-code": "Customer Code",
+                    "description": "Description"
+                }
+            },
+            "detail": {
+                "label": {
+                    "customer-name": "Customer Name",
+                    "customer-code": "Customer Code",
+                    "description": "Description",
+                    "title-name": "Add Customer",
+                    "title-update": "Update Customer",
+                    "title-create": "Create Customer"
+                }
+            }
+        },
+        "skill-level": {
+            "list": {
+                "name": "Level Skill Name",
+                "code": "Level Skill Code",
+                "table": {
+                    "skill-level-code": "Level Skill Code",
+                    "description": "Description",
+                    "skill-level-name": "Level Skill Name",
+                    "skill-level-value": "Level Skill Value",
+                    "skill-level-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-create": "Create Level Skill",
+                    "title-update": "Update Level Skill",
+                    "skill-level-name": "Level Skill Name",
+                    "skill-level-value": "Level Skill Value",
+                    "skill-level-code": "Level Skill Code",
+                    "description": "Description"
+                }
+            }
+        },
+        "status-employee": {
+            "list": {
+                "name": "Employee Status Name",
+                "code": "Employee Status Code",
+                "table": {
+                    "status-employee-code": "Employee Status Code",
+                    "status-employee-name": "Employee Status Name",
+                    "status-employee-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-name": "Add Employee Status",
+                    "title-create": "Create Employee Status",
+                    "title-update": "Update Employee Status",
+                    "status-employee-name": "Employee Status Name",
+                    "statusEmployeeCode": "Employee Status Code"
+                }
+            }
+        },
+        "login": {
+            "signin": "Signin",
+            "username": "Username",
+            "password": "Password",
+            "save-credentials": "Save credentials",
+            "badcredential": "Username or password is wrong!",
+            "username-is-required": "Username is required",
+            "password-is-required": "Password is required"
+        },
+        "level-language": {
+            "list": {
+                "name": "Level Language Name",
+                "code": "Level Language Code",
+                "table": {
+                    "level-language-code": "Level Language Code",
+                    "description": "Description",
+                    "level-language-name": "Level Language Name",
+                    "level-language-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Level Language",
+                    "title-create": "Create Level Language",
+                    "level-language-name": "Level Language Name",
+                    "level-language-value": "Level Language Value",
+                    "description": "Level Language Description",
+                    "level-language-Code": "Level Language Code"
+                }
+            }
+        },
+        "employeePosition": {
+            "list": {
+                "name": "Employee Position Name",
+                "code": "Employee Position Code",
+                "table": {
+                    "employeePosition-code": "Employee Position Code",
+                    "description": "Description",
+                    "employeePosition-name": "Employee Position Name",
+                    "employeePosition-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Employee Position",
+                    "title-create": "Create Employee Position",
+                    "employeePosition-name": "Employee Position Name",
+                    "description": "Description",
+                    "employeePosition-code": "Employee Position Code"
+                }
+            }
+        },
+        "projectPosition": {
+            "list": {
+                "name": "Project Position Name",
+                "code": "Project Position Code",
+                "table": {
+                    "projectPosition-code": "Project Position Code",
+                    "description": "Description",
+                    "projectPosition-name": "Project Position Name",
+                    "projectPosition-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Project Position",
+                    "title-create": "Create Project Position",
+                    "projectPosition-name": "Project Position Name",
+                    "description": "Description",
+                    "projectPosition-code": "Project Position Code"
+                }
+            }
+        },
+        "vacationType": {
+            "list": {
+                "name": "Vacation Type Name",
+                "code": "Vacation Type Code",
+                "table": {
+                    "vacationType-code": "Vacation Type Code",
+                    "description": "Description",
+                    "vacationType-name": "Vacation Type Name",
+                    "vacationType-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Vacation Type",
+                    "title-create": "Create Vacation Type",
+                    "vacationType-name": "Vacation Type Name",
+                    "description": "Description",
+                    "vacationType-code": "Vacation Type Code"
+                }
+            }
+        },
+        "holiday": {
+            "list": {
+                "name": "Description",
+                "year": "Holiday Year",
+                "table": {
+                    "holiday-year": "Holiday Year",
+                    "holiday-name": "Description",
+                    "holiday-content": "Content"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update List Holiday",
+                    "title-create": "Create List Holiday",
+                    "title-update-detail": "Update Detail Holiday",
+                    "title-create-detail": "Create Detail Holiday",
+                    "holiday-name": "Description",
+                    "holiday-year": "Holiday Year"
+                }
+            },
+            "create": {
+                "form": {
+                    "holidayDetailName": "Description",
+                    "holidayDetailDate": "Holiday Date"
+                }
+            }
+        },
+        "role": {
+            "list": {
+                "name": "Role Name",
+                "code": "Role Code",
+                "table": {
+                    "role-name": "Role Name",
+                    "role-code": "Role Code",
+                    "role-value": "Role Value"
+                }
+            },
+            "detail": {
+                "label": {
+                    "role-name": "Role Name",
+                    "role-code": "Role Code",
+                    "role-value": "Role Value",
+                    "title-name": "Add Role",
+                    "title-update": "Update Role",
+                    "title-create": "Create Role"
+                }
+            }
+        },
+        "scopeWork": {
+            "list": {
+                "name": "Scope Work Name",
+                "code": "Scope Work Code",
+                "table": {
+                    "scope-work-name": "Scope Work Name",
+                    "scope-work-code": "Scope Work Code",
+                    "description": "Description",
+                    "scope-work-description": "Description"
+                }
+            },
+            "detail": {
+                "label": {
+                    "scope-work-name": "Scope Work Name",
+                    "scope-work-code": "Scope Work Code",
+                    "scope-work-value": "Scope Work Value",
+                    "scope-work-description": "Description",
+                    "title-name": "Add Scope Work",
+                    "title-update": "Update Scope Work",
+                    "title-create": "Create Scope Work"
+                }
+            }
+        },
+        "degree": {
+            "list": {
+                "name": "Degree Name",
+                "code": "Degree Code",
+                "table": {
+                    "degree-code": "Degree Code",
+                    "description": "Description",
+                    "degree-name": "Degree Name"
+                }
+            },
+            "detail": {
+                "label": {
+                    "title-update": "Update Degree",
+                    "title-create": "Create Degree",
+                    "degree-name": "Degree Name",
+                    "description": "Description",
+                    "degree-code": "Degree Code"
+                }
+            }
+        },
+        "shiftwork":{
+          "list": {
+            "name": "Shift Work Name",
+            "code": "Shift Work Code",
+            "table": {
+                "shiftwork-code": "Shift Work Code",
+                "shiftwork-description": "Description",
+                "shiftwork-name": "Shift Work Name",
+                "shiftwork-timeAM": "Time AM",
+                "shiftwork-timePM": "Time PM"
+
+            }
+          }
+        },
+        "screen": {
+            "list": {
+                "name": "Screen Name",
+                "code": "Screen Code"
+            }
+        },
+        "role-screen": {
+            "detail": {
+                "title-update": "Update Permission",
+                "role": "Role",
+                "screen": "Screen"
+            }
+        }
+    },
+    "notification-message": {
+        "unchecked": "Please select a record to delete!",
+        "delete-success": "Delete success!",
+        "delete-fail": "Delete failed!",
+        "save-success": "Save success!",
+        "save-fail": "Save failed!",
+        "question-delete": "Do you want delete this!",
+        "update-success": "Update success!",
+        "update-fail": "Update failed!",
+        "question-changeTab": "Data will reset. Do you want to save it!",
+        "request-changeTab": "Search Data will reset!",
+        "employee-unUse": "have employee unuse right now!",
+        "export-unchecked": "Please select a record to export!",
+        "add-member-unchecked": "Please select a member!"
+    },
+    "confirm-message": {
+        "delete": "Do you want delete this!",
+        "update": "Do you want to save your change!"
+    },
+    "title-modal": {
+        "reviews-member": "Reviews member"
+    },
+    "project": {
+        "list": {
+            "name": "Projects",
+            "table": {
+                "project-code": "Project Code",
+                "project-status": "Status",
+                "project-name": "Project Name",
+                "project-level": "Level",
+                "project-department": "Department",
+                "project-cost": "Cost",
+                "project-member": "Member",
+                "project-start-date-from": "Start date from",
+                "project-start-date-to": "Start date to",
+                "project-start-date": "Start Date",
+                "project-end-date": "End Date",
+                "project-evaluate": "Evaluate",
+                "project-customer": "Customer",
+                "project-description": "Description",
+                "project-issueAmountDifferenceAverage": "Difference amount",
+                "project-issueQualityDifferenceAverage": "Difference quality",
+                "project-issuePercentDoneAverage": "Percent Done",
+                "issue-tracker": "Tracker",
+                "issue-status": "Status",
+                "issue-project": "Project",
+                "issue-name": "Name",
+                "issue-subject": "Subject",
+                "issue-startDatePlan": "Start Date Plan",
+                "issue-endDatePlan": "End Date Plan",
+                "issue-startDateActual": "Start Date Actual",
+                "issue-endDateActual": "End Date Actual",
+                "issue-amountPlan": "Amount Plan",
+                "issue-qualityPlan": "Quality Plan",
+                "issue-amountActual": "Amount Actual",
+                "issue-qualityActual": "Quality Actual",
+                "issue-AmountDifference": "Difference amount",
+                "issue-QualityDifference": "Difference quality",
+                "issue-StartDateDifference": "Difference start date",
+                "issue-EndDateDifference": "Difference end date",
+                "issue-plan": "Plan",
+                "issue-actual": "Actual",
+                "issue-efficiency": "Efficiency achieved compared to the plan",
+                "issue-id": "Ticket",
+                "member-code": "Code",
+                "member-name": "Name",
+                "member-dateJoinProject": "Date Join",
+                "member-dateOutProject": "Date Out",
+                "member-role": "Role",
+                "member-action": "Action",
+                "member-evaluate": "Rank",
+                "member-comment": "Comment",
+                "document-name": "Name",
+                "document-url": "Link Download",
+                "document-description": "Description"
+            }
+        },
+        "detail": {
+            "tabs": {
+                "tab-info": "Information",
+                "tab-overview": "Overview",
+                "tab-issue": "Issue",
+                "tab-document": "Document",
+                "tab-member": "Member"
+            },
+            "title": {
+                "title-name": "Detail",
+                "title-projectInfo-info-project": "Information",
+                "title-projectInfo-evaluate-project": "Evaluate project",
+                "title-projectMember-activity": "Activity"
+            },
+            "label": {
+                "no-evaluate": "Evaluate didn't set",
+                "no-level": "Level didn't set",
+                "no-activity": "No activity",
+                "project-code": "Project Code",
+                "project-name": "Project Name",
+                "start-date": "Start Date",
+                "end-date": "End Date",
+                "project-effort": "Effort (MM)",
+                "level": "Level",
+                "department": "Department",
+                "evaluate": "Evaluate",
+                "description": "Description",
+                "customer": "Customer",
+                "status": "Status",
+                "employee-code": "Code",
+                "employee-name": "Name",
+                "role": "Role",
+                "notes": "Notes",
+                "issue-tracker": "Tracker",
+                "issue-status": "Status",
+                "issue-project": "Project",
+                "issue-name": "Name",
+                "issue-subject": "Subject",
+                "issue-startDatePlan": "Start Date Plan",
+                "issue-endDatePlan": "End Date Plan",
+                "issue-startDateActual": "Start Date Actual",
+                "issue-endDateActual": "End Date Actual",
+                "issue-amountPlan": "Amount Plan",
+                "issue-qualityPlan": "Quality Plan",
+                "issue-amountActual": "Amount Actual",
+                "issue-qualityActual": "Quality Actual",
+                "issue-percentDone": "Done",
+                "issue-description": "Description",
+                "issue-estimatedTime": "Estimated Time",
+                "issue-priority": "Priority",
+                "issue-plan": "Plan",
+                "issue-actual": "Actual",
+                "issue-title-create": "Create new issue",
+                "issue-assigned": "Assigned issues",
+                "issue-closed": "Closed issues",
+                "document-file": "File",
+                "choose-file": "Choose file",
+                "choose-other-file": "Choose other file",
+                "file-message": "No file has been selected!",
+                "document-description": "Description",
+                "document-maxSize": "Maximum: 25MB",
+                "closed": "Closed",
+                "open": "Open",
+                "total": "Total",
+                "target": "Target",
+                "issue-added-by": {
+                    "added-by": "Added by",
+                    "about": "about",
+                    "hour-ago": "hour ago",
+                    "munite-ago": "minute ago",
+                    "day-ago": "day ago",
+                    "second-ago": "second ago"
+                },
+                "issue-updated-by": {
+                    "updated-by": "Updated by",
+                    "about": "about",
+                    "hour-ago": "hour ago",
+                    "munite-ago": "minute ago",
+                    "day-ago": "day ago",
+                    "second-ago": "second ago"
+                },
+                "date-from": "Date From",
+                "date-to": "Date To"
+            },
+            "form": {
+                "customer-name": "Customer",
+                "department-name": "Department",
+                "level-name": "Level",
+                "evaluate-name": "Evaluate",
+                "start-date-name": "StartDate",
+                "end-date-name": "EndDate",
+                "status-name": "Status",
+                "role-placeholder": "-- Select role --",
+                "rank-placeholder": "-- Select rank --"
+            }
+        }
+    },
+    "vacation": {
+        "list": {
+            "name": "Vacation",
+            "table": {
+                "vacation-employeeID": "Employee ID",
+                "vacation-employeeName": "Employee Name",
+                "vacation-employeeCode": "Employee Code",
+                "vacation-department": "Department",
+                "vacation-start-date": "Start Date",
+                "vacation-end-date": "End Date",
+                "vacation-type": "Type",
+                "vacation-option": "Option",
+                "vacation-status": "Status",
+                "vacation-leave-hour": "Leave Hour",
+                "vacation-reason": "Reason",
+                "vacation-unit": "Hours",
+                "vacation-day-unit": "Days",
+                "vacation-unit-1": "Hour",
+                "vacation-day-unit-1": "Day",
+                "vacation-total-vacation": "Total Vacation",
+                "vacation-total-leave": "Leave",
+                "vacation-total-bonus": "Bonus",
+                "vacation-remain": "Remain",
+                "vacation-year": "Year",
+                "vacation-send-date": "Send At",
+                "violation-salary": "Violation salary deduction",
+                "violation-un-salary": "Violation vacation deduction"
+            }
+        },
+        "form": {
+            "vacation-employeeCode": "Employee Code",
+            "vacation-employeeName": "Employee Name",
+            "vacation-department": "Department",
+            "vacation-type": "Type",
+            "vacation-option": "Option",
+            "vacation-status": "Status",
+            "vacation-start-date": "Start Date",
+            "vacation-end-date": "End Date",
+            "vacation-reason": "Reason",
+            "vacation-title": "Booking Information",
+            "vacation-assign": "Assign Infomation",
+            "vacation-year": "Year"
+        },
+        "tabpanel": {
+            "vacation-tab1": "Receive List",
+            "vacation-tab2": "Send List",
+            "vacation-tab3": "History List"
+        },
+        "detail": {
+            "vacation-assign": "Assign Information",
+            "vacation-start-date": "Start Date",
+            "vacation-end-date": "End Date",
+            "vacation-reason": "Reason",
+            "vacation-title": "Booking Information",
+            "vacation-type": "Type",
+            "vacation-option": "Option",
+            "vacation-option1": "Full Day",
+            "vacation-option2": "Half Day",
+            "vacation-option3": "Special",
+            "vacation-status": "Status",
+            "vacation-start-time": "Start Time",
+            "vacation-end-time": "End Time",
+            "vacation-period": "Period",
+            "vacation-leader": "Project Leader",
+            "vacation-manager": "Team Manager",
+            "vacation-forward": "Team GA",
+            "vacation-title-create": "Create Leave Absence",
+            "vacation-title-update": "Update Leave Absence",
+            "vacation-locale-AM": "AM",
+            "vacation-locale-PM": "PM",
+            "vacation-min-unit": "Minute",
+            "vacation-hour-unit": "Hour",
+            "shift-work-option1": "Shift 1: 7:30-11:30 13:00-17:00",
+            "shift-work-option2": "Shift 2: 7:00-11:30 13:00-16:30"
+        },
+        "approve": {
+            "vacation-start-time": "Start t=Time",
+            "vacation-end-time": "Time Leave Absence",
+            "vacation-leader": "Project Leader",
+            "vacation-manager": "Team Manager",
+            "vacation-forward": "Team GA",
+            "vacation-title-approve": "Approve Leave Absence",
+            "vacation-role": "Role Permission",
+            "vacation-approver": "Approver",
+            "vacation-result": "Result Confirmation",
+            "vacation-comment": "Comment",
+            "vacation-datetime": "Date & Time",
+            "vacation-locale-AM": "AM",
+            "vacation-locale-PM": "PM",
+            "vacation-title": "Booking Information",
+            "vacation-approve-process": "Approve Process"
+        },
+        "timekeeping": {
+            "start-timekeeping": "Start Time Keeping",
+            "end-timekeeping": "End Time Keeping",
+            "description": "Description",
+            "is-active": "Is Active",
+            "year": "Year",
+            "action": "Actions",
+            "activated": "Already",
+            "non-activated": "None-Activated",
+            "import": "Add",
+            "save": "Saved",
+            "report": "Report",
+            "view": "View",
+            "reset": "Reset"
+        },
+        "import-timekeeping": {
+            "employee-code": "Employee Code",
+            "employee-name": "Employee Name",
+            "date": "Date",
+            "violation": "Violations",
+            "checkin-am": "Check In AM",
+            "checkout-am": "Check Out AM",
+            "checkin-pm": "Check In PM",
+            "checkout-pm": "Check Out PM",
+            "import": "Import",
+            "process-data": "Process Data",
+            "status": "Status",
+            "fail": "Fail",
+            "status-good": "GOOD",
+            "status-fail": "FAIL",
+            "status-unknown": "UNKNOWN",
+            "format-fail": " because file import is wrong format",
+            "times": "Times",
+            "minushour": "Deducted (hour)"
+        },
+        "detail-timekeeping": {
+            "employee-code": "Employee Code",
+            "employee-name": "Employee Name",
+            "date": "Date",
+            "violation": "Violations",
+            "checkin-am": "Check In AM",
+            "checkout-am": "Check Out AM",
+            "checkin-pm": "Check In PM",
+            "checkout-pm": "Check Out PM",
+            "start-date": "Start Date",
+            "end-date": "End Date",
+            "am": "AM",
+            "pm": "PM",
+            "time-locale": "Time",
+            "all": "ALL",
+            "check-in": "Work late",
+            "check-out": "Work early",
+            "check-in-missing": "Omissive check in",
+            "check-out-missing": "Omissive check out",
+            "bypass": "ByPass",
+            "times": "Times",
+            "minushour": "Deducted (hour)",
+            "status": "Status",
+            "minus-salary": "salary deduction",
+            "minus-un-salary": "vacation deduction"
+        },
+        "report-timekeeping": {
+            "employee-code": "Employee Code",
+            "employee-name": "Employee Name",
+            "department": "Department",
+            "check_in": "Work late",
+            "check_out": "Work early",
+            "missing_check_in": "Omissive check in",
+            "missing_check_out": "Omissive check out",
+            "start_report_date": "Start report date",
+            "end_report_date": "End report date",
+            "unit": "times",
+            "minus-salary": "salary deduction",
+            "minus-un-salary": "vacation deduction",
+            "unit-hour": "Hour"
+        },
+        "violation-error-code": {
+            "check-in-am": "Work late AM",
+            "check-out-am": "Work early AM",
+            "check-in-pm": "Work late PM",
+            "check-out-pm": "Work early PM",
+            "missing-check-in-am": "Omissive check in AM",
+            "missing-check-out-am": "Omissive check out AM",
+            "missing-check-in-pm": "Omissive check in PM",
+            "missing-check-out-pm": "Omissive check out PM",
+            "all": "ALL"
+        }
+    },
+    "error": {
+        "forbidden403": {
+            "back-to-home": "Back To Homne",
+            "permission-denied": "Permission denied!"
+        },
+        "notfound404": {
+            "back-to-home": "Back To Homne",
+            "not-found": "OPPS! ERROR 404 NOT FOUND"
+        }
+    },
+    "left-menu": {
+        "group-menu": {
+            "dashboard": "Dashboard",
+            "profile": "Profile",
+            "employee": "Employee",
+            "project": "Project",
+            "vacation": "Vacation",
+            "master": "Master"
+        },
+        "menu-item": {
+            "dashboard": {
+                "dashboard": "Dashboard"
+            },
+            "profile": {
+                "profile": "Profile",
+                "update-password": "Update Password"
+            },
+            "employee": {
+                "employee": "Employee"
+            },
+            "project": {
+                "project": "Project"
+            },
+            "vacation": {
+                "history-request": "Vacation History",
+                "receive-request": "Vacation Receive",
+                "send-request": "Vacation Request",
+                "vacation": "Vacation",
+                "vacation-summary": "Vacation Summary",
+                "timekeeping": "Timekeeping Manager",
+                "tracking-timekeeping": "Tracking Timekeeping",
+                "shift-work-request": "Shift Work Request",
+                "shift-work-receive": "Shift Work Receive",
+                "shift-work-history": "Shift Work History"
+            },
+            "master": {
+                "customer": "Customer",
+                "department": "Department",
+                "employee-position": "Employee Position",
+                "employee-status": "Employee Status",
+                "holiday": "Holiday",
+                "language": "Language",
+                "level-language": "Level Language",
+                "level-skill": "Level Skill",
+                "permission": "Permission",
+                "project-position": "Project Position",
+                "role": "Role",
+                "skill": "Skill",
+                "user": "User",
+                "vacation-type": "Vacation Type",
+                "degree": "Degree",
+                "scope-work": "Scope Work",
+                "shift-work": "Shift Work"
+            }
+        }
+    },
+    "breadcrumb": {
+        "parrent": {
+            "dashboard": {
+                "dashboard": "Dashboard"
+            },
+            "profile": {
+                "profile": "Profile",
+                "update-password": "Update Password"
+            },
+            "employee": {
+                "employee": "Employee"
+            },
+            "project": {
+                "project": "Project"
+            },
+            "vacation": {
+                "history-request": "Vacation History",
+                "receive-request": "Vacation Receive",
+                "send-request": "Vacation Request",
+                "vacation": "Vacation",
+                "vacation-summary": "Vacation Summary",
+                "vacation-detail": "Vacation Detail",
+                "vacation-approve": "Approve",
+                "vacation-history-detail": "History Detail",
+                "timekeeping": "Timekeeping",
+                "import-timekeeping": "Import Timekeeping",
+                "detail-timekeeping": "Detail Timekeeping",
+                "report-timekeeping": "Report Timekeeping",
+                "tracking-timekeeping": "Tracking Timekeeping",
+                "shift-work-request": "Shift Work Request",
+                "shift-work-detail": "Shift Work Detail",
+                "shift-work-receive": "Shift Work Receive",
+                "shift-work-approve": "Detail",
+                "shift-work-history": "Shift Work History",
+                "shift-work-history-detail": "Detail"
+            },
+            "master": {
+                "customer": "Customer",
+                "department": "Department",
+                "employee-position": "Employee Position",
+                "employee-status": "Employee Status",
+                "holiday": "Holiday",
+                "language": "Language",
+                "level-language": "Level Language",
+                "level-skill": "Level Skill",
+                "permission": "Permission",
+                "project-position": "Project Position",
+                "role": "Role",
+                "skill": "Skill",
+                "user": "User",
+                "vacation-type": "Vacation Type",
+                "degree": "Degree",
+                "scope-work": "Scope Work",
+                "shift-work": "Shift Work"
+            }
+        },
+        "child": {
+            "update": "Update",
+            "create": "Create"
+        }
+    },
+    "ng-select": {
+        "not-found-text": "Not found",
+        "place-holder-all": "All"
+    },
+    "title": {
+        "dash-board": {
+            "dashboard": "Trang chủ"
+        },
+        "profile": {
+            "profile": "Thông tin cá nhân",
+            "update-password": "Thay đổi mật khẩu"
+        },
+        "employee": {
+            "employee": "Employee - Employee manager"
+        },
+        "project": {
+            "project": "Project - Project manager"
+        },
+        "vacation": {
+            "history-request": "Vacation History - Vacation manager",
+            "receive-request": "Vacation Receive - Vacation manager",
+            "send-request": "Vacation Request - Vacation manager",
+            "vacation": "Vacation - Vacation manager",
+            "vacation-summary": "Vacation Summary - Vacation manager",
+            "vacation-detail": "Vacation Detail - Vacation manager",
+            "vacation-approve": "Approve - Vacation manager",
+            "vacation-history-detail": "History Detail - Vacation manager",
+            "timekeeping": "Timekeeping - Vacation manager",
+            "import-timekeeping": "Import Timekeeping - Vacation manager",
+            "detail-timekeeping": "Detail Timekeeping - Vacation manager",
+            "report-timekeeping": "Report Timekeeping - Vacation manager",
+            "tracking-timekeeping": "Tracking Timekeeping - Vacation manager",
+            "shift-work-request": "Shift Work Request - Vacation manager",
+            "shift-work-detail": "Shift Work Detail - Vacation manager",
+            "shift-work-receive": "Shift Work Receive - Vacation manager",
+            "shift-work-approve": "Detail - Vacation manager",
+            "shift-work-history": "Shift Work History - Vacation manager",
+            "shift-work-history-detail": "Detail - Vacation manager"
+        },
+        "master": {
+            "customer": "Customer - Master manager",
+            "department": "Department - Master manager",
+            "employee-position": "Employee Position - Master manager",
+            "employee-status": "Employee Status - Master manager",
+            "holiday": "Holiday - Master manager",
+            "language": "Language - Master manager",
+            "level-language": "Level Language - Master manager",
+            "level-skill": "Level Skill - Master manager",
+            "permission": "Permission - Master manager",
+            "project-position": "Project Position - Master manager",
+            "role": "Role - Master manager",
+            "skill": "Skill - Master manager",
+            "user": "User - Master manager",
+            "vacation-type": "Vacation Type - Master manager",
+            "degree": "Degree - Master manager",
+            "scope-work": "Scope Work - Master manager"
+
+        }
+    }
+}

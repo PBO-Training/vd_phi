@@ -1,0 +1,80 @@
+<!-- BEGIN Breadcrumd -->
+<div class="d-flex justify-content-between breacrumb">
+  <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.project.project'"
+    [childBreabcrumb]="isUpdate === true ? 'breadcrumb.child.update' : 'breadcrumb.child.create'"
+    [parrentBreabcrumbUrl]="'/project'">
+  </app-breadcrumb-share>
+</div>
+<!-- END Breadcrumd -->
+
+<!-- BEGIN TABS -->
+<div class="col-sm-12">
+  <ul ngbNav #nav="ngbNav" [activeId]="activeId" class="nav nav-tabs mb-3" (navChange)="beforeChange($event)"
+    [destroyOnHide]="true">
+    <li [ngbNavItem]="1" [disabled]="!isUpdate">
+      <a ngbNavLink>{{'project.detail.tabs.tab-overview' | translate}}</a>
+      <ng-template ngbNavContent>
+        <app-pm001002-tab-overview 
+          (detailMember)="onNavigateMemberDetailFromOverview($event)"
+          [projectResponse]="projectResponse" [dropdownData]="dropdownDataProjectInfo"
+          [listPosition]="listPositionProject" (changeTab)="onReceiveActiveIDFromOverview($event)"
+          (navigateActionTabMember)="actionTabMember($event)">
+        </app-pm001002-tab-overview>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>{{'project.detail.tabs.tab-info' | translate}}</a>
+      <ng-template ngbNavContent>
+        <app-project-tab-info *ngIf="isEditFromTabInfo === true" [dropdownData]="dropdownDataProjectInfo"
+          [projectResponse]="projectResponse" [serverErrors$]="serverErrors" (saveProject)="receiveActionSave($event)"
+          (back)="onBack($event)" (isEdit)="onEditFromTabInfo($event)" (isCancel)="onCancelFromTabInfo($event)">
+        </app-project-tab-info>
+        <app-project-tab-info-view *ngIf="isEditFromTabInfo === false" [dropdownData]="dropdownDataProjectInfo"
+          [projectResponse]="projectResponse" (isEdit)="onEditFromTabInfo($event)">
+        </app-project-tab-info-view>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3" [disabled]="!isUpdate">
+      <a ngbNavLink>{{'project.detail.tabs.tab-issue' | translate}}</a>
+      <ng-template ngbNavContent>
+        <app-list-issue *ngIf="isShowDetail?.value !== true" [dropdownData]="dropdownDataIssue"
+          (navigateToDetail)="showDetail($event)" (reGetProjectDetail)="onReGetProjectDetail($event)"></app-list-issue>
+        <app-issue-detail *ngIf="isShowDetail?.value === true" [issueID]="isShowDetail?.issueID"
+          (detailMember)="onNavigateMemberDetailFromOverview($event)"
+          (navigateToDetail)="showDetail($event)" (reGetProjectDetail)="onReGetProjectDetail($event)">
+        </app-issue-detail>
+      </ng-template>
+    </li>
+    <!-- <li [ngbNavItem]="4" [disabled]="!isUpdate">
+      <a ngbNavLink>{{'project.detail.tabs.tab-document' | translate}}</a>
+
+      <ng-template ngbNavContent>
+        <app-tab-document *ngIf="isShowDetailDocument !== true" [listDocument]="documentResponse"
+          (ReGetListDocument)="onReGetListDocument($event)" (navigateToCreateDocument)="onShowDetailDocument($event)">
+        </app-tab-document>
+        <app-pm001002-tab-document-detail *ngIf="isShowDetailDocument === true"
+          (ReGetListDocument)="onReGetListDocument($event)" (navigateToDocument)="onShowDetailDocument($event)">
+        </app-pm001002-tab-document-detail>
+      </ng-template>
+    </li> -->
+    <li [ngbNavItem]="5" [disabled]="!isUpdate">
+      <a ngbNavLink>{{'project.detail.tabs.tab-member' | translate}}</a>
+      <ng-template ngbNavContent>
+        <app-pm001002-tab-member *ngIf="typeActionTabMember === 1 && isShowDetailMember !== true"
+          (navigateActionTabMember)="actionTabMember($event)" (selectedMember)="info($event)"
+          [dropdownData]="dropdownDataMember" [(projectResponse)]="projectResponse"
+          (skipMember)="receiveRequestRemove($event)"></app-pm001002-tab-member>
+        <app-pm001002-tab-member-add-members *ngIf="typeActionTabMember === 2 && isShowDetailMember !== true"
+          (navigateActionTabMember)="actionTabMember($event)" [dropdownData]="dropdownDataMember"
+          [(projectResponse)]="projectResponse"></app-pm001002-tab-member-add-members>
+        <app-member-detail *ngIf="isShowDetailMember === true" (navigateActionTabMember)="actionTabMember($event)"
+          (onBack)="onBack($event)" (detailIssue)="onNavigateIssueDetailFromMemberDetail($event)"
+          (changeTab)="onReceiveActiveIDFromOverview($event)" (navigateToDetail)="showDetail($event)"
+          [employeeID]="employeeID">
+        </app-member-detail>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>
+<!-- END TABS -->

@@ -1,0 +1,366 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.detail-timekeeping'">
+</app-breadcrumb-share>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-down"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-up"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchSendList()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="employeeCode">
+                                    {{'vacation.detail-timekeeping.employee-code'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="employeeName">
+                                    {{'vacation.detail-timekeeping.employee-name'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="start_date">
+                                    {{'vacation.detail-timekeeping.start-date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                        [formControl]="formSearch.controls['startDate']" ngbDatepicker
+                                        #d1="ngbDatepicker" [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.startDate.errors}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="!f.startDate.errors?.greater && !formSearch.hasError('dates') && f.startDate.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail-timekeeping.start-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="end_date">
+                                    {{'vacation.detail-timekeeping.end-date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                        [formControl]="formSearch.controls['endDate']" ngbDatepicker #d2="ngbDatepicker"
+                                        [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.endDate.errors || formSearch.hasError('dates')}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="!f.endDate.errors?.greater && !formSearch.hasError('dates') && f.endDate.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail-timekeeping.end-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                                <div *ngIf="formSearch.hasError('dates') && !f.endDate.errors ">
+                                    <div class="invalid-feedback d-block">
+                                        <span>{{'vacation.detail-timekeeping.end-date'| translate}}
+                                            {{'server-error.004'| translate}}
+                                            {{'vacation.detail-timekeeping.start-date'| translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="violation">
+                                    {{'vacation.detail-timekeeping.violation'| translate}}
+                                </label>
+                                <ng-select placeholder="All" class="custom" (add)="onAddNewViolation($event)"
+                                    id="violation" formControlName="violation" [multiple]="true">
+                                    <ng-option [value]="1">
+                                        {{'vacation.detail-timekeeping.check-in'| translate}}
+                                    </ng-option>
+                                    <ng-option [value]="2">
+                                        {{'vacation.detail-timekeeping.check-out'| translate}}
+                                    </ng-option>
+                                    <ng-option [value]="3">
+                                        {{'vacation.detail-timekeeping.check-in-missing'| translate}}
+                                    </ng-option>
+                                    <ng-option [value]="4">
+                                        {{'vacation.detail-timekeeping.check-out-missing'| translate}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="time-locale">
+                                    {{'vacation.detail-timekeeping.time-locale'| translate}}
+                                </label>
+                                <ng-select placeholder="All" class="custom" (add)="onAddNewTimeLocale($event)"
+                                    id="timeLocale" formControlName="timeLocale" [multiple]="true">
+                                    <ng-option [value]="5">
+                                        {{'vacation.detail-timekeeping.am'| translate}}
+                                    </ng-option>
+                                    <ng-option [value]="6">
+                                        {{'vacation.detail-timekeeping.pm'| translate}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchSendList()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (click)="resetForm()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+    <div class="btn-fun text-right">
+        <button type="button" class="btn btn-danger btn-sm btn-master" (click)="byPassViolation()"
+            *ngIf="authButton.DELETE">
+            <i class="feather icon-x-circle"></i>
+            {{'vacation.detail-timekeeping.bypass'| translate}}
+        </button>
+        <button type="button" class="btn btn-secondary  btn-sm btn-master" (click)="back($event)">
+            <i class="feather icon-rotate-ccw"></i>
+            {{'button.back'| translate}}
+        </button>
+    </div>
+</div>
+<div class="col-md-12"
+    *ngIf="timeKeepingSearchList?.length !== 0 && timeKeepingSearchList !== undefined ; else loading">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive" *ngIf="this.timeKeepingSearchList.length > 0">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">
+                        {{'p.display'| translate}}
+                    </p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of this.screenPropsSearch.pageOpiton"
+                                [selected]="option === this.screenPropsSearch.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex" *ngIf="this.timeKeepingSearchList.length > 1; else oneRecord">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (this.screenPropsSearch.pageNum !== 0 ? this.screenPropsSearch.pageNum *
+                        this.screenPropsSearch.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (timeKeepingSearchList.length + (this.screenPropsSearch.pageNum !== 0 ?
+                        this.screenPropsSearch.pageNum * this.screenPropsSearch.pageSize : 0)) || 0}} {{'p.of'|
+                        translate}} {{screenPropsSearch.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+                <ng-template #oneRecord>
+                    <div class="d-flex" *ngIf="this.timeKeepingSearchList.length === 1">
+                        <p class="text-panigator">
+                            {{'p.from'| translate}}
+                            {{ (1 + (this.screenPropsSearch.pageNum !== 0 ? this.screenPropsSearch.pageNum *
+                            this.screenPropsSearch.pageSize : 0)) || 0}}
+                            {{'p.to'| translate}}
+                            {{ (timeKeepingSearchList.length + (this.screenPropsSearch.pageNum !== 0 ?
+                            this.screenPropsSearch.pageNum * this.screenPropsSearch.pageSize : 0)) || 0}} {{'p.of'|
+                            translate}} {{this.screenPropsSearch.totalRecord || 0}}
+                            {{'p.record-singular'| translate}}
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="this.screenPropsSearch.totalRecord"
+                    (pageChange)="pageChangeOutput($event)" [(page)]="this.screenPropsSearch.page"
+                    [pageSize]="this.screenPropsSearch.pageSize" [maxSize]="this.screenPropsSearch.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th class="remove-th th-5 text-center">
+                            <label
+                                class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                <input type="checkbox" class="custom-control-input" (change)="checkAll($event)"
+                                    (click)="checkAll($event)" [(ngModel)]="checked">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th sortable="employeeCode" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.detail-timekeeping.employee-code'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeName" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.detail-timekeeping.employee-name'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="date" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.detail-timekeeping.date'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'date' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'date' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="violation" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.detail-timekeeping.violation'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'violation' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'violation' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="checkInAM" class="th-10 sort-column">
+                            {{'vacation.detail-timekeeping.checkin-am'| translate}}
+                        </th>
+                        <th sortable="checkOutAM" class="th-10 sort-column">
+                            {{'vacation.detail-timekeeping.checkout-am'| translate}}
+                        </th>
+                        <th sortable="checkInPM" class="th-10 sort-column">
+                            {{'vacation.detail-timekeeping.checkin-pm'| translate}}
+                        </th>
+                        <th sortable="checkOutPM" class="th-10 sort-column">
+                            {{'vacation.detail-timekeeping.checkout-pm'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.detail-timekeeping.status'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.detail-timekeeping.times'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.detail-timekeeping.minushour'| translate}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of timeKeepingSearchList; let i = index ">
+                        <tr *ngIf="item">
+                            <td class="text-center">
+                                <div class="chk-option">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            (change)="onItemChecked(item.timeKeepingDetailID, $event)"
+                                            (click)="onItemChecked(item.timeKeepingDetailID, $event)"
+                                            [checked]="screenPropsSearch.setOfCheckedId.has(item.timeKeepingDetailID)">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                {{i + (screenPropsSearch.pageNum * screenPropsSearch.pageSize) + 1}}
+                            </td>
+                            <td>{{item.employeeCode}}</td>
+                            <td>{{item.employeeName}}</td>
+                            <td>
+                                {{item.date | date: 'MMM dd, yy H:mm' : 'UTC'}}
+                            </td>
+                            <td>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInAM">{{'vacation.violation-error-code.check-in-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutAM">{{'vacation.violation-error-code.check-out-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInPM">{{'vacation.violation-error-code.check-in-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutPM">{{'vacation.violation-error-code.check-out-pm'|
+                                    translate}}</i>
+
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInAMMissing">{{'vacation.violation-error-code.missing-check-in-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutAMMissing">{{'vacation.violation-error-code.missing-check-out-am'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkInPMMissing">{{'vacation.violation-error-code.missing-check-in-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === this.Type.ViolationType.checkOutPMMissing">{{'vacation.violation-error-code.missing-check-out-pm'|
+                                    translate}}</i>
+                                <i *ngIf="item.violation === 'OK'">-</i>
+                            </td>
+                            <td class="text-left">
+                                <i class="text-danger" *ngIf="item.checkInAM != '-'">{{item.checkInAM}}</i>
+                                <i *ngIf="item.checkInAM === null">-</i>
+                            </td>
+                            <td class="text-left">
+                                <i class="text-danger" *ngIf="item.checkOutAM != '-'">{{item.checkOutAM}}</i>
+                                <i *ngIf="item.checkOutAM === null">-</i>
+                            </td>
+                            <td class="text-left">
+                                <i class="text-danger" *ngIf="item.checkInPM != '-'">{{item.checkInPM}}</i>
+                                <i *ngIf="item.checkInPM === null">-</i>
+                            </td>
+                            <td class="text-left">
+                                <i class="text-danger" *ngIf="item.checkOutPM != '-'">{{item.checkOutPM}}</i>
+                                <i *ngIf="item.checkOutPM === null">-</i>
+                            </td>
+                            <td class="text-center">
+                                <span *ngIf="item.isSalary == true" class="badge badge-pill badge-danger">
+                                    {{'vacation.detail-timekeeping.minus-salary'| translate}}
+                                </span>
+                                <span *ngIf="item.isSalary == false" class="badge badge-pill badge-success">
+                                    {{'vacation.detail-timekeeping.minus-un-salary'| translate}}
+                                </span>
+                            </td>
+                            <td class="text-center text-info">
+                                {{item.times}}
+                            </td>
+                            <td class="text-center text-info">
+                                {{item.minusHour}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="col-md-12" *ngIf="timeKeepingSearchList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

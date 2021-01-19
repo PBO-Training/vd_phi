@@ -1,0 +1,184 @@
+<form [formGroup]="formContract" (ngSubmit)="submit()" class="needs-validation" novalidate appFocus>
+    <div class="mb-2 row">
+        <div class="col-sm-10">
+            <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                class="btn   btn-secondary  btn-sm btn-master">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+            <button type="submit" *ngIf="authButton.UPDATE" class="btn  btn-primary btn-sm btn-master">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+                (click)="openPopupContract()">
+                <i class="feather icon-x-square"></i>
+                {{'button.cancel'| translate}}
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Contract  type-->
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <label for="Type">{{'employee.create.form.type'| translate}} <i
+                                        class="color-red">*</i></label>
+                                <ng-select formControlName="contractTypeID"
+                                    [ngClass]="{ 'is-invalid': f.contractTypeID.errors && submited}"
+                                    placeholder="-- {{'employee.create.form.contract-type-placeholder' | translate}} --"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-container *ngIf="listContractType">
+                                        <ng-option *ngFor="let item of listContractType" [value]="item?.contractTypeID">
+                                            {{item?.contractTypeName}}
+                                        </ng-option>
+                                    </ng-container>
+                                </ng-select>
+                                <div *ngIf="submited && f.contractTypeID.errors?.required" class="invalid-feedback">
+                                    <div>
+                                        {{'employee.create.form.type'| translate}}
+                                        {{'server-error.001'| translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End contract Type-->
+                        <!-- Contract  position-->
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <label for="Position">{{'employee.create.form.position'| translate}} <i
+                                        class="color-red">*</i></label>
+                                <ng-select formControlName="positionEmployeeID"
+                                    [ngClass]="{ 'is-invalid': f.positionEmployeeID.errors && submited }"
+                                    placeholder="-- {{'employee.create.form.position-employee-placeholder' | translate}} --"
+                                    notFoundText="{{'ng-select.not-found-text' | translate}}">
+                                    <ng-option *ngFor="let item of listPositionEmployee"
+                                        [value]="item.positionEmployeeID">
+                                        {{item.positionEmployeeName}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="submited && f.positionEmployeeID.errors?.required" class="invalid-feedback">
+                                    <div>
+                                        {{'employee.create.form.position'| translate}}
+                                        {{'server-error.001'| translate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Contract  position-->
+                        <!-- Contract  start date-->
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <label for="Start">{{'employee.create.form.start_date'| translate}} <i
+                                        class="color-red">*</i></label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d6"
+                                        ngbDatepicker #d6="ngbDatepicker"
+                                        [ngClass]="{ 'is-invalid': formContract.get('contractStartDate').errors }"
+                                        [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        formControlName="contractStartDate">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d6.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+
+                                </div>
+                                <div *ngIf="f.contractStartDate.errors" class="invalid-feedback d-block">
+                                    <!-- is required -->
+                                    <div *ngIf="f.contractStartDate.errors.required">
+                                        {{'employee.create.form.start_date'| translate}}
+                                        {{'server-error.001'| translate}}
+                                    </div>
+                                    <!-- format is illegal -->
+                                    <div
+                                        *ngIf="!f.contractStartDate.errors.required && !f.contractStartDate.errors?.greater">
+                                        {{'employee.create.form.start_date'| translate}}
+                                        {{'server-error.003'| translate}}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Contract  start date-->
+                        </div>
+                        <!-- End Contract  start date-->
+                        <!-- Contract  end date-->
+                        <div class="col-md-3">
+                            <div class="mb-2">
+                                <label for="">{{'employee.create.form.end_date'| translate}} <i
+                                        class="color-red">*</i></label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d7"
+                                        ngbDatepicker #d7="ngbDatepicker" [minDate]='config.minDate'
+                                        [maxDate]='config.maxDate'
+                                        [ngClass]="{ 'is-invalid': f.contractEndDate.errors || formContract.hasError('dates')}"
+                                        formControlName="contractEndDate">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d7.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                    <div *ngIf="f.contractEndDate.errors" class="invalid-feedback">
+                                        <!-- is require -->
+                                        <div *ngIf="f.contractEndDate.errors.required">
+                                            {{'employee.create.form.end_date'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <!-- format is illegal -->
+                                        <div
+                                            *ngIf="!f.contractEndDate.errors.required && !f.contractEndDate.errors?.greater">
+                                            {{'employee.create.form.end_date'| translate}}
+                                            {{'server-error.003'| translate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="formContract.hasError('dates') && !f.contractStartDate.errors && !f.contractEndDate.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'employee.create.form.end_date'| translate}}
+                                    {{'server-error.004'| translate}}
+                                    {{'employee.create.form.start_date'| translate}}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Contract  End date-->
+                        <!--Row -->
+                        <!-- End-->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="mr-2">{{'project.detail.label.document-file' | translate}} <i
+                                    *ngIf="isUpdate === false" class="color-red">*</i></label>
+                            <input class="mr-1" type="button" (click)="clickChooseFile()"
+                                value="{{'project.detail.label.choose-file' | translate}}" />
+                            <input type="file" id="file" (change)="selectFiles($event)" hidden name="file"
+                                class="form-control-sm" formControlName="contractAttachments"
+                                [ngClass]="{ 'is-invalid': f.contractAttachments.errors }" />
+                            <label *ngIf="canDownload() && !fileName">{{'project.detail.label.choose-other-file' |
+                                translate}}</label>
+                            <label *ngIf="!fileName && !isUpdate">{{'project.detail.label.file-message' | translate
+                                }}</label>
+                            <label *ngIf="fileName">{{fileName}}</label>
+                            <label class="ml-3"
+                                *ngIf="!isFileSize && !fileName">{{'project.detail.label.document-maxSize' |
+                                translate}}</label>
+                            <label class="ml-3" *ngIf="isFileSize" style="color: red;">File upload must be less than
+                                25M</label>
+                            <div *ngIf="submited && f.contractAttachments.errors && isUpdate === false && this.file === null"
+                                class="invalid-feedback">
+                                <div>
+                                    {{'project.detail.label.document-file' | translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <!-- End Row-->
+
+</form>

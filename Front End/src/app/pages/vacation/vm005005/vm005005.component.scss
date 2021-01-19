@@ -1,0 +1,31 @@
+
+  @import '~@fullcalendar/common/main.css';
+  @import '~@fullcalendar/daygrid/main.css';
+  @import '~@fullcalendar/timegrid/main.css';
+  @import '~@fullcalendar/list/main.css';
+  
+  .fc-view-harness
+  {
+    //* set background color of table
+    background-color: #ffffff;
+  }
+  .fc-col-header
+  {
+    //* set color of header table
+    background-color: #D8E3EE;
+  }
+  .fc .fc-daygrid-day-top
+  {
+    //* set color of day number
+    color: #f80410;
+  }
+  .fc-daygrid-event
+  {
+    //* set color of background event
+    background-color: #038eeb;    
+  }
+  .fc-daygrid-event-harness
+  {
+    //* set color of text event
+    color: #ffffff;    
+  }

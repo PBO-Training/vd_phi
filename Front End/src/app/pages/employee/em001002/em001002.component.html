@@ -1,0 +1,130 @@
+<div class="d-flex justify-content-between breacrumb">
+  <app-breadcrumb-share
+    [parrentBreabcrumb]="isProfile ? 'breadcrumb.parrent.profile.profile' : 'breadcrumb.parrent.employee.employee'"
+    [childBreabcrumb]="!isProfile ? (isUpdate ? 'breadcrumb.child.update' : 'breadcrumb.child.create') : ''"
+    [parrentBreabcrumbUrl]="isProfile ? '/profile' : '/employee'">
+  </app-breadcrumb-share>
+</div>
+<div class="col-sm-12" *ngIf="(masterData$ | async)?.content as data">
+  <!-- <div class="card tabs">
+    <div class="card-body"  > -->
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="true" class="nav nav-tabs mb-3 "
+    (navChange)="onNavChange($event)">
+    <li class="tab-item" [ngbNavItem]="10" [destroyOnHide]="true">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.personal'| translate}}</a>
+      <ng-template ngbNavContent>
+
+        <!-- tab personal -->
+        <app-em001002-personal *ngIf="isEditablePersonal === true" [companyName]="companyName" [authButton]="authButton"
+          [listDepartment]="data.listDepartment" [listPositionEmployee]="data.listPositionEmployee"
+          [listNationality]="data.listNationality" [listStatusEmployee]="data.listStatusEmployee"
+          [listDegree]="data.listDegree" [employeeDetails]="employeeDetails?.content"
+          (submitForm)="submitPersonalEdit($event)" (back)="back($event)" [serverErrors$]="serverErrors"
+          (backOrCancel)="backOrCancel($event)" (backCreate)="backCreate($event)" [isProfile]="isProfile">
+        </app-em001002-personal>
+
+        <app-em001002-personal-view *ngIf="isEditablePersonal === false" [companyName]="companyName"
+          [authButton]="authButton" [listDepartment]="data.listDepartment"
+          [listPositionEmployee]="data.listPositionEmployee" [listNationality]="data.listNationality"
+          [listStatusEmployee]="data.listStatusEmployee" [listDegree]="data.listDegree"
+          [employeeDetails]="employeeDetails?.content" (back)="backEdit($event)" (isEditable)="onEditPersonal($event)"
+          [isProfile]="isProfile">
+        </app-em001002-personal-view>
+      </ng-template>
+    </li>
+    <!-- <li class="tab-item" [ngbNavItem]="20" [destroyOnHide]="true" [disabled]="disabled">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.skill'| translate}}</a>
+      <ng-template ngbNavContent>
+        <app-em001002-skill *ngIf="isEditableSkill === true" [authButton]="authButton" [listSkill]="data.listSkill"
+          [listSkillType]="data.listSkillType" [listLevelSkill]="data.listLevelSkill"
+          [listSkillDetail]="employeeDetails?.content?.listSkill" [serverErrors$]="serverErrors" (back)="back($event)"
+          (submitForm)="submitSkillEdit($event)" [isAddNewSkill]="isAddNewSkill" (backOrCancel)="backOrCancel($event)">
+        </app-em001002-skill>
+        <app-em001002-skill-view *ngIf="isEditableSkill === false" [authButton]="authButton"
+          [listSkill]="data.listSkill" [listSkillType]="data.listSkillType" [listLevelSkill]="data.listLevelSkill"
+          [listSkillDetail]="employeeDetails?.content?.listSkill" [serverErrors$]="serverErrors"
+          (back)="backEdit($event)" (isEditable)="onEditSkill($event)" (addNewSkill)="onAddNewSkill($event)">
+        </app-em001002-skill-view>
+      </ng-template>
+    </li> -->
+    <li class="tab-item" [ngbNavItem]="20" [destroyOnHide]="true" [disabled]="disabled">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.skill'| translate}}</a>
+      <ng-template ngbNavContent>
+        <app-em001002-skill-language [authButton]="authButton" [listSkill]="data.listSkill"
+          [listSkillType]="data.listSkillType" [listLevelSkill]="data.listLevelSkill" [listLanguage]="data.listLanguage"
+          [listLevelLanguage]="data.listLevelLanguage" [listSkillDetail]="employeeDetails.content.listSkill"
+          [listLanguageDetail]="employeeDetails.content.listLanguage" [serverErrors$]="serverErrors"
+          (back)="back($event)" (submitForm)="submitFormSkill($event)" (backOrCancel)="backOrCancel($event)"
+          [isProfile]="isProfile"></app-em001002-skill-language>
+      </ng-template>
+    </li>
+    <li class="tab-item" [ngbNavItem]="30" [destroyOnHide]="true" [disabled]="disabled">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.language'| translate}}</a>
+      <ng-template ngbNavContent let-active>
+        <!-- tab Language -->
+
+        <app-em001002-language *ngIf="isEditableLanguage === true" [authButton]="authButton"
+          [listLanguage]="data.listLanguage" [listLevelLanguage]="data.listLevelLanguage"
+          [listLanguageCategory]="data.listLanguageCategory"
+          [listLanguageDetail]="employeeDetails?.content?.listLanguage" [serverErrors$]="serverErrors"
+          [isAddNewLanguage]="isAddNewLanguage" (back)="back($event)" (submitForm)="submitLanguageEdit($event)"
+          (backOrCancel)="backOrCancel($event)" [isProfile]="isProfile">
+        </app-em001002-language>
+        <app-em001002-language-view *ngIf="isEditableLanguage === false" [authButton]="authButton"
+          [listLanguage]="data.listLanguage" [listLevelLanguage]="data.listLevelLanguage"
+          [listLanguageDetail]="employeeDetails?.content?.listLanguage" [serverErrors$]="serverErrors"
+          (back)="backEdit($event)" (isEditable)="onEditLanguage($event)" (addNewLanguage)="onAddNewLanguage($event)"
+          [isProfile]="isProfile">
+        </app-em001002-language-view>
+      </ng-template>
+    </li>
+    <li class="tab-item" [ngbNavItem]="40" [destroyOnHide]="true" [disabled]="disabled">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.history'| translate}}</a>
+      <ng-template ngbNavContent>
+        <!-- tab history -->
+
+        <app-em001002-history *ngIf="isEditableHistory === true" [authButton]="authButton" [companyName]="companyName"
+          [listHistory]="employeeDetails?.content?.listHistory" [listOperationSystem]="data.listOperationSystem"
+          [listPositionProject]="data.listPositionProject" [listDatabase]="data.listDatabase"
+          [listScopeWork]="data.listScopeWork" [listSkill]="data.listSkill"
+          [listEvaluateEmployeeProject]="data.listEvaluateEmployeeProject" [serverErrors$]="serverErrors"
+          [isAddNewHistory]="isAddNewHistory" (back)="back($event)" (submitForm)="submitHistoryEdit($event)"
+          (backOrCancel)="backOrCancel($event)" [isProfile]="isProfile">
+        </app-em001002-history>
+
+        <app-em001002-history-view *ngIf="isEditableHistory === false" [authButton]="authButton"
+          [companyName]="companyName" [listHistory]="employeeDetails?.content?.listHistory"
+          [listOperationSystem]="data.listOperationSystem" [listPositionProject]="data.listPositionProject"
+          [listDatabase]="data.listDatabase" [listScopeWork]="data.listScopeWork" [listSkill]="data.listSkill"
+          [listEvaluateEmployeeProject]="data.listEvaluateEmployeeProject" [serverErrors$]="serverErrors"
+          (back)="backEdit($event)" (isEditable)="onEditHistory($event)" (addNewHistory)="onAddNewHistory($event)"
+          [isProfile]="isProfile">
+
+        </app-em001002-history-view>
+      </ng-template>
+    </li>
+
+    <li *ngIf="!isHiddenContract" class="tab-item" [ngbNavItem]="50" [destroyOnHide]="true" [disabled]="disabled">
+      <a class="tab-link" ngbNavLink>{{'employee.create.tab.contract'| translate}}</a>
+      <ng-template ngbNavContent>
+
+        <app-em001002-contract *ngIf="isEditableContract === true" [listContractType]="data.listContractType"
+          [contract]="employeeDetails?.content?.contract" [listPositionEmployee]="data.listPositionEmployee"
+          [serverErrors$]="serverErrors" [authButton]="authButton" (back)="back($event)"
+          (submitForm)="submitContractEdit($event)" (backOrCancel)="backOrCancel($event)"
+          (contractFile)="contractFileToBase64($event)" [isProfile]="isProfile">
+        </app-em001002-contract>
+
+        <app-em001002-contract-view *ngIf="isEditableContract === false" [listContractType]="data.listContractType"
+          [contract]="employeeDetails?.content?.contract" [listPositionEmployee]="data.listPositionEmployee"
+          [authButton]="authButton" (back)="backEdit($event)" (isEditable)="onEditContract($event)"
+          (addNewContract)="onAddNewContract($event)" [isProfile]="isProfile">
+        </app-em001002-contract-view>
+      </ng-template>
+    </li>
+
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <!-- </div>
+  </div> -->
+</div>

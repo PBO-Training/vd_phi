@@ -1,0 +1,112 @@
+<div class='d-flex justify-content-between breacrumb'>
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.profile.profile'" [childBreabcrumb]="'breadcrumb.parrent.profile.update-password'"
+        [parrentBreabcrumbUrl]="'/profile'">
+    </app-breadcrumb-share>  
+</div>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5>{{'employee.change-password.title'| translate}}</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label class="floating-label">
+                                {{'employee.change-password.current'| translate}}
+                                <i class="color-red">*</i>
+                            </label>
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control form-control-sm"
+                                formControlName="currentPassword"
+                                [ngClass]="{ 'is-invalid': (submitted && f.currentPassword.errors) || f.currentPassword.errors?.serverError}">
+                            <div *ngIf="submitted && f.currentPassword.errors" class="invalid-feedback">
+                                <div *ngIf="f.currentPassword.errors.required">
+                                    {{'employee.change-password.current'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                            <div *ngIf="f.currentPassword.errors?.serverError" class="invalid-feedback">
+                                <div>
+                                    {{'employee.change-password.current'| translate}}
+                                    {{displayMessage}}</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>
+                                {{'employee.change-password.new'| translate}}
+                                <i class="color-red">*</i>
+                            </label>
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control form-control-sm"
+                                formControlName="newPassword"
+                                [ngClass]="{ 'is-invalid': (submitted && f.newPassword.errors) || f.newPassword.errors?.serverError}">
+                            <div *ngIf="submitted && f.newPassword.errors" class="invalid-feedback">
+                                <div *ngIf="f.newPassword.errors.required">
+                                    {{'employee.change-password.new'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                                <div *ngIf="f.newPassword.errors.minlength || f.newPassword.errors.pattern">
+                                    {{'employee.change-password.new'| translate}}
+                                    {{'server-error.802'| translate}}
+                                </div>
+                            </div>
+                            <div *ngIf="f.newPassword.errors?.serverError" class="invalid-feedback">
+                                <div>
+                                    {{'employee.change-password.new'| translate}}
+                                    {{displayMessage}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>
+                                {{'employee.change-password.confirm'| translate}}
+                                <i class="color-red">*</i>
+                            </label>
+                            <input [type]="fieldTextType ? 'text' : 'password'" class="form-control form-control-sm"
+                                formControlName="confirmPassword"
+                                [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                                <div *ngIf="f.confirmPassword.errors.required">
+                                    {{'employee.change-password.confirm'| translate}}
+                                    {{'server-error.001'| translate}}</div>
+                                <div *ngIf="f.confirmPassword.errors.mustMatch">
+                                    {{'employee.change-password.confirm'| translate}}
+                                    {{'server-error.801'| translate}}</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="custom-checkbox">
+                                <label
+                                    class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center float-left">
+                                    <input type="checkbox" class="custom-control-input" (change)="toggleFieldTextType()">
+                                    <span class="custom-control-label"></span>
+                                    {{'employee.change-password.show'| translate}}
+                                </label>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-6">
+                        <div class="mb-2">{{'employee.change-password.password-guide'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-1'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-2'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-3'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-4'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-5'| translate}}</div>
+                        <div class="mb-2">{{'employee.change-password.password-guide-6'| translate}}</div>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-primary btn-sm btn-master" type="submit">
+                    <i class="feather icon-save"></i>
+                    {{'button.save'| translate}}
+                </button>
+                <button [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
+                    class="btn btn btn-secondary btn-sm btn-master" type="button">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

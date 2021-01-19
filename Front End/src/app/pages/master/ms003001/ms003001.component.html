@@ -1,0 +1,208 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.skill'"></app-breadcrumb-share>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="screenProps.isCollapsed = !screenProps.isCollapsed"
+            [attr.aria-expanded]="!screenProps.isCollapsed" aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <div style="margin-left: 5px; display: inline-flex;">
+                <i class="fas fa-angle-up" *ngIf="screenProps.isCollapsed === true;"></i>
+                <i class="fas fa-angle-down" *ngIf="screenProps.isCollapsed === false;"></i>
+            </div>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchSkill()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="Code">
+                                    {{'master.skill.list.code'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="skillCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="name">
+                                    {{'master.skill.list.name'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="skillName">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="type">
+                                    {{'master.skill.list.type'| translate}}
+                                </label>
+                                <select class="form-control form-control-sm" formControlName="skillTypeID">
+                                    <option *ngFor="let item of type" [value]="item.keyResponse">
+                                        {{item.valueResponse}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-2 mt-2 row">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchSkill()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button appDebounceClick type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (debounceClick)="reset()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+    <div class="btn-fun text-right">
+        <button *ngIf="authButton.CREATE" type="button" class="btn  btn-primary btn-sm btn-master" [routerLink]="['/skill/create']">
+            <i class="feather icon-plus"></i>
+            {{'button.create'| translate}}
+        </button>
+        <button *ngIf="authButton.DELETE" type="button" (click)="deleteSkill()" class="btn btn-danger btn-sm">
+            <i class="feather icon-trash"></i>
+            {{'button.delete'| translate}}
+        </button>
+    </div>
+</div>
+<div class="col-md-12" *ngIf="skillList?.length !== 0 && skillList !== undefined; else nodata">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">{{'p.display'| translate}}</p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of screenProps.pageOpiton"
+                                [selected]="option === screenProps.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (skillList?.length + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                        {{'p.of'| translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="screenProps.totalRecord" (pageChange)="pageChangeOutput($event)"
+                    [(page)]="screenProps.page" [pageSize]="screenProps.pageSize" [maxSize]="screenProps.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th *ngIf="authButton.DELETE" class="remove-th text-left check">
+                            <label
+                                class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                <input type="checkbox" class="custom-control-input" (change)="checkAll($event)" (click)="checkAll($event)" [(ngModel)]="checked">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </th>
+                        <th class="text-right">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th class="text-center sort-column th-code" sortable="skillCode" (sort)="onSort($event)">
+                            {{'master.skill.list.table.skill-code'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'skillCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'skillCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="text-left" sortable="skillName" (sort)="onSort($event)">
+                            {{'master.skill.list.table.skill-name'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'skillName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'skillName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="text-left" sortable="skillTypeID" (sort)="onSort($event)">
+                            {{'master.skill.list.table.skill-type'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'skillTypeID' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'skillTypeID' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="text-left description" sortable="skillDescription" (sort)="onSort($event)">
+                            {{'master.skill.list.table.description'| translate}}
+                            <div class='direction'>
+                                <div
+                                    [className]="direction === 'desc' && column === 'skillDescription' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                                </div>
+                                <div
+                                    [className]="direction === 'asc' && column === 'skillDescription' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of skillList; let i = index; trackBy: trackByFn ">
+                        <tr>
+                            <td *ngIf="authButton.DELETE" class="text-center">
+                                <div class="chk-option">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            (change)="onItemChecked(item.skillID, $event)"
+                                            (click)="onItemChecked(item.skillID, $event)"
+                                            [checked]="screenProps.setOfCheckedId.has(item.skillID)">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="text-right ">
+                                {{((i + 1 )+ (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0))}}
+                            </td>
+                            <td class="text-center underline" [routerLink]="['/skill/detail/',item.skillID]"
+                                routerLinkActive="router-link-active">
+                                {{item.skillCode}}
+                            </td>
+                            <td class="underline" [routerLink]="['/skill/detail/',item.skillID]"
+                                routerLinkActive="router-link-active">
+                                {{item.skillName}}
+                            </td>
+                            <td>{{item.skillTypeName}}</td>
+                            <td>{{item.skillDescription}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #nodata>
+    <div class="col-md-12" *ngIf="skillList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

@@ -1,0 +1,138 @@
+<ng-container *ngIf="isUpdate; else createBreabcrumb">
+    <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.language'" [childBreabcrumb]="'breadcrumb.child.update'"
+        [parrentBreabcrumbUrl]="'/levelLanguage'">
+    </app-breadcrumb-share>
+</ng-container>
+<ng-template #createBreabcrumb>
+    <app-breadcrumb-share [parrentBreabcrumb]="'Level Language'" [childBreabcrumb]="'breadcrumb.child.create'"
+        [parrentBreabcrumbUrl]="'/levelLanguage'">
+    </app-breadcrumb-share>
+</ng-template>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.level-language.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.level-language.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-3 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="levelLanguageID">
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.level-language.detail.label.level-language-Code'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm"
+                                formControlName="levelLanguageCode" 
+                                [ngClass]="{ 'is-invalid': (submitted && f.levelLanguageCode.errors && f.levelLanguageCode.pristine) || f.levelLanguageCode.errors?.serverError}">
+                        <div *ngIf="submitted && f.levelLanguageCode.errors && f.levelLanguageCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.levelLanguageCode.errors.required">
+                                {{'master.level-language.detail.label.level-language-Code'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.levelLanguageCode.errors.pattern; else checkLength">
+                                {{'master.level-language.detail.label.level-language-Code'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.levelLanguageCode.errors.maxlength">
+                                    {{'master.level-language.detail.label.level-language-Code'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+
+                        <div class="invalid-feedback" *ngIf="f.levelLanguageCode.errors?.serverError">
+                            <div>{{'master.level-language.detail.label.level-language-Code'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.level-language.detail.label.level-language-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder
+                            formControlName="levelLanguageName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.levelLanguageName.errors && f.levelLanguageName.pristine) || f.levelLanguageName.errors?.serverError}">
+                        <div *ngIf="submitted && f.levelLanguageName.errors && f.levelLanguageName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.levelLanguageName.errors.required">
+                                {{'master.level-language.detail.label.level-language-name'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.levelLanguageName.errors.maxlength">
+                                {{'master.level-language.detail.label.level-language-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.levelLanguageName.errors?.serverError">
+                            <div>{{'master.level-language.detail.label.level-language-name'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <!-- level language value -->
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.level-language.detail.label.level-language-value'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder maxlength="4"
+                            formControlName="levelLanguageValue"
+                            [ngClass]="{ 'is-invalid': (submitted && f.levelLanguageValue.errors && f.levelLanguageValue.pristine) || f.levelLanguageValue.errors?.serverError}">
+                        <div *ngIf="submitted && f.levelLanguageValue.errors && f.levelLanguageValue.pristine" class="invalid-feedback">
+                            <div *ngIf="f.levelLanguageValue.errors.required">
+                                {{'master.level-language.detail.label.level-language-value'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.levelLanguageValue.errors.pattern">
+                                {{'master.level-language.detail.label.level-language-value'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            </div>
+                            <div class="invalid-feedback" *ngIf="f.levelLanguageValue.errors?.serverError">
+                            <div>
+                                {{'master.level-language.detail.label.level-language-value'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <label>
+                            {{'master.level-language.detail.label.description'| translate}}
+                        </label>
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm"
+                            formControlName="levelLanguageDescription"
+                            [ngClass]="{ 'is-invalid': (submitted && f.levelLanguageDescription.errors && f.levelLanguageDescription.pristine) || f.levelLanguageDescription.errors?.serverError} ">
+                        </textarea>
+                        <div *ngIf="submitted && f.levelLanguageDescription.errors && f.levelLanguageDescription.pristine" class="invalid-feedback">
+                            <div *ngIf="f.levelLanguageDescription.errors.maxlength">
+                                {{'master.level-language.detail.label.description'| translate}}
+                                {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.levelLanguageDescription.errors?.serverError">
+                            <div>{{'master.level-language.detail.label.description'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+                            type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()"
+                            class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

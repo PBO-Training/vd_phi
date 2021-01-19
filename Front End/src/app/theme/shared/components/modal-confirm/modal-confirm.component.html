@@ -1,0 +1,30 @@
+<div class="modal-header confirm">
+    <!-- <h4 class="modal-title">Hi there!</h4> -->
+    <div *ngIf="!isDelete" class="close"  (click)="activeModal.close('Close')"><i class="fas fa-times"></i></div>
+
+  </div>
+  <div class="modal-body">
+    <div class="row justify-content-md-center button-confirm">
+    <h5>{{title | translate}}</h5>
+    </div>
+  </div>
+  <!-- <div class="modal-footer"
+  > -->
+    <div *ngIf="!isBack"  class="row justify-content-md-center button-confirm">
+      <button *ngIf="swapTab" type="button" class="btn  btn-primary btn-sm btn-master" (click)="save()" >  <i class="feather icon-save"></i>
+        {{'button.save'| translate}}</button>
+      <button *ngIf="isDelete" type="button" class="btn btn-danger btn-sm btn-master" (click)='deleteConfirm()'><i class="feather icon-trash"></i> {{'button.delete'| translate}}</button>
+      <button type="button" class="btn btn-secondary btn-sm btn-master" (click)="activeModal.close('Close click')"> 
+
+        <i *ngIf="!isDelete" class="feather icon-refresh-ccw"></i>
+
+        <i *ngIf="isDelete" class="feather icon-x"></i>
+          {{ (isDelete ? 'button.close' : 'button.unSave' )| translate}}</button>
+    </div>
+  <!-- </div> -->
+  <div *ngIf="isBack" class="row justify-content-md-center button-confirm">
+    <button type="button" class="btn btn-primary btn-sm btn-master" (click)="save()"><i class="feather icon-save"></i> {{'button.save'| translate}}</button>
+    <button   type="button" class="btn btn-secondary btn-sm btn-master" (click)="activeModal.close('Unsave')"> 
+      <i class="feather icon-rotate-ccw"></i>
+        {{'button.unSave'| translate}}</button>
+  </div>

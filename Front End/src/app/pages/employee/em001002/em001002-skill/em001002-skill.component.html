@@ -1,0 +1,144 @@
+<form class="create-form" [formGroup]="formSkill" (ngSubmit)="submit(formSkill.value)" novalidate appFocus>
+    <!--Add Skill -->
+    <div id="tab-skill">
+        <div class="row">
+            <div class="col-sm-6 btn-fun">
+                <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                    class="btn   btn-secondary  btn-sm btn-master">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+                <button *ngIf="authButton.UPDATE" type="button" class="btn btn-primary btn-sm btn-master"
+                    (click)="addSkill()"><i class="feather icon-plus"></i> {{'button.add'| translate}}</button>
+                <button *ngIf="authButton.UPDATE" type="submit" class="btn  btn-primary btn-sm btn-master">
+                    <i class="feather icon-save"></i>
+                    {{'button.save'| translate}}
+                </button>
+                <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+                    (click)="openPopupSkill()">
+                    <i class="feather icon-x-square"></i>
+                    {{'button.cancel'| translate}}
+                </button>
+            </div>
+        </div>
+        <ng-container formArrayName="listSkill">
+            <div class="row" *ngFor="let skill of skills.controls; index as i">
+                <ng-container [formGroupName]="i">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body emp-tab">
+                                <div class="index-el">
+                                    <p style="font-weight: 600;">{{i + 1}}</p>
+                                </div>
+                                <div class="close btn-el" (click)="deleteSkill(i)">
+                                    <i class="feather icon-x"></i>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3 col-md-3 mb-2">
+                                        <!-- <div class="mb-2"> -->
+                                        <label class="floating-label">
+                                            {{'employee.create.form.type-skill'| translate}}</label>
+                                        <select #appSkill class="mb-12 form-control form-control-sm"
+                                            formControlName="skillTypeID">
+                                            <option *ngFor="let item of listSkillType" [value]='item.skillTypeID'>
+                                                {{item.skillTypeName}}
+                                            </option>
+
+                                        </select>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 mb-2">
+                                        <!-- <div class="mb-2"> -->
+                                        <label class="floating-label">{{'employee.create.form.nameskill'|
+                                            translate}}</label>
+                                        <select class="mb-12 form-control form-control-sm" formControlName="skillID"
+                                            [ngClass]="{ 'is-invalid': skills.controls[i].errors?.duplicate || skills.controls[i].get('skillID').status === 'INVALID'}">
+                                            <ng-container *ngFor="let item of listSkill index as in">
+                                                <option *ngIf="+skill.value.skillTypeID === +item.skillTypeID"
+                                                    [value]='item.skillID'>
+                                                    {{item.skillName}}
+                                                </option>
+                                            </ng-container>
+
+                                        </select>
+                                        <div class="invalid-feedback d-block"
+                                            *ngIf="skills.controls[i].errors?.duplicate">
+                                            {{'employee.create.form.nameskill'| translate}}
+                                            {{'server-error.009'| translate}}
+                                        </div>
+                                        <div class="invalid-feedback d-block"
+                                            *ngIf="skills.controls[i].get('skillID').status === 'INVALID'">
+                                            {{'employee.create.form.nameskill'| translate}}
+                                            {{'server-error.001'| translate}}
+                                        </div>
+                                        <div class="invalid-feedback d-block"
+                                            *ngIf="skills.controls[i].hasError('serverError','skillID')">
+                                            {{'employee.create.form.nameskill'| translate}} {{displayMessage}}
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="col-sm-3 col-md-3 mb-2">
+                                        <!-- <div class="mb-2"> -->
+                                        <label class="floating-label">{{'employee.create.form.levelskill'|
+                                            translate}}</label>
+                                        <select class="mb-12 form-control form-control-sm"
+                                            [ngClass]="{ 'is-invalid': skills.controls[i].get('levelSkillID').status === 'INVALID'}"
+                                            formControlName="levelSkillID">
+                                            <option *ngFor="let item of listLevelSkill" [value]='item.levelSkillID'>
+                                                {{item.levelSkillName}}
+                                            </option>
+                                        </select>
+                                        <div class="invalid-feedback d-block"
+                                            *ngIf=" this.skills.controls[i].hasError('serverError','levelSkillID')">
+                                            {{'employee.create.form.levelskill'| translate}} {{displayMessage}}
+                                        </div>
+                                        <!-- </div> -->
+                                    </div>
+                                    <!-- <div class="col-sm-3 col-xl-3 btn-delete"
+                                           [ngStyle]="this.skills.controls[i].errors?.duplicate ? {'align-items': 'center'} : {'align-items': 'flex-end'}">
+                                           
+                                            <button *ngIf="authButton.UPDATE" type="button"
+                                                class="btn btn-danger btn-sm" (click)="deleteSkill(i)"><i
+                                                    class="feather icon-trash"></i>
+                                                {{'button.delete'| translate}}</button>
+
+                                        </div> -->
+                                    <div class="col-sm-3 col-md-3 mb-3">
+                                        <label class="floating-label">{{'employee.create.form.skill-exp'|
+                                            translate}}</label>
+                                        <input type="text" class="form-control form-control form-control-sm"
+                                            placeholder="" formControlName="skillExperience">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                            <div class="col-md-9">
+                                <hr style="border-top: 1px solid rgb(0 0 0 / 52%) !important;">
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <button *ngIf="authButton.UPDATE" type="button" class="btn btn-danger btn-sm"
+                                    (click)="deleteSkill(i)"><i class="feather icon-trash"></i>
+                                    {{'button.delete'| translate}}</button>
+                            </div>
+                        </div> -->
+                </ng-container>
+            </div>
+        </ng-container>
+
+    </div>
+    <!-- <div class="form-group row" *ngIf="skills.length || checkRemove === true ">
+        <div class="col-sm-10">
+            <button *ngIf="authButton.UPDATE" type="submit" class="btn  btn-primary btn-sm btn-master">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button type="button" (click)="openPopup()" class="btn   btn-secondary  btn-sm btn-master">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+        </div>
+    </div> -->
+</form>

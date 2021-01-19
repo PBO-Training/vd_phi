@@ -1,0 +1,116 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-fun text-left">
+            <button [routerLink]="['/project']" routerLinkActive="router-link-active"
+                class="btn btn btn-secondary btn-sm btn-master" type="button">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="projectResponse">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="card" style="height: calc(100% - 10px); max-height: 16rem ;">
+                    <div class="card-body">
+                        <div class="card-header-issue"
+                            style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ;padding-top: unset !important;">
+                            <div class="row">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'project.detail.tabs.tab-issue'| translate}}
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- Table -->
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <th></th>
+                                    <th>{{'project.detail.label.open'| translate}}</th>
+                                    <th>{{'project.detail.label.closed'| translate}}</th>
+                                    <th>{{'project.detail.label.total'| translate}}</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{'project.detail.label.target'| translate}}</td>
+                                        <td>{{issueOpen}}</td>
+                                        <td>{{issueClosed}}</td>
+                                        <td>{{issueTotal}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- End Table -->
+                        <!-- Link -->
+                        <div class="row">
+                            <p (click)="navigateOrtherTab(3)"><a href="javascript:">{{'button.more'| translate}}</a>
+                            </p>
+                        </div>
+                        <!-- End Link -->
+                        <hr>
+                        <div>
+                            <h5 class="label-progress font-weight-bold">{{'project.detail.label.target'| translate}}:
+                                {{percent}}%</h5>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" [appProgessBar]='percent'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-6">
+                <div class="card" style="height: calc(100% - 10px);">
+                    <div class="card-body">
+                        <div class="card-header-member"
+                            style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ;padding-top: unset !important;">
+                            <div class="row" style="justify-content: space-between;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'project.detail.tabs.tab-member'| translate}}
+                                </h4>
+                                <h4 style="margin-bottom: auto;">
+                                   {{'project.detail.label.total'| translate}}: {{projectResponse?.listEmployee?.length}}
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="row" *ngFor="let position of showPosition">
+                            <div class="input-group mb-3" *ngIf="position.listMember.length > 0">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"
+                                        style="border-radius:.25rem">{{position.positionProjectName}}</span>
+                                </div>
+                                <div class="form-control">
+                                    <ng-container *ngFor="let item of position.listMember; let i = index">
+                                        <span (click)="navigateMemberDetail(item.employeeID)" class= "non-underline">{{item.employeeName}}</span>
+                                        <span *ngIf="i !== (position.listMember.length - 1)">, </span>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p (click)="navigateOrtherTab(5)">
+                                <a href="javascript:">{{'button.more'| translate}}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        History Member
+                    </div>
+                    <div id="chart">
+                        <apx-chart [series]="chartOptions?.series" [chart]="chartOptions?.chart"
+                            [xaxis]="chartOptions?.xaxis" [dataLabels]="chartOptions?.dataLabels"
+                            [grid]="chartOptions?.grid" [stroke]="chartOptions?.stroke">
+                        </apx-chart>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        </div>
+    </div>
+</div>

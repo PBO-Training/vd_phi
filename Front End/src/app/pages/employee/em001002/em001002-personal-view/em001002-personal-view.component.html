@@ -1,0 +1,421 @@
+<div *ngIf="employeeDetails">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="btn-fun row">
+                <div class="col-sm-10">
+                    <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                        class="btn   btn-secondary  btn-sm btn-master">
+                        <i class="feather icon-rotate-ccw"></i>
+                        {{'button.back'| translate}}
+                    </button>
+                    <button *ngIf="authButton.UPDATE" class="btn  btn-info btn-sm btn-master" (click)="onEdit()">
+                        <!-- <i class="feather icon-save"></i> -->
+                        <i class="feather icon-edit"></i>
+                        {{'button.edit'| translate}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 biography">
+            <div class="row" style="height: 100%;">
+                <div class="col-md-12">
+                    <div class="card" style="height: calc(100% - 10px);">
+                        <div class="card-body">
+                            <!-- avatar skill -->
+                            <div class="row">
+                                <div class="mb-4 col-md-12 text-center">
+                                    <h4 class="text-center">
+                                        {{employeeName}}
+                                    </h4>
+                                    <div class="image-container">
+                                        <img class="img-personal" [src]="url ? url : 'assets/images/user/avatar-1.png'">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end avatar -->
+                            <!-- said -->
+                            <div class="row">
+                                <div class="mb-2 col-md-12">
+                                    <textarea readonly id="biographyTextarea" [innerHTML]="employeeDetails?.biography">
+                                    </textarea>
+                                </div>
+                            </div>
+                            <!-- said -->
+                            <div class="row" *ngIf="employeeDetails?.listSkill.length > 0">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.tab.skill'| translate}}
+                                    </h5>
+                                    <ng-container *ngFor="let item of employeeDetails.listSkill index as i">
+                                        <div *ngIf="i >= 0 && i < 5" class="row mb-2">
+                                            <div class="col-md-3 pr-0">
+                                                <div>{{item.skillName}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <ngb-progressbar type="success" [height]="'13px'"
+                                                    [value]="+item.levelSkillValue">
+                                                </ngb-progressbar>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="employeeDetails?.listLanguage.length > 0">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.tab.language'| translate}}
+                                    </h5>
+                                    <ng-container *ngFor="let item of employeeDetails.listLanguage index as i">
+                                        <div *ngIf="i >= 0 && i < 5" class="row mb-2">
+                                            <div class="col-md-3 pr-0">
+                                                <div>{{item.languageName}}</div>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span>{{item.languageCertificate}} </span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="row"
+                                *ngIf="employeeDetails?.totalExperience !== undefined  && employeeDetails?.totalExperience !== null">
+                                <div class="mb-4 col-md-12">
+                                    <h5>
+                                        {{'employee.create.form.experience'| translate}}
+                                    </h5>
+                                    <div class="col-md-12 pr-0 pl-0">
+                                        <div style="display: inline-grid;">
+                                            <p *ngIf="employeeDetails.totalExperience === 0">
+                                                {{'employee.create.form.total'| translate}}:
+                                                {{'employee.create.form.no-experience' | translate}}
+                                            </p>
+                                            <p *ngIf="employeeDetails.totalExperience > 0">
+                                                {{'employee.create.form.total'| translate}}:
+                                                <span *ngIf="totalYear === 1">
+                                                    {{totalYear}} {{'employee.create.form.year' | translate}}
+                                                </span>
+                                                <span *ngIf="totalYear > 1">
+                                                    {{totalYear}} {{'employee.create.form.years' | translate}}
+                                                </span>
+                                                <span *ngIf="totalMonth === 1">
+                                                    {{totalMonth}} {{'employee.create.form.month' | translate}}
+                                                </span>
+                                                <span *ngIf="totalMonth > 1">
+                                                    {{totalMonth}} {{'employee.create.form.months' | translate}}
+                                                </span>
+                                            </p>
+                                            <p *ngIf="employeeDetails.inCompanyExperience === 0">
+                                                {{'employee.create.form.in'| translate}} {{companyName}}:
+                                                {{'employee.create.form.no-experience' | translate}}
+                                            </p>
+                                            <p *ngIf="employeeDetails.inCompanyExperience > 0">
+                                                {{'employee.create.form.in'| translate}} {{companyName}}:
+                                                <span *ngIf="inCompanyYear === 1">
+                                                    {{inCompanyYear}} {{'employee.create.form.year' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyYear > 1">
+                                                    {{inCompanyYear}} {{'employee.create.form.years' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyMonth === 1">
+                                                    {{inCompanyMonth}} {{'employee.create.form.month' | translate}}
+                                                </span>
+                                                <span *ngIf="inCompanyMonth > 1">
+                                                    {{inCompanyMonth}} {{'employee.create.form.months' | translate}}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 detail-personal">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-header-personal" style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8 ; 
+              padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.tab.personal'| translate}}
+                                </h4>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- Employee Code -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.employee_code'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.employeeCode}}
+                                </span>
+                                <!-- gender -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.gender'| translate}}
+                                </label>
+                                <span class="col-md-3" *ngIf="employeeDetails?.gender===true">
+                                    {{'employee.create.form.male'| translate}}
+                                </span>
+                                <span class="col-md-3" *ngIf="employeeDetails?.gender===false">
+                                    {{'employee.create.form.female'| translate}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- first name -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.firstName'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.firstName}}
+                                </span>
+
+                                <!-- last name -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.lastName'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.lastName}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- birthday -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.birthday'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.birthday | date:'dd-MM-yyyy'}}
+                                </span>
+                                <!-- nationality -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.nationality'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{nationName}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- marital -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.marital'| translate}}
+                                </label>
+                                <span class="col-md-3" *ngIf="employeeDetails?.married === true">
+                                    {{'employee.create.form.married'| translate}}
+                                </span>
+                                <span class="col-md-3" *ngIf="employeeDetails?.married === false">
+                                    {{'employee.create.form.single'| translate}}
+                                </span>
+                                <!-- child -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.employeenum'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.numOfChild}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- identity Card -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.identitycard'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.identityCard}}
+                                </span>
+                                <!-- date of issue of id card -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.dateOfIssue'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.dateOfIssueOfIDCard | date:'dd-MM-yyyy'}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- address -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.address'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.address}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- biography -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.biography'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.biography}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.contact'| translate}}
+                                </h4>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- email -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.email'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.email}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- phone -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.phone'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.phone}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- skype -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.skype'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.skype}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- emergency -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.emergency'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.emergency}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.education'| translate}}
+                                </h4>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- university -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.university'| translate}}
+                                </label>
+                                <span class="col-md-9">
+                                    {{employeeDetails?.university}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- degree -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.degree'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{degreeName}}
+                                </span>
+                                <!-- graduate year -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.graduateYear'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.graduateYear}}
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.position'| translate}}
+                                </h4>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- department -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.department_name'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{departmentName}}
+                                </span>
+                                <!-- date join company -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.dateJoinCompany'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{employeeDetails?.dateJoinCompany | date:'dd-MM-yyyy'}}
+                                </span>
+                            </div>
+                            <div class="row mb-1">
+                                <!-- position -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.position'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{positionName}}
+                                </span>
+                                <!-- status -->
+                                <label class="col-md-3">
+                                    {{'employee.create.form.status'| translate}}
+                                </label>
+                                <span class="col-md-3">
+                                    {{statusName}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card" style="margin-bottom: 10px !important;">
+                        <div class="card-body">
+                            <div class="card-header-personal"
+                                style="margin-block-end: 0.5rem; border-bottom: 1px dotted #e2e5e8; padding-top: unset !important;">
+                                <h4 style="margin-bottom: auto;">
+                                    {{'employee.create.form.description' | translate}}
+                                </h4>
+                            </div>
+                            <div *ngIf="employeeDetails?.description !== null" class="row mb-1">
+                                <!-- desciption -->
+                                <span class="col-md-12">
+                                    {{employeeDetails?.description}}
+                                </span>
+                            </div>
+                            <div *ngIf="employeeDetails?.description === null" class="row mb-1">
+                                <!-- desciption -->
+                                <span class="col-md-12">
+                                    {{'employee.create.form.no-description' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

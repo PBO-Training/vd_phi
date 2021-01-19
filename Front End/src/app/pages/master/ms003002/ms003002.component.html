@@ -1,0 +1,104 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.skill'" [childBreabcrumb]="isUpdate ? 'breadcrumb.child.update' : 'breadcrumb.child.create'" [parrentBreabcrumbUrl]="'/skill'">
+</app-breadcrumb-share>
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.skill.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.skill.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id" formControlName="deparmentID">
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.skill.detail.label.skillCode'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="skillCode" [ngClass]="{ 'is-invalid': (submitted && f.skillCode.errors && f.skillCode.pristine) || f.skillCode.errors?.serverError}">
+                        <div *ngIf="submitted && f.skillCode.errors && f.skillCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.skillCode.errors.required">
+                                {{'master.skill.detail.label.skillCode'| translate}} {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.skillCode.errors.pattern; else checkLength">{{'master.skill.detail.label.skillCode'| translate}} {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.skillCode.errors.maxlength">
+                                {{'master.skill.detail.label.skillCode'| translate}} {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+
+                        <div class="invalid-feedback" *ngIf="f.skillCode.errors?.serverError">
+                            <div>{{'master.skill.detail.label.skillCode'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.skill.detail.label.skill-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder formControlName="skillName" [ngClass]="{ 'is-invalid': (submitted && f.skillName.errors && f.skillName.pristine) || f.skillName.errors?.serverError}">
+                        <div *ngIf="submitted && f.skillName.errors && f.skillName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.skillName.errors.required">
+                                {{'master.skill.detail.label.skill-name'| translate}} {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.skillName.errors.maxlength">
+                                {{'master.skill.detail.label.skill-name'| translate}} {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.skillName.errors?.serverError">
+                            <div>{{'master.skill.detail.label.skill-name'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <label class="floating-label">
+                            {{'master.skill.detail.label.skill-type'| translate}}
+                        </label>
+                        <select class="form-control form-control-sm" id="skillTypeID"
+                        name="skillTypeID" formControlName="skillTypeID">
+                        <option *ngFor="let item of skillTypeList" [value]="item.skillTypeID">
+                            {{item.skillTypeName}}
+                        </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-9">
+                        <label>
+                            {{'master.skill.detail.label.description'| translate}}
+                        </label>
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm" formControlName="skillDescription" 
+                        [ngClass]="{ 'is-invalid': (submitted && f.skillDescription.errors && f.skillDescription.pristine) || f.skillDescription.errors?.serverError} ">
+                        </textarea>
+                        <div *ngIf="submitted && f.skillDescription.errors && f.skillDescription.pristine" class="invalid-feedback">
+                            <div *ngIf="f.skillDescription.errors.maxlength">
+                                {{'master.skill.detail.label.description'| translate}}
+                                {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.skillDescription.errors?.serverError">
+                            <div>{{'master.skill.detail.label.description'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">&nbsp;</div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master" type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

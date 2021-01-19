@@ -1,0 +1,332 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.shift-work-history'"
+    *ngIf="this.isDataAvailable">
+</app-breadcrumb-share>
+<div class="col-md-12" *ngIf="this.isDataAvailable">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-down"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-up"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchHistoryList()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="employeeCode">
+                                    {{'vacation.form.vacation-employeeCode'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeCode">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="employeeName">
+                                    {{'vacation.form.vacation-employeeName'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="employeeName">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="start_date">
+                                    {{'vacation.form.vacation-start-date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                        [formControl]="formSearch.controls['swStartDateAM']" ngbDatepicker
+                                        #d1="ngbDatepicker" [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.swStartDateAM.errors}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="!f.swStartDateAM.errors?.greater && !formSearch.hasError('dates') && f.swStartDateAM.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.form.vacation-start-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="end_date">
+                                    {{'vacation.form.vacation-end-date'| translate}}
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                        [formControl]="formSearch.controls['swEndDatePM']" ngbDatepicker
+                                        #d2="ngbDatepicker" [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                        [ngClass]="{'invalid': f.swEndDatePM.errors || formSearch.hasError('dates')}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                            type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                    </div>
+                                </div>
+                                <div *ngIf="!f.swEndDatePM.errors?.greater && !formSearch.hasError('dates') && f.swEndDatePM.errors"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.form.vacation-end-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                                <div *ngIf="formSearch.hasError('dates') && !f.swEndDatePM.errors ">
+                                    <div class="invalid-feedback d-block">
+                                        <span>{{'vacation.form.vacation-end-date'| translate}}
+                                            {{'server-error.004'| translate}}
+                                            {{'vacation.form.vacation-start-date'| translate}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="vacation_option">
+                                    {{'vacation.form.vacation-option'| translate}}
+                                </label>
+                                <select formControlName="swOptionID" id="swOptionID"
+                                    class="form-control form-control-sm">
+                                    <option *ngFor="let option of listOption" [value]="option.keyResponse">
+                                        {{option.valueResponse}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="vacation_statusn">
+                                    {{'vacation.form.vacation-status'| translate}}
+                                </label>
+                                <select formControlName="swStatusID" id="swStatusID"
+                                    class="form-control form-control-sm">
+                                    <option *ngFor="let status of listStatus" [value]="status.keyResponse">
+                                        {{status.valueResponse}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="department">
+                                    {{'vacation.form.vacation-department'| translate}}
+                                </label>
+                                <select formControlName="departmentID" id="departmentID"
+                                    class="form-control form-control-sm">
+                                    <option *ngFor="let dep of listDepartment" [value]="dep.keyResponse">
+                                        {{dep.valueResponse}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchHistoryList()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (click)="resetForm()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<br>
+<div class="col-md-12"
+    *ngIf="swHistoryList?.length !== 0 && swHistoryList !== undefined && this.isDataAvailable  ; else loading">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive" *ngIf="this.swHistoryList.length > 0">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">
+                        {{'p.display'| translate}}
+                    </p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of this.screenPropsHistory.pageOpiton"
+                                [selected]="option === this.screenPropsHistory.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex" *ngIf="this.swHistoryList.length > 1; else oneRecord">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (this.screenPropsHistory.pageNum !== 0 ? this.screenPropsHistory.pageNum *
+                        this.screenPropsHistory.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (swHistoryList.length + (this.screenPropsHistory.pageNum !== 0 ?
+                        this.screenPropsHistory.pageNum * this.screenPropsHistory.pageSize : 0)) || 0}} {{'p.of'|
+                        translate}} {{screenPropsHistory.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+                <ng-template #oneRecord>
+                    <div class="d-flex" *ngIf="this.swHistoryList.length === 1">
+                        <p class="text-panigator">
+                            {{'p.from'| translate}}
+                            {{ (1 + (this.screenPropsHistory.pageNum !== 0 ? this.screenPropsHistory.pageNum *
+                            this.screenPropsHistory.pageSize : 0)) || 0}}
+                            {{'p.to'| translate}}
+                            {{ (swHistoryList.length + (this.screenPropsHistory.pageNum !== 0 ?
+                            this.screenPropsHistory.pageNum * this.screenPropsHistory.pageSize : 0)) || 0}} {{'p.of'|
+                            translate}} {{this.screenPropsHistory.totalRecord || 0}}
+                            {{'p.record-singular'| translate}}
+                        </p>
+                    </div>
+                </ng-template>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="this.screenPropsHistory.totalRecord"
+                    (pageChange)="pageChangeOutput($event)" [(page)]="this.screenPropsHistory.page"
+                    [pageSize]="this.screenPropsHistory.pageSize" [maxSize]="this.screenPropsHistory.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th class="remove-th th-5 text-center">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th sortable="employeeCode" direction="desc" class="th-15 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-employeeCode'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeCode' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeCode' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="employeeName" direction="desc" class="th-15 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-employeeName'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'employeeName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'employeeName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="departmentName" direction="desc" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-department'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'departmentName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'departmentName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="swStartDateAM" direction="desc" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-start-date'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'swStartDateAM' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'swStartDateAM' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="swEndDatePM" direction="desc" class="th-10 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-end-date'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'swEndDatePM' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'swEndDatePM' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="swOptionName" direction="desc" class="th-5 sort-column" (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-option'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'swOptionName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'swOptionName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th sortable="swStatusName" direction="desc" class="sort-column text-center" style="width: 1%;"
+                            (sort)="onSort($event)">
+                            {{'vacation.list.table.vacation-status'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'swStatusName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'swStatusName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of swHistoryList; let i = index ">
+                        <tr *ngIf="item">
+                            <td class="text-center">{{i + (screenPropsHistory.pageNum * screenPropsHistory.pageSize) +
+                                1}}</td>
+                            <td><a class="text-left underline" [routerLink]="['/shift-work-history/detail/',item.swID]"
+                                    routerLinkActive="router-link-active" *ngIf="!this.route.snapshot.params.id">
+                                    {{item.employeeCode}}</a>
+                                <span *ngIf="this.route.snapshot.params.id">{{item.employeeCode}}</span>
+                            </td>
+                            <td><a class="text-left underline" [routerLink]="['/shift-work-history/detail/',item.swID]"
+                                    routerLinkActive="router-link-active" *ngIf="!this.route.snapshot.params.id">
+                                    {{item.employeeName}}</a>
+                                <span *ngIf="this.route.snapshot.params.id">{{item.employeeName}}</span>
+                            </td>
+                            <td>
+                                {{item.departmentName}}
+                            </td>
+                            <td>
+                                {{item.swStartDateAM | date: 'MMM d, y' : 'UTC'}}
+                            </td>
+                            <td>
+                                {{item.swEndDatePM | date: 'MMM d, y' : 'UTC'}}
+                            </td>
+                            <td>
+                                <span class="badge badge-pill badge-light-primary" style="margin-left:1px">
+                                    {{item.swOptionName}}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="item.swStatusName === this.Type.StatusType.PENDING"
+                                    class="badge badge-pill badge-secondary">
+                                    {{item.swStatusName}}</p>
+                                <p *ngIf="item.swStatusName === this.Type.StatusType.CONFIRMED"
+                                    class="badge badge-pill badge-warning">
+                                    {{item.swStatusName}}</p>
+                                <p *ngIf="item.swStatusName === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-info">
+                                    {{item.swStatusName}}</p>
+                                <p *ngIf="item.swStatusName === this.Type.StatusType.DONE"
+                                    class="badge badge-pill badge-success">
+                                    {{item.swStatusName}}</p>
+                                <p *ngIf="item.swStatusName === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{item.swStatusName}}</p>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="col-md-12" *ngIf="swHistoryList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

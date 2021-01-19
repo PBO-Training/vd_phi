@@ -1,0 +1,28 @@
+div[class*='col-sm'] label {
+    margin-bottom: 0.05rem;
+}
+
+div[class*='mb-2 row'] {
+    margin-bottom: 0.25rem !important;
+}
+
+table td {
+    cursor: default;
+}
+
+button[class*='calendar'] {
+    padding: 0rem 0rem;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.icon-calendar {
+    padding: 0.325rem 0.675rem;
+}
+
+.can-click {
+    cursor: pointer;
+}
+
+td a {
+    text-decoration: underline;
+}

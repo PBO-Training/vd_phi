@@ -1,0 +1,310 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.receive-request'"
+    [childBreabcrumb]="'breadcrumb.parrent.vacation.vacation-approve'" [parrentBreabcrumbUrl]="'/receive-list'"
+    *ngIf="this.isDataAvailable">
+</app-breadcrumb-share>
+<form [formGroup]="formSubmit" (ngSubmit)="submitVacation()" *ngIf="this.isDataAvailable" appFocus>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> {{'vacation.detail.vacation-title'| translate}}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <b>
+                            {{'vacation.detail.vacation-type'| translate}}
+                        </b>
+                        <select class="mb-12 form-control form-control-sm " id="vacationtype" [attr.disabled]="false"
+                            formControlName="vacationTypeID">
+                            <option *ngFor="let item of selectTypes; let i = index" value="{{item.keyResponse}}">
+                                {{item.valueResponse}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <b>
+                            {{'vacation.detail.vacation-option'| translate}}
+                        </b>
+                        <br>
+                        <div class="form-check form-check-inline" *ngFor="let item of selectOptions; let i = index">
+                            <input type="radio" [value]="item.keyResponse" formControlName="vacationOptionID"
+                                [attr.disabled]="false">&nbsp;{{'vacation.detail.vacation-option' + (i + 1) | translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1" *ngIf="this.selectedEntry === fullTimeConstant">
+                    <div class="col-sm-4">
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-start-date'| translate}}
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    formControlName="startDate" ngbDatepicker #d1="ngbDatepicker" [readonly]="true">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        [disabled]="true" type="button"><i
+                                            class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-end-date'| translate}}
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                    [readonly]="true" formControlName="endDate" ngbDatepicker #d2="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                        [disabled]="true" type="button"><i
+                                            class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1" *ngIf="this.selectedEntry === specialTimeConstant">
+                    <div class="col-sm-4">
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-start-date'| translate}}
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    formControlName="startDate" ngbDatepicker #d1="ngbDatepicker" [readonly]="true">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        [disabled]="true" type="button"><i
+                                            class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-start-time'| translate}}
+                            </b>
+                            <div class="input-group-prepend">
+                                <select class="mb-12 form-control form-control-sm" id="starttimehour"
+                                    [attr.disabled]="false" formControlName="startTimeHour">
+                                    <option *ngFor="let item of this.hourList; let i = index" value="{{item.key}}">
+                                        {{item.value}}{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                                </select>&nbsp;:&nbsp;
+                                <select class="mb-12 form-control form-control-sm" id="starttimemin"
+                                    [attr.disabled]="false" formControlName="startTimeMin">
+                                    <option *ngFor="let item of this.minList; let i = index" value="{{item.key}}">
+                                        {{item.value}}{{'vacation.detail.vacation-min-unit'| translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-end-time'| translate}}
+                            </b>
+                            <div class="input-group-prepend">
+                                <select class="mb-12 form-control form-control-sm" id="endtimehour"
+                                    [attr.disabled]="false" formControlName="endTimeHour">
+                                    <option *ngFor="let item of this.hourList; let i = index" value="{{item.key}}">
+                                        {{item.value}}{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                                </select>&nbsp;:&nbsp;
+                                <select class="mb-12 form-control form-control-sm" id="endtimemin"
+                                    [attr.disabled]="false" formControlName="endTimeMin">
+                                    <option *ngFor="let item of this.minList; let i = index" value="{{item.key}}">
+                                        {{item.value}}{{'vacation.detail.vacation-min-unit'| translate}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1" *ngIf="this.selectedEntry === haftTimeConstant">
+                    <div class="col-sm-4">
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-period'| translate}}
+                            </b>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" [value]="0" [attr.disabled]="false"
+                                    formControlName="localeTime">&nbsp;{{'vacation.detail.vacation-locale-AM'| translate}}
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" [value]="1" [attr.disabled]="false"
+                                    formControlName="localeTime">&nbsp;{{'vacation.detail.vacation-locale-PM'| translate}}
+                            </div>
+                            <br>
+                        </div>
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-start-date'| translate}}
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    formControlName="startDate" ngbDatepicker #d1="ngbDatepicker" [readonly]="true">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        [disabled]="true" type="button"><i
+                                            class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <b>
+                            {{'vacation.detail.vacation-reason'| translate}}
+                        </b>
+                        <div class="input-group">
+                            <textarea formControlName="vacationReason" class="form-control form-control-sm" wrap='on'
+                                style="resize: none;" [readonly]="true" row mb-1s="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> {{'vacation.approve.vacation-approve-process'| translate}}
+                </h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 2%;"></th>
+                            <th style="width: 10%;">{{'vacation.approve.vacation-role'| translate}}</th>
+                            <th style="width: 10%;">{{'vacation.approve.vacation-approver'| translate}}</th>
+                            <th class="text-center" style="width: 10%;">
+                                {{'vacation.approve.vacation-result'| translate}}
+                            </th>
+                            <th style="width: 15%;">{{'vacation.approve.vacation-datetime'| translate}}</th>
+                            <th style="width: 33%;">{{'vacation.approve.vacation-comment'| translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td row mb-1span="1"></td>
+                            <td row mb-1span="1">
+                                <p class="text-primary">{{'vacation.approve.vacation-leader'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedLeader">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupOne').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupOne').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupOne').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupOne').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('vacationUpdateGroupOneDate').value}}
+                            </td>
+                            <td>
+                                {{ formSubmit.get('vacationGroupOneNote').value }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td row mb-1span="1"></td>
+                            <td row mb-1span="1">
+                                <p class="text-primary">{{'vacation.approve.vacation-manager'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedManager">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupTwo').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupTwo').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupTwo').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupTwo').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('vacationUpdateGroupTwoDate').value}}
+                            </td>
+                            <td>{{ formSubmit.get('vacationGroupTwoNote').value }}</td>
+                        </tr>
+                        <tr>
+                            <td row mb-1span="2"></td>
+                            <td row mb-1span="2">
+                                <p class="text-primary">{{'vacation.approve.vacation-forward'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedForward">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupThree').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupThree').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupThree').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupThree').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('vacationUpdateGroupThreeDate').value}}
+                            </td>
+                            <td>{{ formSubmit.get('vacationGroupThreeNote').value }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card card-body">
+            <div class="row mb-1">
+                <div class="col-sm-4">
+                    <b>{{'vacation.approve.vacation-comment'| translate}}</b>
+                    <div class="input-group">
+                        <textarea formControlName="vacationGroupNote" class="form-control form-control-sm"
+                            style="resize: none;"
+                            [ngClass]="{ 'is-invalid': (submitted && f.vacationGroupNote.errors || f.vacationGroupNote.errors?.serverError)}"
+                            row mb-1s="3"></textarea>
+                    </div>
+                    <div *ngIf="f.vacationGroupNote.errors?.maxlength" class="invalid-feedback d-block">
+                        {{'vacation.approve.vacation-comment'| translate}}
+                        {{'server-error.008'| translate: maxLenghtInput}}
+                    </div>
+                    <div *ngIf="f.vacationGroupNote.errors?.serverError">
+                        <div class="invalid-feedback d-block">
+                            <span>
+                                {{'vacation.approve.vacation-comment'| translate}}
+                                {{displayMessage}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-sm-10">
+                    <br>
+                    <button type="submit" (click)="onSubmit(true)" class="btn  btn-primary btn-sm btn-master" *ngIf="authButton.UPDATE">
+                        <i class="feather icon-check-circle"></i>
+                        {{'button.approve'| translate}}
+                    </button>
+                    <button type="button" (click)="onSubmit(false)" class="btn btn-danger btn-sm btn-master" *ngIf="authButton.UPDATE">
+                        <i class="feather icon-x-circle"></i>
+                        {{'button.reject'| translate}}
+                    </button>
+                    <button type="button" class="btn btn-secondary  btn-sm btn-master" (click)="back($event)">
+                        <i class="feather icon-rotate-ccw"></i>
+                        {{'button.back'| translate}}
+                    </button>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

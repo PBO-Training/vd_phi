@@ -1,0 +1,143 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.timekeeping'">
+</app-breadcrumb-share>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+            aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <i *ngIf="isCollapsed === true;" class="fas fa-angle-down"></i>
+            <i *ngIf="isCollapsed === false;" class="fas fa-angle-up"></i>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchTimeKeepingList()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>
+                                    {{'vacation.timekeeping.year'| translate}}
+                                </label>
+                                <select class="mb-12 form-control form-control-sm" id="year" formControlName="year">
+                                    <option *ngFor="let item of this.yearList; let i = index" value="{{item.key}}">
+                                        {{item.value}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-2 mt-2">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchTimeKeepingList()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (click)="resetForm()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<br>
+<div class="col-md-12" *ngIf="timeKeepingList?.length !== 0 && timeKeepingList !== undefined ; else loading">
+    <div class="card table-card">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm">
+                <colgroup>
+                    <col>
+                    <col class="text-muted">
+                    <col class="text-muted">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="remove-th th-5 text-center">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.timekeeping.start-timekeeping'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.timekeeping.end-timekeeping'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.timekeeping.description'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-left">
+                            {{'vacation.timekeeping.is-active'| translate}}
+                        </th>
+                        <th class="remove-th th-5 text-center">
+                            {{'vacation.timekeeping.action'| translate}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of timeKeepingList ; let i = index">
+                        <tr *ngIf="item">
+                            <td class="text-center">{{i + 1}}</td>
+                            <td class="text-left text-muted bg-light">
+                                <a class="text-left underline" *ngIf="item.isActive === true"
+                                    [routerLink]="['/timekeeping/detail/',item.timekeepingID]"
+                                    routerLinkActive="router-link-active">{{item.startTimekeeping | date: 'MMM dd, yyyy' :
+                                    'UTC'}}</a>
+                                <span *ngIf="item.isActive === false">{{item.startTimekeeping | date: 'MMM dd, yyyy' :
+                                    'UTC'}}</span>
+                            </td>
+                            <td class="text-left text-muted bg-light">
+                                <a class="text-left underline" *ngIf="item.isActive === true"
+                                    [routerLink]="['/timekeeping/detail/',item.timekeepingID]"
+                                    routerLinkActive="router-link-active">{{item.endTimekeeping | date: 'MMM dd, yyyy' :
+                                    'UTC'}}</a>
+                                <span *ngIf="item.isActive === false">{{item.endTimekeeping | date: 'MMM dd, yyyy' :
+                                    'UTC'}}</span>
+                            </td>
+                            <td class="text-left">{{item.description}}</td>
+                            <td class="text-left">
+                                <span class="badge badge-pill badge-secondary"
+                                    *ngIf="item.isActive === false">{{'vacation.timekeeping.non-activated'|
+                                    translate}}</span>
+                                <span class="badge badge-pill badge-success"
+                                    *ngIf="item.isActive === true">{{'vacation.timekeeping.activated'|
+                                    translate}}</span>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <button [disabled]="item.isActive ? 'disabled': null" *ngIf="authButton.CREATE"
+                                        (click)="import(item.timekeepingID)" type="button"
+                                        class="btn btn-sm btn-primary"><i class="fas fa-file-import"></i>
+                                        {{'vacation.timekeeping.import'| translate}}</button>&nbsp;&nbsp;
+                                    <button [disabled]="!item.isActive ? 'disabled': null" type="button"
+                                        [routerLink]="['/timekeeping/report/',item.timekeepingID]"
+                                        routerLinkActive="router-link-active" class="btn btn-sm btn-success"><i
+                                            class="fa fa-database"></i>
+                                        {{'vacation.timekeeping.report'| translate}}</button>&nbsp;&nbsp;
+                                    <button [disabled]="!item.isActive ? 'disabled': null" type="button"
+                                        [routerLink]="['/timekeeping/detail/',item.timekeepingID]"
+                                        class="btn btn-sm btn-info"><i class="fa fa-eye"></i>
+                                        {{'vacation.timekeeping.view'| translate}}</button>&nbsp;&nbsp;
+                                    <button [disabled]="!item.isActive ? 'disabled': null" type="button"
+                                        *ngIf="authButton.DELETE" (click)="resetTimeKeeping(item.timekeepingID)"
+                                        class="btn btn-sm btn-danger"><i class="feather icon-trash"></i>
+                                        {{'vacation.timekeeping.reset'| translate}}</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #loading>
+    <div class="col-md-12" *ngIf="timeKeepingList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

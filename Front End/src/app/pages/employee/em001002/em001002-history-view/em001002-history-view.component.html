@@ -1,0 +1,146 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-fun row">
+            <div class="col-sm-10">
+                <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                    class="btn   btn-secondary  btn-sm btn-master">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+                <button
+                    *ngIf="authButton.UPDATE && (listHistory !== undefined && listHistory !== null && listHistory?.length > 0)"
+                    class="btn  btn-info btn-sm btn-master" (click)="onEditHistory()">
+                    <!-- <i class="feather icon-save"></i> -->
+                    <i class="feather icon-edit"></i>
+                    {{'button.edit'| translate}}
+                </button>
+                <button type="button"
+                    *ngIf="authButton.UPDATE && (listHistory === undefined || listHistory === null || listHistory?.length < 1)"
+                    class="btn btn-primary btn-sm btn-master" (click)="addHistory()"><i class="feather icon-plus"></i>
+                    {{'button.add'| translate}}
+                </button>
+                <button
+                    *ngIf="authButton.UPDATE && (listHistory !== undefined && listHistory !== null && listHistory?.length > 0)"
+                    type="button" class="btn  btn-primary btn-sm" (click)="exportHistory()">
+                    <i class="fas fa-user-clock"></i>
+                    {{'button.export-excel-history'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card table-card">
+            <div class="d-flex justify-content-between panigator-responsive card-header-right">
+                <div style="margin-right: 10px;">
+                    <div class="top-page-size">
+                        <span>{{'employee.view.history-view.history-outside'| translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="th-5">{{'employee.view.history-view.no' | translate}} </th>
+                            <th>{{'employee.view.history-view.company-name' | translate}} </th>
+                            <th>{{'employee.view.history-view.project-name' | translate}}</th>
+                            <th>{{'employee.view.history-view.start-date' | translate}}</th>
+                            <th>{{'employee.view.history-view.end-date' | translate}}</th>
+                            <th>{{'employee.view.history-view.evaluate' | translate}}</th>
+                            <th>{{'employee.view.history-view.scope-work' | translate}}</th>
+                            <th>{{'employee.view.history-view.role' | translate}}</th>
+                            <th>{{'employee.view.history-view.os' | translate}}</th>
+                            <th>{{'employee.view.history-view.skill' | translate}}</th>
+                            <th>{{'employee.view.history-view.db' | translate}}</th>
+                            <th>{{'employee.view.history-view.tool' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="historysMap?.get('outside').length === 0">
+                            <td colspan="12" class="text-center">
+                                {{ 'table.no-data' | translate}}
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let item of historysMap.get('outside'), let i = index">
+                            <tr *ngIf="item">
+                                <td class="text-right">{{i+1}}</td>
+                                <td>{{item.historyCompanyName}}</td>
+                                <td>{{item.historyProjectName}}</td>
+                                <td>{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.evaluateEmployeeProjectName}}</td>
+                                <td>{{item.listScopeWorkName}}</td>
+                                <td>{{item.positionProjectName}}</td>
+                                <td>{{item.operationSystemName}}</td>
+                                <td>{{item.listSkillName}}</td>
+                                <td>{{item.databaseName}}</td>
+                                <td>{{item.tool}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======================================== -->
+<div class="row mt-1">
+    <div class="col-md-12">
+        <div class="card table-card">
+            <div class="d-flex justify-content-between panigator-responsive card-header-right">
+                <div style="margin-right: 10px;">
+                    <div class="top-page-size">
+                        <span>{{'employee.view.history-view.history-inside'| translate}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="th-5">{{'employee.view.history-view.no' | translate}} </th>
+                            <th>{{'employee.view.history-view.project-name' | translate}}</th>
+                            <th>{{'employee.view.history-view.start-date' | translate}}</th>
+                            <th>{{'employee.view.history-view.end-date' | translate}}</th>
+                            <th>{{'employee.view.history-view.evaluate' | translate}}</th>
+                            <th>{{'employee.view.history-view.scope-work' | translate}}</th>
+                            <th>{{'employee.view.history-view.role' | translate}}</th>
+                            <th>{{'employee.view.history-view.os' | translate}}</th>
+                            <th>{{'employee.view.history-view.skill' | translate}}</th>
+                            <th>{{'employee.view.history-view.db' | translate}}</th>
+                            <th>{{'employee.view.history-view.tool' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="historysMap?.get('inside').length === 0">
+                            <td colspan="11" class="text-center">
+                                {{ 'table.no-data' | translate}}
+                            </td>
+                        </tr>
+                        <ng-container *ngFor="let item of historysMap.get('inside'), let i = index">
+                            <tr *ngIf="item">
+                                <td class="text-right">{{i+1}}</td>
+                                <td>
+                                    <a [routerLink]="['/project/detail', item.projectID]">
+                                        {{item.historyProjectName}}
+                                    </a>
+                                </td>
+                                <td>{{item.startDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.endDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.evaluateEmployeeProjectName}}</td>
+                                <td>{{item.listScopeWorkName}}</td>
+                                <td>{{item.positionProjectName}}</td>
+                                <td>{{item.operationSystemName}}</td>
+                                <td>{{item.listSkillName}}</td>
+                                <td>{{item.databaseName}}</td>
+                                <td>{{item.tool}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

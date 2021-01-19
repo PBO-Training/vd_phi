@@ -1,0 +1,102 @@
+<!-- Popup notification error -->
+<div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{'employee.list.title.title_remove'| translate}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">{{'button.close'| translate}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn  btn-secondary"
+                    data-dismiss="modal">{{'button.close'| translate}}</button>
+                <button type="button" class="btn  btn-primary">{{'button.delete'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BEGIN buttons -->
+<div class="row">
+    <div class="col-md-12 mb-2 mt-2">
+        <div class="btn-fun text-right">
+            <button *ngIf="authButton.UPDATE" type="button" class="btn  btn-primary btn-sm btn-master"
+                (click)="navigateDetailDocument(true)">
+                <i class="feather icon-plus"></i>
+                {{'button.add'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE" type="button" (click)="deleteDocument()"
+                class="btn btn-danger btn-sm btn-master">
+                <i class="feather icon-trash"></i>
+                {{'button.delete'| translate}}
+            </button>
+            <button [routerLink]="['/project']" routerLinkActive="router-link-active"
+                class="btn btn btn-secondary btn-sm btn-master" type="button">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+        </div>
+    </div>
+</div>
+<!-- END buttons -->
+<div class="row">
+    <div class="col-md-12" *ngIf="listDocument?.length !== 0; else nodata">
+        <div class="card table-card">
+            <div class="table-responsive tbl-style">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th *ngIf="authButton.UPDATE" class="remove-th th-5 text-left check">
+                                <label
+                                    class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                    <input type="checkbox" class="custom-control-input" (click)="onCheckedAll($event)"
+                                        (change)="onCheckedAll($event)" [checked]="checked">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </th>
+                            <th class="text-left">
+                                {{'p.no'| translate}}
+                            </th>
+                            <th class="sort-column">{{'project.list.table.document-name'| translate}}</th>
+                            <th class="sort-column">{{'project.list.table.document-description'| translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="listDocument?.length > 0">
+                        <ng-container *ngFor="let item of listDocument; let i = index;">
+                            <tr>
+                                <td *ngIf="authButton.UPDATE" class="text-center">
+                                    <div class="chk-option">
+                                        <label
+                                            class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                            <input type="checkbox" class="custom-control-input"
+                                                (change)="onCheckedItem(item.documentID, $event)"
+                                                [checked]="screenProps.setOfCheckedId.has(item.documentID)">
+                                            <span class="custom-control-label"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
+                                    {{i + 1}}
+                                </td>
+                                <td><a class="link-download"
+                                        (click)="downloadDocFile(item.documentID, item.documentName)">{{item.documentName}}</a>
+                                </td>
+                                <td>{{item.documentDescription}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Table -->
+<ng-template #nodata>
+    <div class="col-md-12" *ngIf="listDocument?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

@@ -1,0 +1,20 @@
+<div class="page-header">
+    <div class="page-block">
+      <div class="row align-items-center">
+        <div class="col-md-12">
+          <div class="page-header-title">
+            <!-- <ng-container><h5 class="m-b-10" >Department List</h5></ng-container> -->
+          </div>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/']" ><i class="feather icon-home"></i></a>
+            </li>
+            <ng-container>
+              <li class="breadcrumb-item" ><a [routerLink]="parrentBreabcrumbUrl" routerLinkActive="router-link-active" >{{parrentBreabcrumb | translate}}</a></li>
+              <li class="breadcrumb-item" *ngIf="childBreabcrumb" ><a routerLinkActive="router-link-active">{{childBreabcrumb | translate}}</a></li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

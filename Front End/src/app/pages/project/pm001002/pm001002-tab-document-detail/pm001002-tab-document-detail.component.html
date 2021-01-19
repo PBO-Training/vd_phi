@@ -1,0 +1,48 @@
+<form [formGroup]="formDetails" enctype="multipart/form-data" (ngSubmit)="saveData()">
+    <div class="card">
+        <div class="card-body">
+            <!-- Row 1 -->
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label>{{'project.detail.label.document-file' | translate}} <i class="color-red">*</i></label>
+                    <input type="file" (change)="selectFile($event)" name="file" class="form-control-sm"
+                        formControlName="file"
+                        [ngClass]="{ 'is-invalid': submited && f.file.errors || fileExceedData === true}" />
+                    <label>{{'project.detail.label.document-maxSize' | translate}}</label>
+                    <div *ngIf="submited && f.file.errors" class="invalid-feedback">
+                        <div>
+                            {{'project.detail.label.document-file' | translate}} {{'server-error.001'| translate}}
+                        </div>
+                    </div>
+                    <div *ngIf="submited && fileExceedData === true" class="invalid-feedback">
+                        <div>
+                            {{'project.detail.label.document-file' | translate}} {{'server-error.904'| translate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label>{{'project.detail.label.document-description' | translate}}</label>
+                    <textarea type="text" name="description" class="form-control form-control-sm area-description"
+                        formControlName="description"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Row End -->
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button class="btn btn-primary btn-sm btn-master" type="submit">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button (click)="backToList(false)" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+        </div>
+    </div>
+</form>

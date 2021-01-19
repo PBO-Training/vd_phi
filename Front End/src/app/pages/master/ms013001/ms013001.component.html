@@ -1,0 +1,173 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.holiday'"></app-breadcrumb-share>
+<div class="col-md-12">
+    <fieldset class="scheduler-border">
+        <legend class="scheduler-border" (click)="screenProps.isCollapsed = !screenProps.isCollapsed"
+            [attr.aria-expanded]="!screenProps.isCollapsed" aria-controls="collapseExample">
+            {{'button.search'| translate}}
+            <div style="margin-left: 5px; display: inline-flex;">
+                <i class="fas fa-angle-up" *ngIf="screenProps.isCollapsed === true;"></i>
+                <i class="fas fa-angle-down" *ngIf="screenProps.isCollapsed === false;"></i>
+            </div>
+        </legend>
+        <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
+            <div class="card card-master">
+                <div class="card-body search-body">
+                    <form [formGroup]="formSearch" (ngSubmit)="searchHoliday()" appFocus>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="Code">
+                                    {{'master.holiday.list.year'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="holidayYear"
+                                    onlyNumber (keyup)="commonFunctionService.removeSpecWord($event)">
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="Code">
+                                    {{'master.holiday.list.name'| translate}}
+                                </label>
+                                <input type="text" class="form-control form-control-sm" formControlName="holidayName">
+                            </div>
+                        </div>
+                        <div class="mb-2 mt-2 row">
+                            <div class="col-sm-10">
+                                <button appDebounceClick (debounceClick)="searchHoliday()" type="submit"
+                                    class="btn  btn-primary btn-sm btn-master">
+                                    <i class="feather icon-search"></i>
+                                    {{'button.search'| translate}}
+                                </button>
+                                <button appDebounceClick type="button" class="btn   btn-secondary  btn-sm btn-master"
+                                    (debounceClick)="reset()">
+                                    <i class="feather icon-refresh-ccw"></i>
+                                    {{'button.refresh'| translate}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+    <div class="btn-fun text-right">
+        <button *ngIf="authButton.CREATE" type="button" class="btn  btn-primary btn-sm btn-master"
+            [routerLink]="['/holiday/create']">
+            <i class="feather icon-plus"></i>
+            {{'button.create'| translate}}
+        </button>
+        <button *ngIf="authButton.DELETE" type="button" (click)="deleteHoliday()" class="btn btn-danger btn-sm">
+            <i class="feather icon-trash"></i>
+            {{'button.delete'| translate}}
+        </button>
+    </div>
+</div>
+<div class="col-md-12" *ngIf="holidayList !== undefined && holidayList?.length !== 0; else nodata">
+    <div class="card table-card">
+        <div class="d-flex justify-content-between panigator-responsive">
+            <div class="grid-page-size">
+                <div class="top-page-size">
+                    <p class="text-panigator">{{'p.display'| translate}}</p>
+                    <div class="select-paging">
+                        <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                            (change)="changePageSize($event.target.value)">
+                            <option *ngFor="let option of screenProps?.pageOpiton"
+                                [selected]="option === screenProps?.pageSize" [value]="option">
+                                {{option}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <p class="text-panigator">
+                        {{'p.from'| translate}}
+                        {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                        {{'p.to'| translate}}
+                        {{ (holidayList?.length + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                        {{'p.of'| translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}}
+                    </p>
+                </div>
+            </div>
+            <div class="grid-panigator">
+                <ngb-pagination [collectionSize]="screenProps.totalRecord" (pageChange)="pageChangeOutput($event)"
+                    [(page)]="screenProps.page" [pageSize]="screenProps.pageSize" [maxSize]="screenProps.maxSize"
+                    [boundaryLinks]="true" [rotate]="true">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th *ngIf="authButton.DELETE" class="remove-th th-5 text-left check">
+                            <label
+                                class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                <input type="checkbox" class="custom-control-input" (change)="checkAll($event)"
+                                    (click)="checkAll($event)" [(ngModel)]="checked">
+                                <span class="custom-control-label"></span>
+                            </label>
+                        </th>
+                        <th class="th-5 text-left">
+                            {{'p.no'| translate}}
+                        </th>
+                        <th class="th-10 text-left sort-column" sortable="holidayYear" (sort)="onSort($event)">
+                            {{'master.holiday.list.table.holiday-year'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'holidayYear' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'holidayYear' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="text-left" sortable="holidayName" (sort)="onSort($event)">
+                            {{'master.holiday.list.table.holiday-name'| translate}}
+                            <div class='direction'>
+                                <div [className]="direction === 'desc' && column === 'holidayName' ? 'hide' : 'asc'">
+                                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                                </div>
+                                <div [className]="direction === 'asc' && column === 'holidayName' ? 'hide' : 'desc'">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let item of holidayList; let i = index; trackBy: trackByFn ">
+                        <tr>
+                            <td *ngIf="authButton.DELETE" class="text-center">
+                                <div class="chk-option">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            (change)="onItemChecked(item.holidayID, $event)"
+                                            (click)="onItemChecked(item.holidayID, $event)"
+                                            [checked]="screenProps.setOfCheckedId.has(item.holidayID)">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="number-left ">
+                                {{((i + 1 )+ (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0))}}
+                            </td>
+                            <td class="text-center underline" [routerLink]="['/holiday/detail/',item.holidayID]"
+                                routerLinkActive="router-link-active">
+                                {{item.holidayYear}}
+                            </td>
+                            <td>
+                                {{item.holidayName}}
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #nodata>
+    <div class="col-md-12" *ngIf="holidayList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

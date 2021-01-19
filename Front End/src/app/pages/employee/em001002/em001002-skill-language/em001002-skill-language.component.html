@@ -1,0 +1,262 @@
+<form [formGroup]="formSkillLanguage" (ngSubmit)="submit(formSkillLanguage.value)" appFocus>
+    <div class="row">
+        <div class="col-sm-6 btn-fun">
+            <button [hidden]="isProfile" type="button" class="btn btn-secondary  btn-sm btn-master"
+                (click)="eventBack()">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE && isEdit" type="submit" class="btn btn-primary btn-sm btn-master">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE && isEdit" type="button" class="btn btn-danger btn-sm btn-master"
+                (click)="eventCancel()">
+                <i class="feather icon-x-square"></i>
+                {{'button.cancel'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE && !isEdit" type="button" class="btn btn-info btn-sm btn-master"
+                (click)="editSkill()">
+                <i class="feather icon-edit"></i>
+                {{'button.edit'| translate}}
+            </button>
+        </div>
+        <div class="col-sm-6 btn-fun text-right">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="display: block;">
+            <div class="card table-card">
+                <div class="d-flex justify-content-between panigator-responsive card-header-right">
+                    <div style="margin-right: 10px;">
+                        <div class="top-page-size">
+                            <span>{{'employee.create.tab.skill'| translate}}</span>
+                        </div>
+                    </div>
+                    <div class="grid-panigator">
+                        <button *ngIf="isEdit" type="button" class="btn btn-sm btn-success" (click)="addTypeSkill()">
+                            <i class="feather icon-plus"></i> {{'button.add'| translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table">
+                        <thead>
+                            <tr>
+                                <th style="width: 1px">{{'employee.create.form.type-skill'| translate}}</th>
+                                <th style="width: auto;">{{'employee.create.form.nameskill'| translate}}<i
+                                        *ngIf="isEdit" class="color-red">*</i></th>
+                                <th style="width: 25%;">{{'employee.create.form.levelskill'| translate}}<i
+                                        *ngIf="isEdit" class="color-red">*</i></th>
+                                <th style="width: 15%">{{'employee.create.form.skill-exp'| translate}}
+                                    ({{'employee.create.form.year' | translate}})<i *ngIf="isEdit"
+                                        class="color-red">*</i> </th>
+                                <th style="width: 8%" class="text-center" *ngIf="isEdit">
+                                    {{'project.list.table.member-action'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <ng-container formArrayName="listSkill">
+                            <tbody>
+                                <tr *ngIf="listTypeSkillCustom.length === 0">
+                                    <td colspan="5" class="text-center">
+                                        {{ 'table.no-data' | translate}}
+                                    </td>
+                                </tr>
+                                <ng-container *ngFor="let skill of skills.controls; let i = index">
+                                    <ng-container [formGroupName]="i">
+                                        <tr>
+                                            <td *ngIf="listTypeSkillCustom[i].total && isEdit"
+                                                [attr.rowspan]="listTypeSkillCustom[i].total + 1">
+                                                <span>{{listTypeSkillCustom[i].skillTypeName}}</span>
+                                            </td>
+                                            <td *ngIf="listTypeSkillCustom[i].total && !isEdit"
+                                                [attr.rowspan]="listTypeSkillCustom[i].total">
+                                                <span>{{listTypeSkillCustom[i].skillTypeName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span *ngIf="!isEdit">{{listTypeSkillCustom[i].skillName}}</span>
+                                                <ng-select *ngIf="isEdit"
+                                                    placeholder="-- {{'employee.create.form.skill-placeholder' | translate}} --"
+                                                    [clearable]="false" [multiple]="false" bindLabel="skillName"
+                                                    bindValue="skillID"
+                                                    [ngClass]="{'is-invalid': (skills.controls[i].errors?.duplicate || skills.controls[i].get('skillID').status === 'INVALID') && formSubmit}"
+                                                    formControlName="skillID">
+                                                    <ng-container *ngFor="let item of listSkill index as in"
+                                                        style="height: auto;">
+                                                        <ng-option
+                                                            *ngIf="+listTypeSkillCustom[i].skillTypeID === +item.skillTypeID"
+                                                            [value]='item.skillID'>
+                                                            {{item.skillName}}
+                                                        </ng-option>
+                                                    </ng-container>
+                                                </ng-select>
+                                                <div *ngIf="isEdit && skills.controls[i].errors?.duplicate && skills.controls[i].get('skillID').status === 'VALID'  && formSubmit"
+                                                    class="invalid-feedback d-block ">
+                                                    {{'employee.create.form.nameskill'| translate}}
+                                                    {{'server-error.009'| translate}}
+                                                </div>
+                                                <div *ngIf="isEdit && skills.controls[i].get('skillID').status === 'INVALID' && formSubmit"
+                                                    class="invalid-feedback d-block ">
+                                                    {{'employee.create.form.nameskill'| translate}}
+                                                    {{'server-error.001'| translate}}
+                                                </div>
+                                                <div *ngIf="isEdit && (skills.controls[i].get('skillExperience').status === 'INVALID' && skills.controls[i].get('skillID').status === 'VALID' && !skills.controls[i].errors?.duplicate) && formSubmit"
+                                                    class="div-hide">
+                                                    <span></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span *ngIf="!isEdit ">{{listTypeSkillCustom[i].levelSkillName}}</span>
+                                                <ng-select *ngIf="isEdit" [clearable]="false" [multiple]="false"
+                                                    bindLabel="levelSkillName" bindValue="levelSkillID"
+                                                    formControlName="levelSkillID">
+                                                    <ng-option *ngFor="let item of listLevelSkill"
+                                                        [value]='item.levelSkillID'>
+                                                        {{item.levelSkillName}}
+                                                    </ng-option>
+                                                </ng-select>
+                                                <div *ngIf="isEdit && (skills.controls[i].errors?.duplicate || skills.controls[i].get('skillID').status === 'INVALID' || skills.controls[i].get('skillExperience').status === 'INVALID') && formSubmit"
+                                                    class="div-hide">
+                                                    <span></span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span *ngIf="!isEdit ">{{listTypeSkillCustom[i].skillExperience}}</span>
+                                                <input *ngIf="isEdit" type="number" min="0"
+                                                    [ngClass]="{'is-invalid': skills.controls[i].get('skillExperience').status === 'INVALID' && formSubmit}"
+                                                    class="form-control form-control form-control-sm"
+                                                    (keydown)="onKeyDownExp($event)" formControlName="skillExperience">
+                                                <div *ngIf="isEdit && (skills.controls[i].errors?.duplicate || skills.controls[i].get('skillID').status === 'INVALID') && skills.controls[i].get('skillExperience').status === 'VALID' && formSubmit"
+                                                    class="div-hide">
+                                                    <span></span>
+                                                </div>
+                                                <div *ngIf="skills.controls[i].get('skillExperience').status === 'INVALID' && formSubmit"
+                                                    class="invalid-feedback d-block ">
+                                                    {{'employee.create.form.skill-exp'| translate}}
+                                                    {{'server-error.001'| translate}}
+                                                </div>
+                                            </td>
+                                            <td *ngIf="isEdit" class="text-center">
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm btn-master ng-star-inserted"
+                                                    (click)="deleteSkill(listTypeSkillCustom[i].skillTypeID, i)">
+                                                    <i class="feather icon-trash"></i>
+                                                </button>
+                                                <div *ngIf="(skills.controls[i].errors?.duplicate || skills.controls[i].get('skillID').status === 'INVALID' || skills.controls[i].get('skillExperience').status === 'INVALID') && formSubmit"
+                                                    class="div-hide">
+                                                    <span></span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="isEdit && listTypeSkillCustom[i].endGroup">
+                                            <td colspan="4">
+                                                <button type="button" class="btn btn-sm btn-primary"
+                                                    (click)="addSkill(listTypeSkillCustom[i].skillTypeID, i)">
+                                                    <i class="feather icon-plus"></i>
+                                                </button>
+                                            </td>
+                                            <!-- <td style="border-left: none; border-right: none;"></td>
+                                            <td style="border-left: none;"></td> -->
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </tbody>
+                        </ng-container>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="row">
+        <div class="col-md-12" style="display: block;">
+            <div class="card table-card">
+                <div class="d-flex justify-content-between panigator-responsive card-header-right">
+                    <div style="margin-right: 10px;">
+                        <div class="top-page-size">
+                            <span>{{'employee.create.tab.language'| translate}}</span>
+                        </div>
+                    </div>
+                    <div class="grid-panigator">
+                        <button *ngIf="isEdit" id="edit-btn" type="button" class="btn btn-sm btn-success">
+                            <i class="feather icon-plus"></i> {{'button.add'| translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive" id="collapseExample">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th [ngStyle]="{ 'width': isEdit ? '23%' : '25%' }">
+                                    {{'employee.create.form.namelanguage'| translate}}</th>
+                                <th [ngStyle]="{ 'width': isEdit ? '23%' : '25%' }">
+                                    {{'employee.create.form.levellanguage'| translate}}</th>
+                                <th [ngStyle]="{ 'width': isEdit ? '23%' : '25%' }">
+                                    {{'employee.create.form.points'| translate}}</th>
+                                <th [ngStyle]="{ 'width': isEdit ? '23%' : '25%' }">
+                                    {{'employee.create.form.expiration_day'| translate}}</th>
+                                <th *ngIf="isEdit" style="width: 8%" class="text-center"> Action </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container>
+                                <tr *ngIf="listLanguageDetail.length === 0">
+                                    <td colspan="5" class="text-center">
+                                        {{ 'table.no-data' | translate}}
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let language of listLanguageDetail; let i = index">
+                                    <td>
+                                        <span *ngIf="!isEdit">{{language.languageName}}</span>
+                                        <select *ngIf="isEdit"  class="mb-12 form-control form-control-sm">
+                                            <option *ngFor="let item of listLanguage" [value]="item.languageID">
+                                                {{item.languageName}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!isEdit">{{language.levelLanguageID}}</span>
+                                        <select *ngIf="isEdit" class="mb-12 form-control form-control-sm">
+                                            <option *ngFor="let item of listLevelLanguage"
+                                                [value]="item.levelLanguageID">
+                                                {{item.levelLanguageName}} - {{item.levelLanguageDescription}}
+                                            </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!isEdit">{{language.languagePoints}}</span>
+                                        <input *ngIf="isEdit" type="text" onlyNumber
+                                            class="form-control form-control form-control-sm text-right" [maxLength]=3
+                                            value="0" placeholder="">
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!isEdit">{{language.expirationDate | date: 'dd/MM/yyyy'}}</span>
+                                        <div *ngIf="isEdit" class="input-group">
+                                            <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                                name="d4" ngbDatepicker #d4="ngbDatepicker" [minDate]='config.minDate'
+                                                [maxDate]='config.maxDate'>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary calendar" (click)="d4.toggle()"
+                                                    type="button">
+                                                    <i class="icon-calendar far fa-calendar-alt"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="isEdit" class="text-center">
+                                        <button type="button" class="btn btn-danger btn-sm btn-master ng-star-inserted">
+                                            <i class="feather icon-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</form>

@@ -1,0 +1,191 @@
+<form class="needs-validation tab-container" [formGroup]="memberForm" novalidate>
+    <div class="form-row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="btn-fun">
+                        <button (click)="backToList(1)" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                        <button class="btn btn-primary btn-sm btn-master" type="submit" (click)="save()">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="card table-card">
+                <!-- Row 1 -->
+                <div class="table-responsive tbl-style">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center style-no">
+                                    {{'p.no'| translate}}
+                                </th>
+                                <th class="sort-column text-center">{{'project.list.table.member-code'| translate}}</th>
+                                <th class="sort-column">{{'project.list.table.member-name'| translate}}</th>
+                                <th class="field-other">{{'project.list.table.member-role'| translate}}</th>
+                                <th class="sort-column style-date">{{'project.list.table.member-dateJoinProject'| translate}}<i
+                                        class="color-red">*</i></th>
+                                <th class="sort-column style-date">{{'project.list.table.member-dateOutProject'| translate}}<i
+                                        class="color-red">*</i></th>
+                                <th class="sort-column style-rank">{{'project.list.table.member-evaluate'| translate}}<i
+                                        class="color-red style-input">*</i></th>
+                                <th class="sort-column style-date">{{'project.list.table.member-comment'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container formArrayName="listMember">
+                                <ng-container *ngFor="let member of members.controls; index as i;" [formGroupName]="i">
+                                    <tr>
+                                        <td class="text-right">
+                                            <div>{{i+ 1}}</div>
+                                            <div *ngIf="member.invalid" class="display-error"></div>
+                                        </td>
+                                        <td class="text-center">
+                                            <ng-container *ngFor="let e of projectResponse?.listEmployee">
+                                                <div *ngIf="member.get('employeeID').value === ''+e.employeeID">
+                                                    <span>{{e.employeeCode}}</span>
+                                                </div>
+                                            </ng-container>
+                                            <div *ngIf="member.invalid" class="display-error"></div>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngFor="let e of projectResponse?.listEmployee">
+                                                <div *ngIf="member.get('employeeID').value === ''+e.employeeID">
+                                                    <span>{{e.employeeName}}</span>
+                                                </div>
+                                            </ng-container>
+                                            <div *ngIf="member.invalid" class="display-error"></div>
+                                        </td>
+                                        <td>
+                                            <ng-container>
+                                                <div
+                                                    *ngFor="let itemPositionProject of dropdownData?.listPositionProject">
+                                                    <span
+                                                        *ngIf="member.get('positionProjectID').value === ''+itemPositionProject.positionProjectID">
+                                                        {{itemPositionProject.positionProjectName}}
+                                                    </span>
+                                                </div>
+                                            </ng-container>
+                                            <div *ngIf="member.invalid" class="display-error"></div>
+                                        </td>
+                                        <td>
+                                            <ng-container>
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                                        name="d1" formControlName="dateJoinProject"
+                                                        [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                                        [ngClass]="{ 'is-invalid': members.controls[i].get('dateJoinProject').errors?.ngbDate || (submitted && member.get('dateJoinProject')?.errors?.required)}"
+                                                        ngbDatepicker #d1="ngbDatepicker" placement="bottom">
+                                                    <button type="button"
+                                                        class="calendar input-group-append btn btn-outline-secondary"
+                                                        (click)="d1.toggle()">
+                                                        <i class="icon-calendar far fa-calendar-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="member.invalid" class="display-error">
+                                                    <div *ngIf="members.controls[i].get('dateJoinProject').errors?.ngbDate"
+                                                        class="invalid-feedback" style="display: block;">
+                                                        {{'server-error.003'| translate}}
+                                                    </div>
+                                                    <div *ngIf="submitted && member.get('dateJoinProject')?.errors?.required"
+                                                        class="invalid-feedback" style="display: block;">
+                                                        {{'project.list.table.member-dateJoinProject'| translate}}
+                                                        {{'server-error.001'| translate}}
+                                                    </div>
+                                                    <div *ngIf="member.get('dateJoinProject')?.errors?.serverError"
+                                                        class="invalid-feedback" style="display: block;">
+                                                        {{'server-error.003'| translate}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container>
+                                                <div class="input-group">
+                                                    <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                                        name="d1" formControlName="dateOutProject"
+                                                        [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                                        [ngClass]="{ 'is-invalid': members.controls[i].get('dateOutProject').errors?.ngbDate || member.hasError('dates') || (submitted && member.get('dateOutProject')?.errors?.required)}"
+                                                        ngbDatepicker #d2="ngbDatepicker" placement="bottom">
+                                                    <button type="button"
+                                                        class="calendar input-group-append btn btn-outline-secondary"
+                                                        (click)="d2.toggle()">
+                                                        <i class="icon-calendar far fa-calendar-alt"></i>
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="member.invalid" class="display-error">
+                                                    <div *ngIf="submitted && member.get('dateOutProject')?.errors?.required">
+                                                        <div class="invalid-feedback" style="display: block;">
+                                                            <span>{{'project.list.table.member-dateOutProject'| translate}}
+                                                                {{'server-error.001'| translate}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="members.controls[i].get('dateOutProject').errors?.ngbDate">
+                                                        <div class="invalid-feedback" style="display: block;">
+                                                            <span>{{'server-error.003'| translate}}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        *ngIf="!members.controls[i].get('dateOutProject').errors?.ngbDate && member.hasError('dates')">
+                                                        <div class="invalid-feedback" style="display: block;">
+                                                            <span>
+                                                                {{'project.list.table.member-dateOutProject'| translate}}
+                                                                {{'server-error.004'| translate}}
+                                                                {{'project.list.table.member-dateJoinProject'| translate}}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngIf="member.get('dateOutProject')?.errors?.serverError">
+                                                        <div class="invalid-feedback" style="display: block;">
+                                                            <span>{{'server-error.003'| translate}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                        <td class="style-rank">
+                                            <ng-container>
+                                                <div class="input-group">
+                                                    <select class="mb-12 form-control form-control-sm"
+                                                        id="evaluateEmployeeProjectID" name="evaluateEmployeeProjectID"
+                                                        formControlName="evaluateEmployeeProjectID"
+                                                        [ngClass]="{ 'is-invalid': submitted && member.get('evaluateEmployeeProjectID').errors.required}">
+                                                        <option value="null" hidden>{{'project.detail.form.rank-placeholder'| translate}}</option>
+                                                        <option
+                                                            *ngFor="let item of dropdownData?.listEvaluateEmployeeProject"
+                                                            [value]="item.evaluateEmployeeProjectID">
+                                                            {{item.evaluateEmployeeProjectName}}</option>
+                                                    </select>
+                                                </div>
+                                                <div *ngIf="member.invalid" class="display-error">
+                                                    <div class="invalid-feedback" style="display: block;"
+                                                        *ngIf="submitted && member.get('evaluateEmployeeProjectID').errors.required">
+                                                        {{'project.list.table.member-evaluate'| translate}} {{'server-error.001'| translate}}</div>
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <ng-container>
+                                                <textarea type="text" name="note" cols="45" rows="1" style="resize: none;" class="form-control form-control-sm"
+                                                    formControlName="note" [ngClass]="{ 'is-invalid': member.get('note').errors }"></textarea>
+                                                <div *ngIf="member.invalid" class="display-error">
+                                                    <div *ngIf="member.get('note')?.errors?.maxlength" class="invalid-feedback" style="display: block;">
+                                                        {{'project.list.table.member-note'| translate}}
+                                                        {{'server-error.008'| translate:maxLenghtDescription}} </div>
+                                                </div>
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,92 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.department'" [childBreabcrumb]="isUpdate ? 'breadcrumb.child.update' : 'breadcrumb.child.create'" [parrentBreabcrumbUrl]="'/department'">
+</app-breadcrumb-share>
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.department.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.department.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id" formControlName="deparmentID">
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.department.detail.label.departmentCode'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="departmentCode" [ngClass]="{ 'is-invalid': (submitted && f.departmentCode.errors && f.departmentCode.pristine) || f.departmentCode.errors?.serverError}">
+                        <div *ngIf="submitted && f.departmentCode.errors && f.departmentCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.departmentCode.errors.required">
+                                {{'master.department.detail.label.departmentCode'| translate}} {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.departmentCode.errors.pattern; else checkLength">
+                                {{'master.department.detail.label.departmentCode'| translate}} {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.departmentCode.errors.maxlength">
+                                    {{'master.department.detail.label.departmentCode'| translate}} {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.departmentCode.errors?.serverError">
+                            <div>{{'master.department.detail.label.departmentCode'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.department.detail.label.department-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="departmentName" [ngClass]="{ 'is-invalid': (submitted && f.departmentName.errors && f.departmentName.pristine) || f.departmentName.errors?.serverError}">
+                        <div *ngIf="submitted && f.departmentName.errors && f.departmentName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.departmentName.errors.required">
+                                {{'master.department.detail.label.department-name'| translate}} {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.departmentName.errors.maxlength">
+                                {{'master.department.detail.label.department-name'| translate}} {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.departmentName.errors?.serverError">
+                            <div>{{'master.department.detail.label.department-name'| translate}} {{displayMessage}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <label>
+                            {{'master.department.detail.label.description'| translate}}
+                        </label>
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm" 
+                                formControlName="departmentDescription" [ngClass]="{ 'is-invalid': (submitted && f.departmentDescription.errors && f.departmentDescription.pristine) || f.departmentDescription.errors?.serverError} ">
+                        </textarea>
+                        <div *ngIf="submitted && f.departmentDescription.errors && f.departmentDescription.pristine" class="invalid-feedback">
+                            <div *ngIf="f.departmentDescription.errors.maxlength">
+                                {{'master.department.detail.label.description'| translate}} {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.departmentDescription.errors?.serverError">
+                            <div>{{'master.department.detail.label.description'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master" type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

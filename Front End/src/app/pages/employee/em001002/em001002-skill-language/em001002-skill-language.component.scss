@@ -1,0 +1,40 @@
+.top-page-size span {
+    font-weight: 900; 
+    font-size: 15px;
+    margin: 8px 0 15px 0;
+}
+
+.icon-x {
+    font-size: unset !important;
+    color: unset !important;
+}
+
+.input-group {
+    position: unset;
+}
+
+.table td, .table th {
+    border: 1px solid #e2e5e8;
+}
+
+.div-hide {
+    height: 18px;
+}
+
+.table-responsive {
+    overflow-x: unset !important;
+}
+
+.is-invalid {
+    border: 2px solid red !important;
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    height: auto  !important;
+}
+
+.table td.fit, 
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}

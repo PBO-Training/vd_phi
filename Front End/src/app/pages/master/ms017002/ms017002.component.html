@@ -1,0 +1,93 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.permission'" [childBreabcrumb]="'breadcrumb.child.update'"
+    [parrentBreabcrumbUrl]="'/permission'">
+</app-breadcrumb-share>
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="typeRole">{{'master.role-screen.detail.title-update'| translate}}
+                {{'master.role-screen.detail.role'| translate}}</h5>
+            <h5 *ngIf="!typeRole">{{'master.role-screen.detail.title-update'| translate}}
+                {{'master.role-screen.detail.screen'| translate}}</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            <span *ngIf="typeRole"> {{'master.role.list.code'| translate}} </span>
+                            <span *ngIf="!typeRole"> {{'master.screen.list.code'| translate}} </span>
+                            <i class="color-red">*</i>
+                        </label>
+                        <input *ngIf="typeRole" type="text" class="form-control form-control-sm"
+                            formControlName="roleCode" disabled>
+                        <input *ngIf="!typeRole" type="text" class="form-control form-control-sm"
+                            formControlName="screenCode" disabled>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button class="btn btn-primary btn-sm btn-master" type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="buttonBack()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" *ngFor="let item of listPermission;" id="{{item.groupScreenCode}}" style="display: block;">
+    <div class="card table-card" *ngIf="item.listRoleAction.length > 0">
+        <div class="d-flex justify-content-between panigator-responsive card-header-right"
+            (click)="item.isCollapsed = !item.isCollapsed" [attr.aria-expanded]="!item.isCollapsed"
+            aria-controls="collapseExample">
+            <div style="margin-right: 10px;">
+                <div class="top-page-size">
+                    <span>{{item.groupScreenCode}}</span>
+                </div>
+            </div>
+            <div class="grid-panigator">
+                <i class="fas fa-angle-up" *ngIf="item.isCollapsed"></i>
+                <i class="fas fa-angle-down" *ngIf="!item.isCollapsed"></i>
+            </div>
+        </div>
+        <div class="table-responsive" id="collapseExample" [ngbCollapse]="item.isCollapsed">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th [ngClass]="{'text-center': i!=0}" *ngFor="let action of listAction; let i = index">
+                            {{action.actionCode}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let roleActionItem of item.listRoleAction; let i = index;">
+                        <tr>
+                            <td [ngClass]="{'text-center': j!=0}" *ngFor="let action of listAction;let j = index;">
+                                <!-- thang dau tien la ten man hinh -->
+                                <span class="role-screen" *ngIf="j==0" data-toggle="tooltip"
+                                    title="{{roleActionItem.screenCode}}">{{roleActionItem.screenCode}}</span>
+                                <!-- cac truong sau la checkbox -->
+                                <div *ngIf="j!=0">
+                                    <label
+                                        class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                        <input type="checkbox" class="custom-control-input"
+                                            [(ngModel)]="roleActionItem[action.actionCode]"
+                                            [disabled]="roleActionItem['disable' + action.actionCode]"
+                                            (change)="onChange(action.actionCode, roleActionItem.screenCode, item.groupScreenCode, $event)">
+                                        <span class="custom-control-label"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

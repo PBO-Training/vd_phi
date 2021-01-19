@@ -1,0 +1,214 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.shift-work'"></app-breadcrumb-share>
+<div class="col-md-12">
+  <fieldset class="scheduler-border">
+    <legend class="scheduler-border" (click)="screenProps.isCollapsed = !screenProps.isCollapsed" [attr.aria-expanded]="!screenProps.isCollapsed" aria-controls="collapseExample">
+      {{'button.search'| translate}}
+      <div style="margin-left: 5px; display: inline-flex;">
+          <i class="fas fa-angle-up" *ngIf="screenProps.isCollapsed === true;"></i>
+          <i class="fas fa-angle-down" *ngIf="screenProps.isCollapsed === false;"></i>
+      </div>
+  </legend>
+  <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
+    <div class="card-body search-body">
+      <form [formGroup]="formSearch" (ngSubmit)="searchShiftwork(screenProps.pageNum,screenProps.pageSize)" appFocus>
+        <div class="row">
+          <div class="col-sm-3">
+              <label for="Code">
+                  {{'master.shiftwork.list.code'| translate}}
+              </label>
+              <input type="text" class="form-control form-control-sm" formControlName="shiftWorkOptionCode">
+          </div>
+          <div class="col-sm-3">
+              <label for="Name">
+                  {{'master.shiftwork.list.name'| translate}}
+              </label>
+              <input type="text" class="form-control form-control-sm" formControlName="shiftWorkOptionName">
+          </div>
+      </div>
+      <div class="mb-2 mt-2 row">
+          <div class="col-sm-10">
+              <button appDebounceClick (debounceClick)="searchShiftwork(screenProps.pageNum,screenProps.pageSize)" type="submit" class="btn  btn-primary btn-sm btn-master">
+                  <i class="feather icon-search"></i>
+                  {{'button.search'| translate}}
+              </button>
+              <button appDebounceClick type="button" class="btn   btn-secondary  btn-sm btn-master" (debounceClick)="reset()">
+                  <i class="feather icon-refresh-ccw"></i>
+                  {{'button.refresh'| translate}}
+              </button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+  </fieldset>
+</div>
+<div class="col-md-12 mb-2 mt-2">
+  <div class="btn-fun text-right">
+      <button type="button" class="btn  btn-primary btn-sm btn-master" [routerLink]="['/vacation-shift-work/create']">
+          <i class="feather icon-plus"></i>
+          {{'button.create'| translate}}
+      </button>
+      <button type="button" (click)="deleteShilftwork()" class="btn btn-danger btn-sm">
+          <i class="feather icon-trash"></i>
+          {{'button.delete'| translate}}
+      </button>
+  </div>
+</div>
+<div class="col-md-12"  *ngIf="shiftWorkList?.length !== 0 && shiftWorkList !== undefined; else nodata">
+  <div class="card table-card">
+    <div class="d-flex justify-content-between panigator-responsive">
+      <div class="grid-page-size">
+        <div class="top-page-size">
+          <p class="text-panigator">{{'p.display'| translate}}</p>
+          <div class="select-paging">
+            <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize" (change)="changePageSize($event.target.value)">
+              <option
+                  *ngFor="let option of screenProps.pageOpiton"
+                  [selected]="option === screenProps.pageSize"
+                  [value]="option"
+              >
+                  {{option}}
+              </option>
+          </select>
+          </div>
+        </div>
+        <div class="d-flex">
+          <p class="text-panigator">
+              {{'p.from'| translate}} {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}} {{'p.to'| translate}} {{ (shiftWorkList?.length + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+              {{'p.of'| translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}}
+          </p>
+        </div>
+      </div>
+      <div class="grid-panigator">
+        <ngb-pagination [collectionSize]="screenProps.totalRecord" (pageChange)="pageChangeOutput($event)" [(page)]="screenProps.page" [pageSize]="screenProps.pageSize" [maxSize]="screenProps.maxSize" [boundaryLinks]="true" [rotate]="true">
+        </ngb-pagination>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="remove-th text-left th-5 check">
+              <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    (change)="checkAll($event)"
+                    (click)="checkAll($event)"
+                    [(ngModel)]="checked"
+                >
+                <span class="custom-control-label"></span>
+              </label>
+            </th>
+            <th class="text-left th-5">
+              {{'p.no'| translate}}
+            </th>
+            <th class="text-left sort-column th-10" sortable="shiftworkCode" (sort)="onSort($event)">
+              {{'master.shiftwork.list.table.shiftwork-code'| translate}}
+              <div class='direction'>
+                <div [className]="direction === 'desc' && column === 'shiftworkCode' ? 'hide' : 'asc'">
+                    <i class="fa fa-caret-up" aria-hidden="true"></i>
+                </div>
+                <div [className]="direction === 'asc' && column === 'shiftworkCode' ? 'hide' : 'desc'">
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+              </div>
+            </th>
+            <th class="text-left th-10 " sortable="shiftworkName" (sort)="onSort($event)">
+              {{'master.shiftwork.list.table.shiftwork-name'| translate}}
+              <div class='direction'>
+                  <div [className]="direction === 'desc' && column === 'shiftworkName' ? 'hide' : 'asc'">
+                      <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                  </div>
+                  <div [className]="direction === 'asc' && column === 'shiftworkName' ? 'hide' : 'desc'">
+                      <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </div>
+              </div>
+            </th>
+            <th class="text-left th-10" sortable="shiftWorkTimeAM" (sort)="onSort($event)">
+              {{'master.shiftwork.list.table.shiftwork-timeAM'| translate}}
+              <div class='direction'>
+                  <div [className]="direction === 'desc' && column === 'shiftWorkTimeAM' ? 'hide' : 'asc'">
+                      <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                  </div>
+                  <div [className]="direction === 'asc' && column === 'shiftWorkTimeAM' ? 'hide' : 'desc'">
+                      <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </div>
+              </div>
+            </th>
+            <th class="text-left th-10" sortable="shiftWorkTimePM" (sort)="onSort($event)">
+              {{'master.shiftwork.list.table.shiftwork-timePM'| translate}}
+              <div class='direction'>
+                  <div [className]="direction === 'desc' && column === 'shiftWorkTimePM' ? 'hide' : 'asc'">
+                      <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                  </div>
+                  <div [className]="direction === 'asc' && column === 'shiftWorkTimePM' ? 'hide' : 'desc'">
+                      <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </div>
+              </div>
+            </th>
+            <th class="text-left" sortable="shiftworkDescription" (sort)="onSort($event)">
+              {{'master.shiftwork.list.table.shiftwork-description'| translate}}
+              <div class='direction'>
+                  <div [className]="direction === 'desc' && column === 'shiftworkDescription' ? 'hide' : 'asc'">
+                      <i class="fa fa-caret-up" aria-hidden="true"></i>
+
+                  </div>
+                  <div [className]="direction === 'asc' && column === 'shiftworkDescription' ? 'hide' : 'desc'">
+                      <i class="fa fa-caret-down" aria-hidden="true"></i>
+                  </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let item of shiftWorkList; let i = index; trackBy: trackByFn ">
+              <tr>
+                  <td class="text-center">
+                      <div class="chk-option">
+                          <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                              <input
+                                  type="checkbox"
+                                  class="custom-control-input"
+                                  (change)="onItemChecked(item.shiftWorkOptionID, $event)"
+                                  (click)="onItemChecked(item.shiftWorkOptionID, $event)"
+                                  [checked]="screenProps.setOfCheckedId.has(item.shiftWorkOptionID)"
+                              >
+                              <span class="custom-control-label"></span>
+                          </label>
+                      </div>
+                  </td>
+                  <td class="number-left ">
+                       {{((i + 1 )+ (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0))}}
+
+                  </td>
+                  <td class="text-center underline" [routerLink]="['']" routerLinkActive="router-link-active">
+                      {{item.shiftWorkOptionCode}}
+                  </td>
+                  <td class="underline" [routerLink]="['']" routerLinkActive="router-link-active">
+                      {{item.shiftWorkOptionName}}
+                  </td>
+                  <td class="text-left">
+                    {{item.shiftWorkOptionStartTimeAM}} - {{item.shiftWorkOptionEndTimeAM}}
+                  </td>
+                  <td class="text-left">
+                    {{item.shiftWorkOptionStartTimePM}} - {{item.shiftWorkOptionEndTimePM}}
+                  </td>
+                  <td class="text-left">
+                    {{item.shiftWorkOptionDescription}}
+                  </td>
+              </tr>
+          </ng-container>
+      </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<ng-template #nodata>
+  <div class="col-md-12" *ngIf="shiftWorkList?.length === 0">
+      {{ 'table.no-data' | translate}}
+  </div>
+</ng-template>

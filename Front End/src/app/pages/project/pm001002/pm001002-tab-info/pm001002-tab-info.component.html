@@ -1,0 +1,287 @@
+<form appFocus [formGroup]="formDetails" (ngSubmit)="submitForm()" class="needs-validation tab-container" novalidate>
+
+  <!-- Row 1 -->
+  <div class="form-row">
+    <div class="col-md-12">
+      <div class="row btn-fun">
+        <div class="col-sm-10">
+          <button (click)="onBack()" routerLinkActive="router-link-active"
+            class="btn btn btn-secondary btn-sm btn-master" type="button">
+            <i class="feather icon-rotate-ccw"></i>
+            {{'button.back'| translate}}
+          </button>
+          <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+            type="submit">
+            <i class="feather icon-save"></i>
+            {{'button.save'| translate}}
+          </button>
+          <button type="button" *ngIf="authButton.UPDATE" class="btn  btn-danger btn-sm btn-master"
+            (click)="onCancel()">
+            <i class="feather icon-x-square"></i>
+            {{'button.cancel'| translate}}
+          </button>
+        </div>
+      </div>
+      <!-- BEGIN Card Infomation Project -->
+      <div class="card">
+        <div class="card-body">
+          <div class="card-header">
+            <h4 style="margin-bottom: auto;">{{'project.detail.title.title-projectInfo-info-project'| translate}}</h4>
+          </div>
+          <!-- row 1 -->
+          <div class="row">
+            <div class="col-md-3 mb-1">
+              <label class="floating-label">
+                {{'project.detail.label.project-code'| translate}}
+                <i class="color-red">*</i>
+              </label>
+              <input type="text" class="form-control form-control form-control-sm" name="projectCode"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.projectCode.errors || formDetailsValidation.projectCode.errors?.serverError}"
+                formControlName="projectCode" />
+              <div *ngIf="formDetailsValidation.projectCode.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.projectCode.errors.required">
+                  {{'project.detail.label.project-code'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.projectCode.errors.maxlength">
+                  {{'project.detail.label.project-code'| translate}}
+                  {{'server-error.008'| translate:maxLenghtCode}}</div>
+                <div *ngIf="formDetailsValidation.projectCode.errors.pattern">
+                  {{'project.detail.label.project-code'| translate}}
+                  {{'server-error.007'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.projectCode.errors?.serverError">
+                <div>{{'project.detail.label.project-code'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+
+            <!-- Input Project Name -->
+            <div class="col-md-3 mb-1">
+              <label class="floating-label">
+                {{'project.detail.label.project-name'| translate}}
+                <i class="color-red">*</i>
+              </label>
+              <input type="text" class="form-control form-control form-control-sm" name="projectName"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.projectName.errors || formDetailsValidation.projectName.errors?.serverError}"
+                formControlName="projectName" />
+              <div *ngIf="formDetailsValidation.projectName.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.projectName.errors.required">
+                  {{'project.detail.label.project-name'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.projectName.errors.maxlength">
+                  {{'project.detail.label.project-name'| translate}}
+                  {{'server-error.008'| translate:maxLenghtName}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.projectName.errors?.serverError">
+                <div>{{'project.detail.label.project-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- row 2 -->
+          <div class="row">
+            <!-- Dropdown Customer -->
+            <div class="col-md-6 mb-1">
+              <label>{{'project.detail.label.customer'| translate}} </label>
+              <select class="mb-12 form-control form-control-sm" name="customerID" formControlName="customerID"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.customerID.errors }">
+                <option *ngFor="let item of dropdownData?.listCustomer" [value]="item.customerID">{{item.customerName}}
+                </option>
+              </select>
+              <div *ngIf="formDetailsValidation.customerID.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.customerID.errors.required">
+                  {{'project.detail.form.customer-name'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.customerID.errors.maxlength">
+                  {{'project.detail.form.customer-name'| translate}}
+                  {{'server-error.008'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.customerID.errors?.serverError">
+                <div>{{'project.detail.form.customer-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- row 3 -->
+          <div class="row">
+            <!-- Datetime picker start day -->
+            <div class="col-md-3 mb-1">
+              <label>{{'project.detail.label.start-date'| translate}}</label>
+              <div class="input-group input-group-picker">
+                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                  formControlName="projectStartDate" ngbDatepicker #d1="ngbDatepicker" [minDate]='config.minDate'
+                  [maxDate]='config.maxDate'
+                  [ngClass]="{ 'is-invalid': (formDetailsValidation.projectStartDate.errors?.ngbDate)}">
+                <button type="button" class="calendar input-group-append btn btn-outline-secondary"
+                  (click)="d1.toggle()">
+                  <i class="icon-calendar far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <div *ngIf="formDetailsValidation.projectStartDate.errors?.ngbDate">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>{{'project.detail.label.start-date'| translate}} {{'server-error.003'| translate}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 mb-1">
+              <!-- Datetime picker end day -->
+              <label>{{'project.detail.label.end-date'| translate}}</label>
+              <div class="input-group input-group-picker">
+                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                  formControlName="projectEndDate" ngbDatepicker #d2="ngbDatepicker" [minDate]='config.minDate'
+                  [maxDate]='config.maxDate'
+                  [ngClass]="{ 'is-invalid': (formDetailsValidation.projectEndDate.errors?.ngbDate) || formDetails.errors?.dates}">
+                <button type="button" class="calendar input-group-append btn btn-outline-secondary"
+                  (click)="d2.toggle()">
+                  <i class="icon-calendar far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <div *ngIf="formDetailsValidation.projectEndDate.errors?.ngbDate">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>{{'project.detail.label.end-date'| translate}} {{'server-error.003'| translate}}</span>
+                </div>
+              </div>
+              <div *ngIf="!formDetailsValidation.projectEndDate.errors?.ngbDate && formDetails.errors?.dates">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>
+                    {{'project.detail.label.end-date'| translate}}
+                    {{'server-error.004'| translate}}
+                    {{'project.detail.label.start-date'| translate}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- row 4 -->
+          <div class="row">
+            <!-- Dropdown Status Project -->
+            <div class="col-md-3 mb-1">
+              <label>{{'project.detail.label.status'| translate}}<i class="color-red">*</i></label>
+              <select class="mb-12 form-control form-control-sm" name="statusProjectID"
+                formControlName="statusProjectID"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.statusProjectID.errors }">
+                <option *ngFor="let item of statusProject" [value]="item.statusProjectID">
+                  {{item.statusProjectName}}</option>
+              </select>
+              <div *ngIf="formDetailsValidation.statusProjectID.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.statusProjectID.errors.required">
+                  {{'project.detail.form.status-name'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.statusProjectID.errors.maxlength">
+                  {{'project.detail.form.status-name'| translate}}
+                  {{'server-error.008'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.statusProjectID.errors?.serverError">
+                <div>{{'project.detail.form.status-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- row 5 -->
+          <div class="row">
+            <div class="col-md-3 mb-1">
+              <label>{{'project.detail.label.department'| translate}} </label>
+              <select class="mb-12 form-control form-control-sm" name="departmentID" formControlName="departmentID"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.departmentID.errors }">
+                <option *ngFor="let item of dropdownData?.listDepartment" [value]="item.departmentID">
+                  {{item.departmentName}}
+                </option>
+              </select>
+              <div *ngIf="formDetailsValidation.departmentID.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.departmentID.errors.maxlength">
+                  {{'project.detail.form.department-name'| translate}}
+                  {{'server-error.008'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.departmentID.errors?.serverError">
+                <div>{{'project.detail.form.department-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- row 6 -->
+          <div class="row">
+            <!-- Input Cost -->
+            <div class="col-md-3 mb-1">
+              <label class="floating-label">{{'project.detail.label.project-effort'| translate}}</label>
+              <input type="text" class="form-control form-control form-control-sm" name="projectEffort" onlyNumber
+                [ngClass]="{ 'is-invalid': formDetailsValidation.projectEffort.errors }" formControlName="projectEffort"
+                (keyup)="common.removeSpecWord($event)" />
+              <div *ngIf="formDetailsValidation.projectEffort.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.projectEffort.errors.max">
+                  {{'project.detail.label.project-effort'| translate}}
+                  {{'server-error.006'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.projectEffort.errors?.serverError">
+                <div>{{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+          <!-- Input Note -->
+          <div class="form-row">
+            <div class="col-md-12 mb-1">
+              <label class="floating-label">{{'project.detail.label.description'| translate}}</label>
+              <textarea type="text" class="form-control form-control form-control-sm" rows="3" name="projectDescription"
+                [ngClass]="{ 'is-invalid': formDetailsValidation.projectDescription.errors }"
+                formControlName="projectDescription"></textarea>
+              <div *ngIf="formDetailsValidation.projectDescription.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.projectDescription.errors.maxlength">
+                  {{'project.detail.label.description'| translate}}
+                  {{'server-error.008'| translate:maxLenghtDescription}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- END Card Infomation Project -->
+
+      <!-- BEGIN Card Evaluate Project -->
+      <div class="card" *ngIf="isUpdate === true">
+        <div class="card-body">
+          <div class="card-header">
+            <h4 style="margin-bottom: auto;">{{'project.detail.title.title-projectInfo-evaluate-project'| translate}}
+            </h4>
+          </div>
+          <div class="row">
+            <!-- Dropdown Evaluate Project -->
+            <div class="col-md-3 mb-1">
+              <label>{{'project.detail.label.evaluate'| translate}} </label>
+              <ng-select placeholder="-- {{'employee.create.form.evaluate-placeholder' | translate}} --"
+                formControlName="evaluateProjectID">
+                <ng-option *ngFor="let item of dropdownData?.listEvaluateProject" [value]="item.evaluateProjectID">
+                  {{item.evaluateProjectName}}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="formDetailsValidation.evaluateProjectID.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.evaluateProjectID.errors.required">
+                  {{'project.detail.form.evaluate-name'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.evaluateProjectID.errors.maxlength">
+                  {{'project.detail.form.evaluate-name'| translate}}
+                  {{'server-error.008'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.evaluateProjectID.errors?.serverError">
+                <div>{{'project.detail.form.evaluate-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+            <!-- Dropdown Level Project -->
+            <div class="col-md-3 mb-1">
+              <label>{{'project.detail.label.level'| translate}} </label>
+              <ng-select placeholder="-- {{'employee.create.form.level-project-placeholder' | translate}} --"
+                formControlName="levelProjectID">
+                <ng-option *ngFor="let item of dropdownData?.listLevelProject" [value]="item.levelProjectID">
+                  {{item.levelProjectName}}
+                </ng-option>
+              </ng-select>
+              <div *ngIf="formDetailsValidation.levelProjectID.errors" class="invalid-feedback">
+                <div *ngIf="formDetailsValidation.levelProjectID.errors.required">
+                  {{'project.detail.form.level-name'| translate}}
+                  {{'server-error.001'| translate}}</div>
+                <div *ngIf="formDetailsValidation.levelProjectID.errors.maxlength">
+                  {{'project.detail.form.level-name'| translate}}
+                  {{'server-error.008'| translate}}</div>
+              </div>
+              <div class="invalid-feedback" *ngIf="formDetailsValidation.levelProjectID.errors?.serverError">
+                <div>{{'project.detail.form.level-name'| translate}} {{displayMessage | translate}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

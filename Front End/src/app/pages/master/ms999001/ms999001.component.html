@@ -1,0 +1,51 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.dashboard.dashboard'"
+    [parrentBreabcrumbUrl]="'/dashboard'">
+</app-breadcrumb-share>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="card-header">
+                    <h5>{{'dashboard.title.employee-over-month'| translate}}</h5>
+                </div>
+                <div id="chart">
+                    <apx-chart 
+                        *ngIf="isRenderCharts === true"
+                        [series]="chartEmployeeJoinInMonth?.series" 
+                        [chart]="chartEmployeeJoinInMonth?.chart"
+                        [xaxis]="chartEmployeeJoinInMonth?.xaxis" 
+                        [dataLabels]="chartEmployeeJoinInMonth?.dataLabels"
+                        [grid]="chartEmployeeJoinInMonth?.grid" 
+                        [stroke]="chartEmployeeJoinInMonth?.stroke">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header">
+                    <div class="row" style="justify-content: space-between;">
+                        <h5>{{'dashboard.title.employee-statistics'| translate}}</h5>
+                        <h5>{{'dashboard.title.total'| translate}}: {{employeeInCompany}}</h5>
+                    </div>
+                </div>
+                <div id="chat2">
+                    <apx-chart 
+                        *ngIf="isRenderCharts === true"
+                        [series]="chartEmployeeInCompany?.series" 
+                        [chart]="chartEmployeeInCompany?.chart"
+                        [legend]="chartEmployeeInCompany?.legend"
+                        [labels]="chartEmployeeInCompany?.labels" 
+                        [responsive]="chartEmployeeInCompany?.responsive"
+                        [colors]="chartEmployeeInCompany?.colors">
+                    </apx-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,266 @@
+<!-- Popup notification error -->
+<div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">{{'employee.list.title.title_remove'| translate}}
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0">{{'button.close'| translate}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn  btn-secondary"
+                    data-dismiss="modal">{{'button.close'| translate}}</button>
+                <button type="button" class="btn  btn-primary">{{'button.delete'| translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border" (click)="screenProps.isCollapsed = !screenProps.isCollapsed"
+                [attr.aria-expanded]="!screenProps.isCollapsed" aria-controls="collapseExample">
+                {{'button.search'| translate}}
+                <div style="display: inline-flex;">
+                    <i class="fas fa-angle-up" *ngIf="screenProps.isCollapsed === true;"></i>
+                    <i class="fas fa-angle-down" *ngIf="screenProps.isCollapsed === false;"></i>
+                </div>
+            </legend>
+            <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
+                <div class="card card-master">
+                    <div class="card-body search-body">
+                        <form [formGroup]="formSearch" (ngSubmit)="searchIssue()">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label for="tracker">
+                                        {{'project.list.table.issue-tracker'| translate}}
+                                    </label>
+                                    <select class="form-control form-control-sm" formControlName="trackerID">
+                                        <option *ngFor="let item of dropdownData?.listTracker" [value]="item.keyResponse">
+                                            {{item.valueResponse}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label for="status">
+                                        {{'project.list.table.issue-status'| translate}}
+                                    </label>
+                                    <select class="form-control form-control-sm" formControlName="statusIssueID">
+                                        <option *ngFor="let item of dropdownData?.listStatusIssue"
+                                            [value]="item.keyResponse">
+                                            {{item.valueResponse}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3" *ngIf="isShowProject === true">
+                                    <label for="project">
+                                        {{'project.list.table.issue-project'| translate}}
+                                    </label>
+                                    <select class="form-control form-control-sm" formControlName="projectID">
+                                        <option *ngFor="let item of dropdownData?.listProject" [value]="item.keyResponse">
+                                            {{item.valueResponse}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-2 mt-2">
+                                <div class="col-sm-10">
+                                    <button (click)="searchIssue()" type="submit"
+                                        class="btn  btn-primary btn-sm btn-master">
+                                        <i class="feather icon-search"></i>
+                                        {{'button.search'| translate}}
+                                    </button>
+                                    <button type="button" class="btn btn-secondary btn-sm btn-master" (click)="resetForm()">
+                                        <i class="feather icon-refresh-ccw"></i>
+                                        {{'button.refresh'| translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<!-- BEGIN buttons -->
+<div class="row">
+    <div class="col-md-12 mt-2">
+        <div class="btn-fun text-right">
+            <button *ngIf="authButton.UPDATE" type="button" class="btn  btn-primary btn-sm btn-master"
+                (click)="navigateDetailIssue(true, null)">
+                <i class="feather icon-plus"></i>
+                {{'button.create'| translate}}
+            </button>
+            <button *ngIf="authButton.UPDATE && issueList?.length > 0" type="button" (click)="deleteIssue()"
+                class="btn btn-danger btn-sm btn-master">
+                <i class="feather icon-trash"></i>
+                {{'button.delete'| translate}}
+            </button>
+            <button *ngIf="authButton.EXPORT && issueList?.length > 0" type="button" (click)="generateExcel()"
+                class="btn  btn-primary btn-sm btn-master">
+                <i class="fas fa-file-export"></i>
+                {{'button.export-excel'| translate}}
+            </button>
+            <button [routerLink]="['/project']" routerLinkActive="router-link-active"
+                class="btn btn btn-secondary btn-sm btn-master" type="button">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+        </div>
+    </div>
+</div>
+<!-- END buttons -->
+
+<!-- BEGIN Table -->
+<div class="row">
+    <div class="col-md-12" *ngIf="issueList?.length !== 0 && issueList !== undefined; else nodata">
+        <div class="card table-card">
+            <div class="d-flex justify-content-between panigator-responsive">
+                <div class="grid-page-size">
+                    <div class="top-page-size">
+                        <p class="text-panigator">{{'p.display'| translate}}</p>
+                        <div class="select-paging">
+                            <select class="form-control form-control-sm page-size" style="width: auto" name="pageSize"
+                                (change)="changePageSize($event.target.value)">
+                                <option *ngFor="let option of screenProps.pageOpiton"
+                                    [selected]="option === screenProps.pageSize" [value]="option">
+                                    {{option}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="d-flex" *ngIf="issueList?.length > 1; else oneRecord">
+                        <p class="text-panigator">
+                            {{'p.from'| translate}}
+                            {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                            {{'p.to'| translate}}
+                            {{ (issueList.length + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                            {{'p.of'| translate}} {{screenProps.totalRecord || 0}} {{'p.record'| translate}}
+                        </p>
+                    </div>
+                    <ng-template #oneRecord>
+                        <div class="d-flex" *ngIf="issueList?.length === 1">
+                            <p class="text-panigator">
+                                {{'p.from'| translate}}
+                                {{ (1 + (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                                {{'p.to'| translate}}
+                                {{ (issueList.length +  (screenProps.pageNum !== 0 ? screenProps.pageNum * screenProps.pageSize : 0)) || 0}}
+                                {{'p.of'| translate}} {{screenProps.totalRecord || 0}}
+                                {{'p.record-singular'| translate}}
+                            </p>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="grid-panigator">
+                    <ngb-pagination [collectionSize]="screenProps.totalRecord" (pageChange)="pageChangeOutput($event)"
+                        [(page)]="screenProps.page" [pageSize]="screenProps.pageSize" [maxSize]="screenProps.maxSize"
+                        [boundaryLinks]="true" [rotate]="true">
+                    </ngb-pagination>
+                </div>
+            </div>
+            <div class="table-responsive tbl-style">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th *ngIf="authButton.UPDATE" class="remove-th th-5 text-left check" rowspan="2">
+                                <label
+                                    class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                    <input type="checkbox" class="custom-control-input" (click)="onCheckedAll($event)"
+                                        (change)="onCheckedAll($event)" [checked]="checked">
+                                    <span class="custom-control-label"></span>
+                                </label>
+                            </th>
+                            <th class="text-left" rowspan="2">
+                                {{'p.no'| translate}}
+                            </th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-id'| translate}}</th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-subject'| translate}}</th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-status'| translate}}</th>
+                            <th colspan="4" style="padding: 0 !important; text-align: center;">
+                                {{'project.list.table.issue-plan'| translate}}</th>
+                            <th colspan="4" style="padding: 0 !important; text-align: center;">
+                                {{'project.list.table.issue-actual'| translate}}</th>
+                            <th colspan="4" style="padding: 0 !important; text-align: center;">
+                                {{'project.list.table.issue-efficiency'| translate}}</th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-tracker'| translate}}</th>
+                        </tr>
+                        <tr>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-startDatePlan'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-endDatePlan'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-amountPlan'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-qualityPlan'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-startDateActual'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-endDateActual'| translate}}</th>
+                            <th class="sort-column" style="border: none; border-right: 1px solid #dee2e6;">
+                                {{'project.list.table.issue-amountActual'| translate}}</th>
+                            <th class="sort-column" style="border: none;">
+                                {{'project.list.table.issue-qualityActual'| translate}}</th>
+                            <th class="sort-column" rowspan="2">
+                                {{'project.list.table.issue-StartDateDifference'| translate}}</th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-EndDateDifference'| translate}}
+                            </th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-AmountDifference'| translate}}
+                            </th>
+                            <th class="sort-column" rowspan="2">{{'project.list.table.issue-QualityDifference'| translate}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="issueList?.length > 0">
+                        <ng-container *ngFor="let item of issueList; let i = index;">
+                            <tr>
+                                <td *ngIf="authButton.UPDATE" class="text-center">
+                                    <div class="chk-option">
+                                        <label
+                                            class="check-task custom-control custom-checkbox d-flex justify-content-center done-task text-center">
+                                            <input type="checkbox" class="custom-control-input"
+                                                (change)="onCheckedItem(item.issueID, $event)"
+                                                [checked]="screenProps.setOfCheckedId.has(item.issueID)">
+                                            <span class="custom-control-label"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                                <td class="text-right">
+                                    {{i + (screenProps.pageNum * screenProps.pageSize) + 1}}
+                                </td>
+                                <td (click)="navigateDetailIssue(true, item.issueID)" class="underline text-center">
+                                    #{{item.issueID}}</td>
+                                <td (click)="navigateDetailIssue(true, item.issueID)" class="underline">
+                                    {{item.issueSubject}}</td>
+                                <td>{{item.statusIssue.statusIssueName}}</td>
+                                <td>{{item.issueStartDatePlan | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.issueEndDatePlan | date:'dd-MM-yyyy'}}</td>
+                                <td class="text-right">{{item.issueAmountPlan}}</td>
+                                <td class="text-right">{{item.issueQualityPlan}}</td>
+
+                                <td>{{item.issueStartDateActual | date:'dd-MM-yyyy'}}</td>
+                                <td>{{item.issueEndDateActual | date:'dd-MM-yyyy'}}</td>
+                                <td class="text-right">{{item.issueAmountActual}}</td>
+                                <td class="text-right">{{item.issueQualityActual}}</td>
+                                <td class="text-right">{{item.issueStartDateDifference}}</td>
+                                <td class="text-right">{{item.issueEndDateDifference}}</td>
+                                <td class="text-right">{{item.issueAmountDifference}}</td>
+                                <td class="text-right">{{item.issueQualityDifference}}</td>
+                                <td>{{item.tracker.trackerName}}</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Table -->
+<ng-template #nodata>
+    <div class="col-md-12" *ngIf="issueList?.length === 0">
+        {{ 'table.no-data' | translate}}
+    </div>
+</ng-template>

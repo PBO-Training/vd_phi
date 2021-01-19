@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="btn-fun row">
+            <div class="col-sm-10">
+                <button [hidden]="isProfile" type="button" (click)="openPopup()"
+                    class="btn   btn-secondary  btn-sm btn-master">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+                <button
+                    *ngIf="authButton.UPDATE && (listSkillDetail !== undefined && listSkillDetail !== null && listSkillDetail?.length > 0)"
+                    class="btn  btn-info btn-sm btn-master" (click)="onEditSkill()">
+                    <!-- <i class="feather icon-save"></i> -->
+                    <i class="feather icon-edit"></i>
+                    {{'button.edit'| translate}}
+                </button>
+                <button type="button"
+                    *ngIf="authButton.UPDATE && (listSkillDetail === undefined || listSkillDetail === null || listSkillDetail?.length < 1)"
+                    class="btn btn-primary btn-sm btn-master" (click)="addSkill()"><i class="feather icon-plus"></i>
+                    {{'button.add'| translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12"
+        *ngIf="listSkillDetail !== undefined && listSkillDetail !== null && listSkillDetail?.length > 0">
+        <div class="card table-card">
+            <div class="table-responsive">
+                <table class="table table-hover table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="th-5">{{'employee.view.skill-view.no' | translate}} </th>
+                            <th>{{'employee.view.skill-view.skill-type' | translate}} </th>
+                            <th>{{'employee.view.skill-view.skill-name' | translate}}</th>
+                            <th>{{'employee.view.skill-view.skill-level' | translate}}</th>
+                            <th>{{'employee.view.skill-view.skill-exp' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let item of skillsMap | keyvalue, let i = index">
+                            <tr *ngIf="item">
+                                <td [attr.rowspan]="item.value.length" class="text-right">{{i+1}}</td>
+                                <td [attr.rowspan]="item.value.length">{{item.key}}</td>
+                                <td>{{item.value[0].skillName}}</td>
+                                <td>{{item.value[0].levelSkillName}}</td>
+                                <td>{{item.value[0].skillExperience}}</td>
+                            </tr>
+                            <ng-container *ngFor="let skill of item.value; let i= index;">
+                                <tr *ngIf="i!=0">
+                                    <td>{{skill.skillName}}</td>
+                                    <td>{{skill.levelSkillName}}</td>
+                                    <td>{{skill.skillExperience}}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

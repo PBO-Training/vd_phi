@@ -1,0 +1,192 @@
+<div class='d-flex justify-content-between breacrumb'>
+    <ng-container *ngIf="isUpdate; else createBreabcrumb">
+        <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.user'" [childBreabcrumb]="'breadcrumb.child.update'"
+            [parrentBreabcrumbUrl]="'/user'">
+        </app-breadcrumb-share>
+    </ng-container>
+    <ng-template #createBreabcrumb>
+        <app-breadcrumb-share [parrentBreabcrumb]="'User'" [childBreabcrumb]="'breadcrumb.child.create'"
+            [parrentBreabcrumbUrl]="'/user'">
+        </app-breadcrumb-share>
+    </ng-template>
+</div>
+<div class="col-sm-12">
+    <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+        <div class="card">
+            <div class="card-header">
+                <h5 *ngIf="isUpdate else createTitle">
+                    {{'master.user.detail.label.title-update'| translate}}
+                </h5>
+            </div>
+            <ng-template #createTitle>
+                <h5>{{'master.user.detail.label.title-name'| translate}}</h5>
+            </ng-template>
+
+            <div class="card-body">
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder formControlName="username">
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="floating-label">
+                            {{'master.user.detail.label.username'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="username"
+                            [ngClass]="{ 'is-invalid': (submitted && f.username.errors && f.username.pristine) || f.username.errors?.serverError}">
+                        <div *ngIf="submitted && f.username.errors && f.username.pristine" class="invalid-feedback">
+                            <div *ngIf="f.username.errors.required">
+                                {{'master.user.detail.label.username'| translate}}
+                                {{'server-error.001'| translate}}
+                            </div>
+                            <div *ngIf="f.username.errors.pattern; else checkLength">
+                                {{'master.user.detail.label.username'| translate}}
+                                {{'server-error.007'| translate}}
+                            </div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.username.errors.minlength">
+                                    {{'master.user.detail.label.username'| translate}}
+                                    {{'server-error.011'| translate:minLenghtName}}</div>
+                                <div *ngIf="f.username.errors.maxlength">
+                                    {{'master.user.detail.label.username'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtName}}</div>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="f.username.errors?.serverError" class="invalid-feedback">
+                            <div>
+                                {{'master.user.detail.label.username'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label class="floating-label">
+                            {{'master.user.detail.label.role'| translate}}
+                        </label>
+                        <select formControlName="roleID" id="listRole" class="form-control form-control-sm">
+                            <option *ngFor="let r of listRole" [value]="r.roleID">{{r.roleName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-3 mb-3">
+                        <label>
+                            {{'master.user.detail.label.password'| translate}}
+                            <i *ngIf="passwordRequired" class="color-red">*</i>
+                        </label>
+                        <input type="password" class="form-control form-control-sm" formControlName="password"
+                             [ngClass]="{ 'is-invalid': (submitted && f.password.errors && f.password.pristine) || f.password.errors?.serverError}">
+                        <div *ngIf="submitted && f.password.errors?.maxlength && f.username.pristine" class="invalid-feedback">
+                            {{'master.user.detail.label.password'| translate}}
+                            {{'server-error.008'| translate:maxLenghtName}}
+                        </div>
+                        <div *ngIf="f.password.errors?.serverError" class="invalid-feedback">
+                            <div>
+                                {{'master.user.detail.label.password'| translate}}
+                                {{displayMessage}}
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-3 mb-3">
+                        <label>
+                            {{'master.user.detail.label.confirm'| translate}}
+                            <i *ngIf="passwordRequired" class="color-red">*</i>
+                        </label>
+                        <div class="input-group">
+                            <input type="password" class="form-control form-control-sm"
+                                formControlName="confirmPassword"
+                                [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors && f.confirmPassword.pristine}" />
+                            <div *ngIf="submitted && f.confirmPassword.errors && f.confirmPassword.pristine"
+                                class="invalid-feedback">
+
+                                <div *ngIf="f.confirmPassword.errors.mustMatch">
+                                    {{'master.user.detail.label.confirm'| translate}}
+                                    {{'server-error.801'| translate}}</div>
+
+                            </div>
+                            <div *ngIf="f.confirmPassword.errors?.serverError" class="invalid-feedback">
+                                <div>
+                                    {{'master.user.detail.label.confirm'| translate}}
+                                    {{displayMessage}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- assign employee -->
+        <div class="card">
+            <div class="card-body">
+                <div class="form-row justify-content-left">
+                    <!-- assignTo EmployeeID-->
+                    <div class="col-md-3 mb-3">
+                        <label class="floating-label">
+                            {{'master.user.detail.label.assign-to'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input hidden class="form-control form-control-sm" formControlName="employeeID">
+                        <input readonly class="form-control form-control-sm" formControlName="employeeName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.employeeID.errors && f.employeeID.pristine) || f.employeeID.errors?.serverError}">
+                        <div *ngIf="submitted && f.employeeID.errors" class="invalid-feedback">
+                            <div *ngIf="f.employeeID.errors.required">
+                                {{'master.user.detail.label.assign-to'| translate}}
+                                {{'server-error.001'| translate}}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- errow asign -->
+                    <div class="col-md-1 mb-3 ">
+                        <br>
+                        <div class="btn-assign">
+                            <button (click)="assignLeader()" class="btn btn-primary btn-sm btn-master form-control-sm"
+                                type="button">
+                                <i class="feather icon-arrow-left"></i>
+                            </button>
+                        </div>
+                        <div *ngIf="submitted && f.employeeID.errors" class="invalid-feedback" style="height: 15px;">
+                        </div>
+                    </div>
+                    <!-- search Employee -->
+                    <div class="col-md-4 mb-3">
+                        <label class="floating-label">
+                        </label>
+                        <input type="text" class="form-control form-control-sm" (keyup)="onKey($event)">
+                        <!-- <i class="feather icon-search"></i> -->
+                    </div>
+                </div>
+                <!-- button quickly add ney employee and list employee search -->
+                <div class="form-row justify-content-left">
+                    <div class="col-md-3 mb-3">
+                        <button *ngIf="!showBtnDefaultEmp" class="btn btn-primary btn-sm btn-master btn-def-emp-add"
+                            type="button" (click)="generatedEmp()">
+                            <i class="feather icon-plus"></i>
+                            {{'button.default-employee-create'| translate}}
+                        </button>
+                    </div>
+                    <div class="col-md-1 mb-3">
+                    </div>
+                    <!-- select employee -->
+                    <div class="col-md-4 mb-3">
+                        <select class="mb-12 form-control form-control-sm fixInputWidth" size="7" id="employees"
+                            formControlName="employeeSelectID">
+                            <option *ngFor="let item of employee" [ngValue]="item.employeeID">
+                                {{item.firstName}} {{item.lastName}} ({{item.employeeCode}})
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- button -->
+        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master" type="submit">
+            <i class="feather icon-save"></i>
+            {{'button.save'| translate}}
+        </button>
+        <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
+            <i class="feather icon-rotate-ccw"></i>
+            {{'button.back'| translate}}
+        </button>
+    </form>
+</div>

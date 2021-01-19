@@ -1,0 +1,115 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.master.employee-position'"
+    [childBreabcrumb]="isUpdate ? 'breadcrumb.child.update' : 'breadcrumb.child.create'"
+    [parrentBreabcrumbUrl]="'/employee-position'">
+</app-breadcrumb-share>
+
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header">
+            <h5 *ngIf="isUpdate; else createTitle">
+                {{'master.employeePosition.detail.label.title-update'| translate}} </h5>
+        </div>
+        <ng-template #createTitle>
+            <h5>{{'master.employeePosition.detail.label.title-create'| translate}}</h5>
+        </ng-template>
+
+        <div class="card-body" *ngIf="!loading">
+            <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+                <div class="form-row justify-content-left">
+                    <div class="col-md-4 mb-3" *ngIf="!showId">
+                        <input type="text" class="form-control form-control-sm" placeholder="Id"
+                            formControlName="positionEmployeeID">
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" formControlName="positionEmployeeCode"
+                            [ngClass]="{ 'is-invalid': (submitted && f.positionEmployeeCode.errors && f.positionEmployeeCode.pristine) || f.positionEmployeeCode.errors?.serverError}">
+                        <div *ngIf="submitted && f.positionEmployeeCode.errors && f.positionEmployeeCode.pristine" class="invalid-feedback">
+                            <div *ngIf="f.positionEmployeeCode.errors.required">
+                                {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.positionEmployeeCode.errors.minlength">
+                                {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                {{'server-error.011'| translate}}</div>
+                            <div *ngIf="f.positionEmployeeCode.errors.maxlength">
+                                {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            <div *ngIf="f.positionEmployeeCode.errors.pattern">
+                                {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                {{'server-error.007'| translate}}</div>
+                            <ng-template #checkLength>
+                                <div *ngIf="f.positionEmployeeCode.errors.maxlength">
+                                    {{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtCode}}</div>
+                            </ng-template>
+                        </div>
+
+                        <div class="invalid-feedback d-block" *ngIf="f.positionEmployeeCode.errors?.serverError">
+                            <div>{{'master.employeePosition.detail.label.employeePosition-code'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-1">
+                        <label class="floating-label">
+                            {{'master.employeePosition.detail.label.employeePosition-name'| translate}}
+                            <i class="color-red">*</i>
+                        </label>
+                        <input type="text" class="form-control form-control-sm" placeholder
+                            formControlName="positionEmployeeName"
+                            [ngClass]="{ 'is-invalid': (submitted && f.positionEmployeeName.errors && f.positionEmployeeName.pristine) || f.positionEmployeeName.errors?.serverError}">
+                        <div *ngIf="submitted && f.positionEmployeeName.errors && f.positionEmployeeName.pristine" class="invalid-feedback">
+                            <div *ngIf="f.positionEmployeeName.errors.required">
+                                {{'master.employeePosition.detail.label.employeePosition-name'| translate}}
+                                {{'server-error.001'| translate}}</div>
+                            <div *ngIf="f.positionEmployeeName.errors.maxlength">
+                                {{'master.employeePosition.detail.label.employeePosition-name'| translate}}
+                                {{'server-error.008'| translate:maxLenghtName}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.positionEmployeeName.errors?.serverError">
+                            <div>{{'master.employeePosition.detail.label.employeePosition-name'| translate}}
+                                {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-8">
+                        <label>
+                            {{'master.employeePosition.detail.label.description'| translate}}
+                        </label>
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm"
+                            formControlName="positionEmployeeDescription"
+                            [ngClass]="{ 'is-invalid': (submitted && f.positionEmployeeDescription.errors && f.positionEmployeeDescription.pristine) || f.positionEmployeeDescription.errors?.serverError}">
+                        </textarea>
+                        <div *ngIf="submitted && f.positionEmployeeDescription.errors && f.positionEmployeeDescription.pristine" class="invalid-feedback">
+                            <div *ngIf="f.positionEmployeeDescription.errors.maxlength">
+                                {{'master.employeePosition.detail.label.description'| translate}}
+                                {{'server-error.008'| translate:maxLenghtDescription}}</div>
+                        </div>
+                        <div class="invalid-feedback" *ngIf="f.positionEmployeeDescription.errors?.serverError">
+                            <div>{{'master.employeePosition.detail.label.description'| translate}} {{displayMessage}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-2 form-row">
+                    <div class="col-12">
+                        <button *ngIf="authButton.UPDATE || authButton.CREATE" class="btn btn-primary btn-sm btn-master"
+                            type="submit">
+                            <i class="feather icon-save"></i>
+                            {{'button.save'| translate}}
+                        </button>
+                        <button (click)="back()"
+                            class="btn btn btn-secondary btn-sm btn-master" type="button">
+                            <i class="feather icon-rotate-ccw"></i>
+                            {{'button.back'| translate}}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-container *ngIf="loading">
+</ng-container>

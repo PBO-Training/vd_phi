@@ -1,0 +1,37 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">{{title}}</h4>
+        <div class="close" (click)="activeModal.close('Close')">
+            <i class="fas fa-times"></i>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formSkill">
+            <ng-container formArrayName="listSkill">
+                <div class="row mb-1" *ngFor="let skill of skills.controls; index as i">
+                    <ng-container [formGroupName]="i">
+                        <div class="col-md-8">
+                            <input hidden type="text" [readonly]="true" formControlName="skillID">
+                            <input type="text" [readonly]="true" class="form-control form-control-sm"
+                                formControlName="skillName">
+                        </div>
+                        <div class="col-md-4" (keydown)="onKeyDownExp($event)">
+                            <input type="number" min="0" step="1" class="form-control form-control-sm inputExpYear"
+                                formControlName="skillExperience">
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn  btn-primary btn-sm" (click)="onClickOKButton()">
+            <i class="far fa-check-circle"></i>
+            {{'button.ok' | translate}}
+        </button>
+        <button type="button" class="btn  btn-secondary btn-sm" (click)="activeModal.close('Close click')">
+            <i class="feather icon-x"></i>
+            {{'button.close' | translate}}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,459 @@
+<div class='d-flex justify-content-between breacrumb' *ngIf="this.isDataAvailable">
+    <ng-container *ngIf="f.swID.value && formSubmit.get('allowUpdate').value == true ">
+        <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.shift-work-request'"
+            [childBreabcrumb]="'breadcrumb.child.update'" [parrentBreabcrumbUrl]="'/shift-work'">
+        </app-breadcrumb-share>
+    </ng-container>
+    <ng-container *ngIf="f.swID.value && formSubmit.get('allowUpdate').value == false ">
+        <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.shift-work-request'"
+            [childBreabcrumb]="'breadcrumb.parrent.vacation.shift-work-detail'" [parrentBreabcrumbUrl]="'/shift-work'">
+        </app-breadcrumb-share>
+    </ng-container>
+    <ng-container *ngIf="!f.swID.value">
+        <app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.shift-work-request'"
+            [childBreabcrumb]="'breadcrumb.child.create'" [parrentBreabcrumbUrl]="'/shift-work'">
+        </app-breadcrumb-share>
+    </ng-container>
+</div>
+<form [formGroup]="formSubmit" (ngSubmit)="submitShiftWork()" *ngIf="this.isDataAvailable" appFocus>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> {{'vacation.detail.vacation-title'| translate}}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <b>
+                            {{'vacation.detail.vacation-option'| translate}}
+                        </b>
+                        <br>
+                        <div class="form-check form-check-inline" *ngFor="let item of listOption; let i = index">
+                            <input type="radio" [value]="item.swOptionID" formControlName="swOptionID"
+                                [ngClass]="{ 'is-invalid': (submitted && f.swOptionID.errors || f.swOptionID.errors?.serverError)}"
+                                [attr.disabled]="formSubmit.get('allowUpdate').value === false ? '' : null"
+                                (click)="onSelectionChange(item.swOptionName)">&nbsp;{{'vacation.detail.shift-work-option'
+                            + (i + 1) | translate}}
+                        </div>
+                        <div *ngIf="f.swOptionID.errors?.required" class="invalid-feedback d-block">
+                            {{'vacation.detail.vacation-option'| translate}}
+                            {{'server-error.001'| translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-start-date'| translate}}
+                                <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                                    (ngModelChange)="this.onChangeValue()" formControlName="startDateCalculator"
+                                    ngbDatepicker #d1="ngbDatepicker" [minDate]='config.minDate'
+                                    [maxDate]='config.maxDate'
+                                    [readonly]="formSubmit.get('allowUpdate').value === false ? 'true' : false"
+                                    [ngClass]="{ 'is-invalid': submitted && f.startDateCalculator.errors || f.swStartDateAM.errors?.serverError}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()"
+                                        [disabled]="formSubmit.get('allowUpdate').value === false ? 'true' : false"
+                                        type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                                <div *ngIf="f.startDateCalculator.errors?.required && submitted"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-start-date'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="f.startDateCalculator.errors && !f.startDateCalculator.errors?.required && submitted">
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{'vacation.detail.vacation-start-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                            </div>
+                            <div *ngIf="f.swStartDateAM.errors?.serverError">
+                                <div class="invalid-feedback d-block">
+                                    <span>
+                                        {{'vacation.detail.vacation-start-date'| translate}}
+                                        {{displayMessage}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-inline">
+                            <b>
+                                {{'vacation.detail.vacation-end-date'| translate}}
+                                <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                            </b>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                                    (ngModelChange)="this.onChangeValue()"
+                                    [readonly]="formSubmit.get('allowUpdate').value === false ? 'true' : false"
+                                    formControlName="endDateCalculator" ngbDatepicker #d2="ngbDatepicker"
+                                    [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                    [ngClass]="{ 'is-invalid': submitted && (f.endDateCalculator.errors || formSubmit.hasError('dates')) || f.swEndDatePM.errors?.serverError}">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()"
+                                        [disabled]="formSubmit.get('allowUpdate').value === false ? 'true' : false"
+                                        type="button"><i class="icon-calendar far fa-calendar-alt"></i></button>
+                                </div>
+                                <div *ngIf="f.endDateCalculator.errors?.required && submitted"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-end-date'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="f.endDateCalculator.errors && !f.endDateCalculator.errors?.required && submitted">
+                                <div class="invalid-feedback" style="display: block;">
+                                    {{'vacation.detail.vacation-end-date'| translate}}
+                                    {{'server-error.003'| translate}}
+                                </div>
+                            </div>
+                            <div *ngIf="formSubmit.hasError('dates') && submitted">
+                                <div class="invalid-feedback d-block">
+                                    <span>
+                                        {{'vacation.detail.vacation-end-date'| translate}}
+                                        {{'server-error.004'| translate}}
+                                        {{'vacation.detail.vacation-start-date'| translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngIf="f.swEndDatePM.errors?.serverError">
+                                <div class="invalid-feedback d-block">
+                                    <span>
+                                        {{'vacation.detail.vacation-end-date'| translate}}
+                                        {{displayMessage}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col-sm-4">
+                        <b>
+                            {{'vacation.detail.vacation-reason'| translate}}
+                            <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                        </b>
+                        <div class="input-group">
+                            <textarea formControlName="swReason" class="form-control form-control-sm" wrap='on'
+                                style="resize: none;"
+                                [readonly]="formSubmit.get('allowUpdate').value === false ? 'true' : false"
+                                [ngClass]="{ 'is-invalid': (submitted && f.swReason.errors || f.swReason.errors?.serverError || f.swReason.errors?.maxlength)}"
+                                rows="3"></textarea>
+                        </div>
+                        <div *ngIf="f.swReason.errors?.required && submitted" class="invalid-feedback d-block">
+                            {{'vacation.detail.vacation-reason'| translate}}
+                            {{'server-error.001'| translate}}
+                        </div>
+                        <div *ngIf="f.swReason.errors?.maxlength" class="invalid-feedback d-block">
+                            {{'vacation.detail.vacation-reason'| translate}}
+                            {{'server-error.008'| translate: maxLenghtInput}}
+                        </div>
+                        <div *ngIf="f.swReason.errors?.serverError">
+                            <div class="invalid-feedback d-block">
+                                <span>
+                                    {{'vacation.detail.vacation-reason'| translate}}
+                                    {{displayMessage}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="formSubmit.get('allowUpdate').value == true">
+        <div class="card">
+            <div class="card-header">
+                <h5> {{'vacation.detail.vacation-assign'| translate}}
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table-responsive">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>
+                                    {{'vacation.detail.vacation-leader'| translate}}
+                                    <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                                </b>
+                                <div class="input-group">
+                                    <input hidden class="form-control form-control-sm"
+                                        formControlName="swAssignGroupOne">
+                                    <input readonly class="form-control form-control-sm"
+                                        formControlName="swAssignGroup1Name"
+                                        [ngClass]="{ 'is-invalid': (submitted && f.swAssignGroupOne.errors || f.swAssignGroupOne.errors?.serverError)}">
+                                    <div class="input-group-append">
+                                        <br>
+                                        <div class="btn-assign">
+                                            <span class="input-group-btn input-space"></span><button
+                                                class="btn btn-primary btn-sm btn-master form-control-sm"
+                                                (click)="assignLeader()" type="button" value=" ← "><i
+                                                    class="feather icon-arrow-left"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="f.swAssignGroupOne.errors?.required && submitted"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-leader'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                                <div *ngIf="f.swAssignGroupOne.errors?.serverError">
+                                    <div class="invalid-feedback d-block">
+                                        <span>
+                                            {{'vacation.detail.vacation-leader'| translate}}
+                                            {{displayMessage}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td class="align-middle">
+                                <div class="col-sm-8">
+                                    <b>&nbsp;</b>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-primary btn-sm" type="button"><i
+                                                    class="feather icon-search"></i></button>
+                                        </div>
+                                        <input type="text" class="mb-12 form-control form-control-sm fixInputWidth"
+                                            formControlName="filterEmployee" (ngModelChange)="filterItem($event)">
+                                    </div>
+                                    <div
+                                        *ngIf="submitted && f.swAssignGroupOne.errors || f.swAssignGroupOne.errors?.serverError">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>
+                                    {{'vacation.detail.vacation-manager'| translate}}
+                                    <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                                </b>
+                                <div class="input-group">
+                                    <input hidden class="form-control form-control-sm"
+                                        formControlName="swAssignGroupTwo">
+                                    <input readonly class="form-control form-control-sm"
+                                        formControlName="swAssignGroup2Name"
+                                        [ngClass]="{ 'is-invalid': (submitted && f.swAssignGroupTwo.errors || f.swAssignGroupTwo.errors?.serverError)}">
+                                    <div class="input-group-append">
+                                        <div class="btn-assign">
+                                            <span class="input-group-btn input-space"></span><button
+                                                class="btn btn-primary btn-sm btn-master form-control-sm"
+                                                (click)="assignManager()" type="button" value=" ← "><i
+                                                    class="feather icon-arrow-left"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="f.swAssignGroupTwo.errors?.required && submitted"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-manager'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                                <div *ngIf="f.swAssignGroupTwo.errors?.serverError">
+                                    <div class="invalid-feedback d-block">
+                                        <span>
+                                            {{'vacation.detail.vacation-manager'| translate}}
+                                            {{displayMessage}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td class="align-top" rowspan="3">
+                                <div class="col-sm-8">
+                                    <b>&nbsp;</b>
+                                    <div class="input-group">
+                                        <select [(ngModel)]="selectedToAdd"
+                                            class="mb-12 form-control form-control-sm fixInputWidth" size="8"
+                                            id="listEmployee" formControlName="selectedEmployeeID">
+                                            <option *ngFor="let item of listEmployee" [ngValue]="item">
+                                                {{item.valueResponse}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>
+                                    {{'vacation.detail.vacation-forward'| translate}}
+                                    <i class="color-red" *ngIf="formSubmit.get('allowUpdate').value == true">*</i>
+                                </b>
+                                <div class="input-group">
+                                    <select readonly class="form-control form-control-sm fixInputWidth"
+                                        [(ngModel)]="selectedToRemove"
+                                        [ngClass]="{ 'is-invalid': (submitted && f.swAssignGroupThree.errors || f.swAssignGroupThree.errors?.serverError)}"
+                                        formControlName="swAssignGroupThree" size="3">
+                                        <option *ngFor="let item of selectedForward" [ngValue]="item">
+                                            {{item.valueResponse}}
+                                        </option>
+                                    </select>
+                                    <div>
+                                        <div class="btn-assign">
+                                            <span class="input-group-btn input-space"></span><button
+                                                class="btn btn-primary btn-sm btn-master form-control-sm"
+                                                (click)="assignForward()" style="height: 30px;" type="button"
+                                                value=" ← "><i class="feather icon-arrow-left"></i></button>
+                                        </div>
+                                        <br><br>
+                                        <div class="btn-assign">
+                                            <span class="input-group-btn input-space"></span><button
+                                                class="btn btn-primary btn-sm btn-master form-control-sm"
+                                                (click)="unassignForward()" style="height: 30px;" type="button"
+                                                value=" → "><i class="feather icon-arrow-right"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="f.swAssignGroupThree.errors?.required && submitted"
+                                    class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-forward'| translate}}
+                                    {{'server-error.001'| translate}}
+                                </div>
+                                <div *ngIf="f.swAssignGroupThree.errors?.maxlength" class="invalid-feedback d-block">
+                                    {{'vacation.detail.vacation-forward'| translate}}
+                                    {{'server-error.008'| translate:maxLenghtApprover3}}
+                                </div>
+                                <div *ngIf="f.swAssignGroupThree.errors?.serverError">
+                                    <div class="invalid-feedback d-block">
+                                        <span>
+                                            {{'vacation.detail.vacation-forward'| translate}}
+                                            {{displayMessage}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-10">
+                <button type="submit" class="btn  btn-primary btn-sm btn-master"
+                    *ngIf="formSubmit.get('allowUpdate').value == true && (authButton.CREATE || authButton.UPDATE)">
+                    <i class="feather icon-save"></i>
+                    {{'button.save'| translate}}
+                </button>
+                <button type="button" class="btn btn-danger btn-sm btn-master" (click)="deleteShiftWork()"
+                    *ngIf="formSubmit.get('swID').value != null && formSubmit.get('allowUpdate').value == true && authButton.DELETE">
+                    <i class="feather icon-trash"></i>
+                    {{'button.delete'| translate}}
+                </button>
+                <button type="button" class="btn btn-secondary  btn-sm btn-master" (click)="back($event)">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="col-md-12" *ngIf="formSubmit.get('allowUpdate').value == false">
+        <div class="card">
+            <div class="card-header">
+                <h5> {{'vacation.approve.vacation-approve-process'| translate}}
+                </h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 2%;"></th>
+                            <th style="width: 10%;">{{'vacation.approve.vacation-role'| translate}}</th>
+                            <th style="width: 10%;">{{'vacation.approve.vacation-approver'| translate}}</th>
+                            <th class="text-center" style="width: 10%;">
+                                {{'vacation.approve.vacation-result'| translate}}
+                            </th>
+                            <th style="width: 15%;">{{'vacation.approve.vacation-datetime'| translate}}</th>
+                            <th style="width: 33%;">{{'vacation.approve.vacation-comment'| translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="1"></td>
+                            <td rowspan="1">
+                                <p class="text-primary">{{'vacation.approve.vacation-leader'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedLeader">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupOne').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupOne').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupOne').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupOne').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('swUpdateGroupOneDate').value | date: 'MMM dd, yy H:mm'}}</td>
+                            <td>
+                                {{ formSubmit.get('swAssignGroupOneNote').value }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="1"></td>
+                            <td rowspan="1">
+                                <p class="text-primary">{{'vacation.approve.vacation-manager'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedManager">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupTwo').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupTwo').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupTwo').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupTwo').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('swUpdateGroupTwoDate').value | date: 'MMM dd, yy H:mm'}}</td>
+                            <td>{{ formSubmit.get('swAssignGroupTwoNote').value }}</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"></td>
+                            <td rowspan="2">
+                                <p class="text-primary">{{'vacation.approve.vacation-forward'| translate}}</p>
+                            </td>
+                            <td>
+                                <div *ngFor="let item of selectedForward">
+                                    {{item.valueResponse}}
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <p *ngIf="formSubmit.get('statusNameGroupThree').value === this.Type.StatusType.APPROVED"
+                                    class="badge badge-pill badge-success">
+                                    {{ formSubmit.get('statusNameGroupThree').value }}</p>
+                                <p *ngIf="formSubmit.get('statusNameGroupThree').value === this.Type.StatusType.REJECTED"
+                                    class="badge badge-pill badge-danger">
+                                    {{ formSubmit.get('statusNameGroupThree').value }}</p>
+                            </td>
+                            <td>
+                                {{ formSubmit.get('swUpdateGroupThreeDate').value | date: 'MMM dd, yy H:mm'}}
+                            </td>
+                            <td>{{ formSubmit.get('swAssignGroupThreeNote').value }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-secondary  btn-sm btn-master" (click)="back($event)">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+            </div>
+            <br>
+        </div>
+    </div>
+</form>

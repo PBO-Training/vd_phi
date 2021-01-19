@@ -1,0 +1,19 @@
+<app-breadcrumb-share [parrentBreabcrumb]="'breadcrumb.parrent.vacation.tracking-timekeeping'">
+</app-breadcrumb-share>
+<!--<div class="col-md-12" *ngIf="isDataAvailable == true">
+	<div class="table-responsive">
+		<ax-scheduler [axEventTemplate]="t" [axSchedulerView]="'month'" [axEventToolbar]="true"
+			[axAnimation]="'animation4'" [axTheme]="'light'" [axEvents]="violationData" [axDragStep]="5"
+			[axViews]="['week','month','year']" [axShowLocale]="true" (axDateChange)="dateChange($event)">
+		</ax-scheduler>
+		<ng-template #t let-item="item">
+			<div class="event-template">
+				{{ item.title }} at <b> {{ item.from | date:'HH:mm' }} {{ item.to | date:'HH:mm' }} </b>
+			</div>
+		</ng-template>
+	</div>
+</div>-->
+<div class="col-md-12">
+	<div #calendar>
+	</div>	
+</div>

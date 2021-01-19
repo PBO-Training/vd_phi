@@ -1,0 +1,204 @@
+    /**======================================================================
+=========================================================================
+Template Name: Flat Able Admin Template
+Author: Codedthemes
+File: style.css
+=========================================================================
+=========================================================================
+  == Table of Contents==
+	- Generic classes
+		-	Margin, Padding, Font class, text align, position, floating, overflow, background class, text color, display class, boarder class
+	- Theme Elements
+		-	Accordion, Button, tabs, typography, buttons, box shadow, Lable & Badges, Alert, Pagination, Breadcumb, Cards, Collapse,
+        -   Carousel, Grid, Progress, Model, tooltip, popover, Datepicker, Gridstack, lightbox, notification, Nestable, pnotify, rating,
+        -   Rangeslider, Slider, Syntax Highlighter, Tour, Treeview, Toolbar, Session Timeout, Session idle Timeout, offline, Animation
+    - Forms
+        -   Forms Elements, Advance Form Control, Validation, Masking, Wizard, Picker, Select
+	- Pages
+		-   authentication, Maintenance, Maps, Landing page messages, task, Todo, Notes, Charts, Icons, Gallery, Editors,
+        -   Invoice, Full Calender, File Upload,
+=================================================================================
+=================================================================================== */
+    
+    // ng select
+    @import "~@ng-select/ng-select/themes/default.theme.css";
+    // Theme Font
+    @import "themes/font/theme-font";
+    // theme scrollbar
+    @import "themes/plugin/perfect-scrollbar";
+    // main framework
+    @import "~bootstrap/scss/functions";
+    @import "~bootstrap/scss/variables";
+    @import "settings/custom-variables";
+    @import "settings/theme-variables";
+    // ng module
+    @import "ng-module/ng-module";
+    // bootstrap
+    @import "~bootstrap/scss/bootstrap";
+    // icon
+    @import "themes/font/datta-icon";
+    @import "themes/font/feather";
+    @import "themes/font/fontawesome";
+    // bootstrap css
+    @import "themes/bootstrap-overlay/card";
+    @import "themes/bootstrap-overlay/button";
+    @import "themes/bootstrap-overlay/radiobox-checkbox";
+    @import "themes/bootstrap-overlay/switches";
+    @import "themes/bootstrap-overlay/badge";
+    @import "themes/general";
+    @import "themes/generic";
+    @import "themes/plugin/animate";
+    // theme layouts
+    @import "themes/layouts/menu-lite";
+    @import "themes/layouts/menu-ng";
+    // Dashboard Widgets
+    @import "themes/dashboard/widget";
+    // custom plugin
+    @import "themes/plugin/sweatalert";
+    @import "themes/plugin/lightbox";
+    @import "themes/plugin/rangeslider";
+    @import "themes/plugin/daterange";
+    @import "themes/plugin/maxlength";
+    @import "themes/plugin/data-tables";
+    // Charts
+    // pages
+    @import "themes/pages/authentication";
+    @import "themes/pages/pages";
+    @import "themes/pages/icon-lauouts";
+    // custom
+    @import "themes/custom";
+    // 
+    @import "page-master/master";
+    // 
+    .color-red {
+        color: red;
+    }
+    
+    .custom-control {
+        position: relative;
+        display: block;
+        min-height: 1.5rem;
+        padding-left: 1.5rem !important;
+    }
+    
+    .table thead th {
+        border-bottom: 1px solid #e2e5e8;
+        font-size: 13px;
+        color: #37474f;
+        background-color: #f6f6f6;
+        text-transform: none !important;
+    }
+    
+    .remove-th {
+        padding-left: 0px !important;
+    }
+    
+    .table td,
+    .table th {
+        border-top: 1px solid #e2e5e8;
+        white-space: nowrap;
+        padding: 0.5rem 0.75rem !important;
+    }
+    
+    .th-5 {
+        width: 5% !important;
+    }
+    
+    .th-10 {
+        width: 10% !important;
+    }
+    
+    .th-15 {
+        width: 15% !important;
+    }
+    
+    .th-20 {
+        width: 20% !important;
+    }
+    
+    .th-25 {
+        width: 25% !important;
+    }
+    
+    // Tan
+    .area-description {
+        min-height: 200px;
+    }
+    
+    .form-control-sm {
+        // font-size: 0.775rem !important;
+        font-size: 0.83375rem !important;
+    }
+    
+    .pcoded-inner-navbar {
+        font-size: 14px;
+    }
+    
+    .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+        background-color: #1abc9c;
+        color: #ffffff;
+    }
+    
+    .ng-select .ng-arrow-wrapper {
+        width: 0.85rem;
+        padding-right: 0.25rem;
+        cursor: default !important;
+    }
+    
+    .ng-select .ng-arrow-wrapper .ng-arrow {
+        border-color: #0f0f0f transparent transparent;
+        border-style: solid;
+        border-width: 5px 5px 2.5px;
+    }
+    
+    .ng-select.ng-select-opened>.ng-select-container .ng-arrow {
+        top: 0px;
+        font: 400 13.3333px Arial;
+        border-color: #0f0f0f transparent transparent;
+        border-style: solid;
+        border-width: 5px 5px 2.5px;
+    }
+    
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+    .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+        background-color: #d9dfe4;
+    }
+    
+    .ng-select.custom {
+        border: 0px;
+        min-height: 0px;
+        border-radius: 0;
+    }
+    
+    .ng-select.custom .ng-select-container {
+        position: relative;
+    }
+    
+    .ng-select.custom .ng-select-container::after {
+        content: '';
+        position: absolute;
+        right: 5px;
+        top: 10px;
+        border-top: 4px solid #ffffff;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+    }
+
+    .ng-select.ng-select-single .ng-select-container{
+        height: auto;
+    }
+
+    .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input{
+        top: 5px;
+        left: 0;
+        padding-left: 7px;
+        padding-right: 50px
+    }
+
+    .modal-dialog {
+        top: 0 !important;
+    }
+    
+    .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+        padding-top: 4px !important;
+    }

@@ -1,0 +1,11 @@
+<div class="modal-header confirm">
+  </div>
+  <div class="modal-body">
+    <div class="row justify-content-md-center button-confirm">
+      <h5 [ngClass]="className"> {{key | translate}} </h5>
+    </div>
+  </div>
+    <div class="row justify-content-md-center button-confirm">
+      <button type="button" class="btn btn-primary btn-sm btn-master" (click)="close('redirect')"><i class="feather icon-home"></i>  Home</button>
+      <button type="button" class="btn btn-secondary btn-sm btn-master" (click)="close('reload')"><i class="feather icon-refresh-ccw"></i>  reload</button>
+    </div>

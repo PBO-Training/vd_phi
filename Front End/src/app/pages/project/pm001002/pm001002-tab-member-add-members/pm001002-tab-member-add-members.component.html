@@ -1,0 +1,158 @@
+<form [formGroup]="formAddMembers" (ngSubmit)="submitForm()" class="needs-validation tab-container" novalidate>
+  <div class="form-row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="btn-fun">
+            <button (click)="backToList(1)" class="btn btn btn-secondary btn-sm btn-master" type="button">
+              <i class="feather icon-rotate-ccw"></i>
+              {{'button.back'| translate}}
+            </button>
+            <button class="btn btn-primary btn-sm btn-master" type="submit">
+              <i class="feather icon-save"></i>
+              {{'button.save'| translate}}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 mb-3" *ngIf="!showId">
+              <input type="text" class="form-control form-control-sm" placeholder="Id" formControlName="employeeID">
+            </div>
+          </div>
+
+          <!-- Row 1 -->
+          <div class="row">
+            <!-- Search with department -->
+            <div class="form-group col-md-3">
+              <label class="floating-label">
+                {{'project.detail.label.department'| translate}}
+              </label>
+              <select id="department" class="form-control form-control-sm" (change)="searchEmployee($event.target.value)">
+                <option [value]="-1">ALL</option>
+                <option *ngFor="let d of dropdownData?.listDepartment" [value]="d.departmentID"
+                  [selected]="projectResponse?.objectDepartment?.departmentID === d.departmentID">{{d.departmentName}}
+                </option>
+              </select>
+            </div>
+            <!-- Filter Employee -->
+            <div class="col-md-3 mb-3">
+              <label class="floating-label">
+                {{'project.detail.label.employee-name'| translate}}
+              </label>
+              <input type="text" class="form-control form-control-sm" (keyup)="filterItem($event)" [value]="keyFilter">
+            </div>
+          </div>
+
+          <hr />
+          <!-- Row 2 -->
+          <div class="row">
+            <!-- Check condition of list employee -->
+            <ng-container *ngIf="listEmployeeShow !== undefined && listEmployeeShow.length !== 0;else loading">
+              <div class="col-sm">
+                <div class="frame" #scrollframe>
+                  <!-- Use for statement to browse element of list employee  -->
+                  <ng-container *ngFor="let item of listEmployeeShow; index as i">
+                    <label style="min-width:17vw">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" value="{{item.employeeID}}"
+                          (change)="onCheckChange($event)" id="{{i}}+{{item.employeeID}}"
+                          [checked]="this.formAddMembers?.value?.listEmployeeID.includes(item.employeeID)">
+                        <span class="custom-control-label">{{item.employeeName}}</span>
+                      </div>
+                    </label>
+                  </ng-container>
+                </div>
+              </div>
+            </ng-container>
+            <ng-template #loading>
+              <div class="col-md-12 text-center" *ngIf="listEmployeeShow?.length === 0">
+                <div class="frame">
+                  {{ 'table.no-data' | translate}}
+                </div>
+              </div>
+            </ng-template>
+          </div>
+
+          <hr class="mb-3">
+
+          <!-- Row 3 -->
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label class="floating-label" for="positionProjectID">
+                {{'project.list.table.member-role'| translate}}<i class="color-red">*</i>
+              </label>
+              <!-- <div> -->
+              <div class="input-group">
+                <select class="mb-12 form-control form-control-sm" name="positionProjectID"
+                  formControlName="positionProjectID"
+                  [ngClass]="{ 'is-invalid': submitted && formValidation.positionProjectID.errors?.required && this.request.listEmployeeID?.length > 0}">
+                  <option value="null" hidden>{{'project.detail.form.role-placeholder'| translate}}</option>
+                  <option *ngFor="let item of dropdownData?.listPositionProject" [value]="item.positionProjectID">
+                    {{item.positionProjectName}}</option>
+                </select>
+              </div>
+              <div *ngIf="submitted && formValidation.positionProjectID.errors?.required && this.request.listEmployeeID?.length > 0">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>{{'project.list.table.member-role'| translate}} {{'server-error.001'| translate}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <label>{{'project.list.table.member-dateJoinProject'| translate}}</label>
+              <div class="input-group input-group-picker">
+                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d1"
+                  formControlName="dateJoinProject" ngbDatepicker #d1="ngbDatepicker" placement="bottom"
+                  [minDate]='config.minDate' [maxDate]='config.maxDate'
+                  [ngClass]="{ 'is-invalid': formValidation.dateJoinProject.errors?.ngbDate}">
+                <button type="button" class="calendar input-group-append btn btn-outline-secondary"
+                  (click)="d1.toggle()">
+                  <i class="icon-calendar far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <div *ngIf="formValidation.dateJoinProject.errors?.ngbDate">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>{{'project.list.table.member-dateJoinProject'| translate}} {{'server-error.003'| translate}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-3">
+              <!-- Datetime picker end day -->
+              <label>{{'project.list.table.member-dateOutProject'| translate}}</label>
+              <div class="input-group input-group-picker">
+                <input class="form-control form-control-sm" placeholder="DD-MM-YYYY" name="d2"
+                  formControlName="dateOutProject" ngbDatepicker #d2="ngbDatepicker" placement="bottom"
+                  [minDate]='config.minDate' [maxDate]='config.maxDate'
+                  [ngClass]="{ 'is-invalid': (formValidation.dateOutProject.errors?.ngbDate) || formAddMembers.errors?.dates}">
+                <button type="button" class="calendar input-group-append btn btn-outline-secondary"
+                  (click)="d2.toggle()">
+                  <i class="icon-calendar far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <div *ngIf="formValidation.dateOutProject.errors?.ngbDate">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>{{'project.list.table.member-dateOutProject'| translate}} {{'server-error.003'| translate}}</span>
+                </div>
+              </div>
+              <div *ngIf="!formValidation.dateOutProject.errors?.ngbDate && formAddMembers.errors?.dates">
+                <div class="invalid-feedback" style="display: block;">
+                  <span>
+                    {{'project.list.table.member-dateOutProject'| translate}}
+                    {{'server-error.004'| translate}}
+                    {{'project.list.table.member-dateJoinProject'| translate}}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+      <!-- Row End -->
+    </div>
+  </div>
+</form>

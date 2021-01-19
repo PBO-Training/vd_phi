@@ -1,0 +1,557 @@
+<form appFocus [formGroup]="formDetails" (ngSubmit)="saveData()" *ngIf="isEdit">
+    <!-- Row button -->
+    <div class="form-group row btn-fun">
+        <div class="col-sm-10">
+            <button (click)="backToList(false)" class="btn btn btn-secondary btn-sm btn-master" type="button">
+                <i class="feather icon-rotate-ccw"></i>
+                {{'button.back'| translate}}
+            </button>
+            <button
+                *ngIf="authButton.UPDATE"
+                class="btn btn-primary btn-sm btn-master" type="submit">
+                <i class="feather icon-save"></i>
+                {{'button.save'| translate}}
+            </button>
+            <button type="button" (click)="onCancel()" class="btn  btn-danger btn-sm btn-master"
+                *ngIf="authButton.UPDATE && issueID !== null && issueID !== undefined">
+                <i class="feather icon-x-square"></i>
+                {{'button.cancel'| translate}}
+            </button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 *ngIf="issueID !== null">Target #{{issueID}}</h4>
+            <h4 *ngIf="issueID === null">{{'project.detail.label.issue-title-create' | translate}}</h4>
+            <!-- Row 1 -->
+            <div class="row">
+                <div class="col-md-3 mb-1">
+                    <label>{{'project.detail.label.issue-tracker' | translate}} <i class="color-red">*</i></label>
+                    <select class="mb-12 form-control form-control-sm" name="tracker" formControlName="trackerID">
+                        <option *ngFor="let data of dropdownData?.listTracker" [value]="data.keyResponse">
+                            {{data.valueResponse}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="row">
+                <div class="col-md-12 mb-1">
+                    <label>{{'project.detail.label.issue-subject' | translate}} <i class="color-red">*</i></label>
+                    <input type="text" name="issueSubject" class="form-control form-control-sm"
+                        formControlName="issueSubject"
+                        [ngClass]="{ 'is-invalid': formDetailsValidation.issueSubject.errors || formDetailsValidation.issueSubject.errors?.serverError}" />
+                    <div *ngIf="formDetailsValidation.issueSubject.errors" class="invalid-feedback">
+                        <div *ngIf="formDetailsValidation.issueSubject.errors.required">
+                            {{'project.detail.label.issue-subject' | translate}} {{'server-error.001'| translate}}</div>
+                        <div *ngIf="formDetailsValidation.issueSubject.errors.maxlength">
+                            {{'project.detail.label.issue-subject' | translate}}
+                            {{'server-error.008'| translate:maxLenghtName}}</div>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="formDetailsValidation.issueSubject.errors?.serverError">
+                        <div>{{displayMessage | translate}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="row">
+                <div class="col-md-12 mb-1">
+                    <label>{{'project.detail.label.issue-description' | translate}}</label>
+                    <textarea type="text" name="issueDescription" class="form-control form-control-sm area-description"
+                        [ngClass]="{ 'is-invalid': formDetailsValidation.issueDescription.errors || formDetailsValidation.issueDescription.errors?.serverError}"
+                        formControlName="issueDescription"></textarea>
+                    <div *ngIf="formDetailsValidation.issueDescription.errors" class="invalid-feedback">
+                        <div *ngIf="formDetailsValidation.issueDescription.errors.maxlength">
+                            {{'project.detail.label.issue-description' | translate}}
+                            {{'server-error.008'| translate:maxLenghtDescription}}
+                        </div>
+                    </div>
+                    <div class="invalid-feedback" *ngIf="formDetailsValidation.issueDescription.errors?.serverError">
+                        <div>{{displayMessage | translate}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 col-xl-4 mb-1">
+                            <label>{{'project.detail.label.issue-status' | translate}} <i
+                                    class="color-red">*</i></label>
+                            <select class="mb-12 form-control form-control-sm" name="status"
+                                formControlName="statusIssueID">
+                                <option *ngFor="let data of dropdownData?.listStatusIssue" [value]="data.keyResponse">
+                                    {{data.valueResponse}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-xl-4 mb-1 offset-md-1 offset-lg-3 offset-sm-0">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6 mb-1">
+                                    <label>{{'project.detail.label.issue-startDatePlan' | translate}}</label>
+                                    <div class="input-group input-group-picker">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            name="issueStartDatePlan" formControlName="issueStartDatePlan" ngbDatepicker
+                                            #d11="ngbDatepicker"
+                                            [ngClass]="{ 'is-invalid': formDetailsValidation.issueStartDatePlan.errors || formDetailsValidation.issueStartDatePlan.errors?.serverError}" />
+                                        <button type="button"
+                                            class="calendar input-group-append btn btn-outline-secondary"
+                                            (click)="d11.toggle()">
+                                            <i class="icon-calendar far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div *ngIf="formDetailsValidation.issueStartDatePlan.errors">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-startDatePlan' | translate}}
+                                                {{'server-error.003'| translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="formDetailsValidation.issueStartDatePlan.errors?.serverError">
+                                        <div>{{displayMessage | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6 mb-1">
+                                    <label>{{'project.detail.label.issue-endDatePlan' | translate}}</label>
+                                    <div class="input-group input-group-picker">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            name="issueEndDatePlan" formControlName="issueEndDatePlan" ngbDatepicker
+                                            #d12="ngbDatepicker"
+                                            [ngClass]="{ 'is-invalid': formDetailsValidation.issueEndDatePlan.errors 
+                                                || formDetailsValidation.issueEndDatePlan.errors?.serverError || formDetails.errors?.issueEndDatePlan}" />
+                                        <button type="button"
+                                            class="calendar input-group-append btn btn-outline-secondary"
+                                            (click)="d12.toggle()">
+                                            <i class="icon-calendar far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div *ngIf="formDetails.errors?.issueEndDatePlan">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-endDatePlan' | translate}}
+                                                {{'server-error.004'| translate}}
+                                                {{'project.detail.label.issue-startDatePlan' | translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="formDetailsValidation.issueEndDatePlan.errors">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-endDatePlan' | translate}}
+                                                {{'server-error.003'| translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="formDetailsValidation.issueEndDatePlan.errors?.serverError">
+                                        <div>{{displayMessage | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 col-xl-4 mb-1">
+                            <label>{{'project.detail.label.issue-priority' | translate}} <i
+                                    class="color-red">*</i></label>
+                            <select class="mb-12 form-control form-control-sm" name="priority"
+                                formControlName="priorityIssueID">
+                                <option *ngFor="let data of dropdownData?.listPriorityIssue" [value]="data.keyResponse">
+                                    {{data.valueResponse}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 col-lg-5 col-xl-4 mb-1 offset-md-1 offset-lg-3 offset-sm-0">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-xl-6 mb-1">
+                                    <label>{{'project.detail.label.issue-startDateActual' | translate}}</label>
+                                    <div class="input-group input-group-picker">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            name="issueStartDateActual" formControlName="issueStartDateActual"
+                                            ngbDatepicker #d13="ngbDatepicker"
+                                            [ngClass]="{ 'is-invalid': formDetailsValidation.issueStartDateActual.errors || formDetailsValidation.issueStartDateActual.errors?.serverError}" />
+                                        <button type="button"
+                                            class="calendar input-group-append btn btn-outline-secondary"
+                                            (click)="d13.toggle()">
+                                            <i class="icon-calendar far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+                                    <div *ngIf="formDetailsValidation.issueStartDateActual.errors">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-startDateActual' | translate}}
+                                                {{'server-error.003'| translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="formDetailsValidation.issueStartDateActual.errors?.serverError">
+                                        <div>{{displayMessage | translate}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6 col-xl-6 mb-1">
+                                    <label>{{'project.detail.label.issue-endDateActual' | translate}}</label>
+                                    <div class="input-group input-group-picker">
+                                        <input class="form-control form-control-sm" placeholder="DD-MM-YYYY"
+                                            [minDate]='config.minDate' [maxDate]='config.maxDate'
+                                            name="issueEndDateActual" formControlName="issueEndDateActual" ngbDatepicker
+                                            #d14="ngbDatepicker"
+                                            [ngClass]="{ 'is-invalid': formDetailsValidation.issueEndDateActual.errors 
+                                                || formDetailsValidation.issueEndDateActual.errors?.serverError || formDetails.errors?.issueEndDateActual}" />
+                                        <button type="button"
+                                            class="calendar input-group-append btn btn-outline-secondary"
+                                            (click)="d14.toggle()">
+                                            <i class="icon-calendar far fa-calendar-alt"></i>
+                                        </button>
+                                    </div>
+
+                                    <div *ngIf="formDetails.errors?.issueEndDateActual">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-endDateActual' | translate}}
+                                                {{'server-error.004'| translate}}
+                                                {{'project.detail.label.issue-startDateActual' | translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="formDetailsValidation.issueEndDateActual.errors">
+                                        <div class="invalid-feedback" style="display: block;">
+                                            <span>{{'project.detail.label.issue-endDateActual' | translate}}
+                                                {{'server-error.003'| translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"
+                                        *ngIf="formDetailsValidation.issueEndDateActual.errors?.serverError">
+                                        <div>{{displayMessage | translate}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2 col-xl-2 mb-1 ">
+                            <label>{{'project.detail.label.issue-amountPlan' | translate}}</label>
+                            <input type="text" name="issueAmountPlan" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.issueAmountPlan.errors }"
+                                formControlName="issueAmountPlan" onlyNumber (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.issueAmountPlan.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.issueAmountPlan.errors.max">
+                                    {{'project.detail.label.issue-amountPlan' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="formDetailsValidation.issueAmountPlan.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 mb-1 ">
+                            <label>{{'project.detail.label.issue-qualityPlan' | translate}}</label>
+                            <input type="text" name="issueQualityPlan" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.issueQualityPlan.errors }"
+                                formControlName="issueQualityPlan" onlyNumber (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.issueQualityPlan.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.issueQualityPlan.errors.max">
+                                    {{'project.detail.label.issue-qualityPlan' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="formDetailsValidation.issueQualityPlan.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 mb-1 offset-md-1 offset-lg-3 offset-sm-0">
+                            <label>{{'project.detail.label.issue-estimatedTime' | translate}}</label>
+                            <input type="text" name="estimatedTime" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.estimatedTime.errors }"
+                                formControlName="estimatedTime" onlyNumber (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.estimatedTime.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.estimatedTime.errors.max">
+                                    {{'project.detail.label.issue-estimatedTime' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="formDetailsValidation.estimatedTime.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 col-lg-2 col-xl-2 mb-1 ">
+                            <label>{{'project.detail.label.issue-amountActual' | translate}}</label>
+                            <input type="text" name="issueAmountActual" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.issueAmountActual.errors }"
+                                formControlName="issueAmountActual" onlyNumber
+                                (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.issueAmountActual.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.issueAmountActual.errors.max">
+                                    {{'project.detail.label.issue-amountActual' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="formDetailsValidation.issueAmountActual.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-2 col-xl-2 mb-1 ">
+                            <label>{{'project.detail.label.issue-qualityActual' | translate}}</label>
+                            <input type="text" name="issueQualityActual" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.issueQualityActual.errors }"
+                                formControlName="issueQualityActual" onlyNumber
+                                (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.issueQualityActual.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.issueQualityActual.errors.max">
+                                    {{'project.detail.label.issue-qualityActual' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="formDetailsValidation.issueQualityActual.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xl-2 mb-1 offset-md-1 offset-lg-3 offset-sm-0">
+                            <label>% {{'project.detail.label.issue-percentDone' | translate}}</label>
+                            <input type="text" name="percentDone" class="form-control form-control-sm"
+                                [ngClass]="{ 'is-invalid': formDetailsValidation.percentDone.errors }"
+                                formControlName="percentDone" onlyNumber (keyup)="common.removeSpecWord($event)" />
+                            <div *ngIf="formDetailsValidation.percentDone.errors" class="invalid-feedback">
+                                <div *ngIf="formDetailsValidation.percentDone.errors.max">
+                                    {{'project.detail.label.issue-percentDone' | translate}}
+                                    {{'server-error.006'| translate}}
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" *ngIf="formDetailsValidation.percentDone.errors?.serverError">
+                                <div>{{displayMessage | translate}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- View detail -->
+<div class="row" *ngIf="issueDetail !== undefined && isCreate === false && isEdit === false">
+    <div class="col-md-12">
+        <div class="row mb-1">
+            <div class="col-sm-10">
+                <button class="btn btn btn-secondary btn-sm btn-master" type="button" (click)="backToList(false)">
+                    <i class="feather icon-rotate-ccw"></i>
+                    {{'button.back'| translate}}
+                </button>
+                <button *ngIf="authButton.UPDATE || authButton.CREATE" (click)="onEdit()"
+                    class="btn btn-info btn-sm btn-master" type="button">
+                    <i class="feather icon-edit"></i>
+                    {{'button.edit'| translate}}
+                </button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 *ngIf="issueID !== null">Target #{{issueID}}</h4>
+                <h4 *ngIf="issueID === null">{{'project.detail.label.issue-title-create' | translate}}</h4>
+
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="col-1 container-icon-subject">
+                        <i class="fas fa-stream"></i>
+                    </div>
+                    <div class="col-10">
+                        <h5>{{issueDetail?.issueSubject}}</h5>
+                        <p>{{'project.detail.label.issue-added-by.added-by' | translate}}
+                            <span (click)="navigateMemberDetail(issueDetail?.employee.employeeID)" class= "non-underline">
+                                {{issueDetail?.employee.employeeName}}</span>
+                            {{'project.detail.label.issue-added-by.about' | translate}}
+                            <span> {{issueDetail?.issueTimeAdded}} </span>
+                            <span *ngIf="issueDetail && issueDetail['unit'] === 's'">
+                                {{'project.detail.label.issue-updated-by.second-ago' | translate}}
+                            </span>
+                            <span *ngIf="issueDetail && issueDetail['unit'] === 'm'">
+                                {{'project.detail.label.issue-updated-by.munite-ago' | translate}}
+                            </span>
+                            <span *ngIf="issueDetail && issueDetail['unit'] === 'h'">
+                                {{'project.detail.label.issue-updated-by.hour-ago' | translate}}
+                            </span>
+                            <span *ngIf="issueDetail && issueDetail['unit'] === 'd'">
+                                {{'project.detail.label.issue-updated-by.day-ago' | translate}}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="some-class-here">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-status' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.statusIssue.statusIssueName}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-priority' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.priorityIssue.priorityIssueName}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1 ">
+                                    <label>{{'project.detail.label.issue-amountPlan' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1 ">
+                                    <span>{{issueDetail?.issueAmountPlan}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1 ">
+                                    <label>{{'project.detail.label.issue-qualityPlan' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1 ">
+                                    <span>{{issueDetail?.issueQualityPlan}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1 ">
+                                    <label>{{'project.detail.label.issue-amountActual' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1 ">
+                                    <span>{{issueDetail?.issueAmountActual}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1 ">
+                                    <label>{{'project.detail.label.issue-qualityActual' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1 ">
+                                    <span>{{issueDetail?.issueQualityActual}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-startDatePlan' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.issueStartDatePlan | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-endDatePlan' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.issueEndDatePlan | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-startDateActual' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.issueStartDateActual | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-endDateActual' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.issueEndDateActual | date:'dd/MM/yyyy'}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>{{'project.detail.label.issue-estimatedTime' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <span>{{issueDetail?.estimatedTime}}</span>
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mb-1">
+                                    <label>% {{'project.detail.label.issue-percentDone' | translate}}:</label>
+                                </div>
+                                <div class="col-md-4 mb-1">
+                                    <div>{{issueDetail?.percentDone}}%</div>
+                                    <!-- <p><ngb-progressbar 
+                                        type="success" 
+                                        textType="white"
+                                        [value]="issueDetail?.percentDone"
+                                        [showValue]="true"
+                                        [height]="'18px'"></ngb-progressbar></p> -->
+                                </div>
+                                <div class="col-md-5">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">&nbsp;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card History -->
+        <div class="card" *ngIf="issueDetail?.historyIssueUpdate !== undefined && issueDetail?.historyIssueUpdate.length > 0">
+            <div class="card-body">
+                <h5 class="history-title">History</h5>
+                <div class="row" *ngFor="let item of historyIssue; let i = index;">
+                    <div class="col-12">
+                        <p>
+                            <i class="fas fa-user-circle"></i> 
+                            {{'project.detail.label.issue-updated-by.updated-by' | translate}}
+                            <span (click)="navigateMemberDetail(item.employee.employeeID)" class= "non-underline">
+                                {{item.employee.employeeName}} </span>
+                            {{'project.detail.label.issue-updated-by.about' | translate}}
+                            <span> {{item.historyUpdateIssueTime}} </span>
+                            <span *ngIf="item['unit'] === 's'">
+                                {{'project.detail.label.issue-updated-by.second-ago' | translate}}
+                            </span>
+                            <span *ngIf="item['unit'] === 'm'">
+                                {{'project.detail.label.issue-updated-by.munite-ago' | translate}}
+                            </span>
+                            <span *ngIf="item['unit'] === 'h'">
+                                {{'project.detail.label.issue-updated-by.hour-ago' | translate}}
+                            </span>
+                            <span *ngIf="item['unit'] === 'd'">
+                                {{'project.detail.label.issue-updated-by.day-ago' | translate}}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col-12">
+                        <ul style="color: gray;">
+                            <li *ngFor="let fieldUpdated of item.fieldIssueUpdate">
+                                <span style="font-weight: bold;">{{fieldUpdated.fieldIssueUpdateName}} </span> changed from 
+                                {{(
+                                    fieldUpdated.fieldIssueUpdateName === 'Start date plan' || 
+                                    fieldUpdated.fieldIssueUpdateName === 'End date plan' ||
+                                    fieldUpdated.fieldIssueUpdateName === 'Start date actual' ||
+                                    fieldUpdated.fieldIssueUpdateName === 'End date actual'
+                                ) ? (fieldUpdated.fieldIssueUpdateFrom | date:'dd/MM/yyyy') : (fieldUpdated.fieldIssueUpdateFrom)}}
+                                to 
+                                {{(
+                                    fieldUpdated.fieldIssueUpdateName === 'Start date plan' || 
+                                    fieldUpdated.fieldIssueUpdateName === 'End date plan' ||
+                                    fieldUpdated.fieldIssueUpdateName === 'Start date actual' ||
+                                    fieldUpdated.fieldIssueUpdateName === 'End date actual'
+                                ) ? (fieldUpdated.fieldIssueUpdateTo | date:'dd/MM/yyyy') : (fieldUpdated.fieldIssueUpdateTo)}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
