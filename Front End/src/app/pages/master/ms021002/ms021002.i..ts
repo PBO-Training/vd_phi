@@ -1,6 +1,4 @@
-import { Hour } from "src/app/common/constant/type";
-
-export interface ShiftWorkMaster {
+export interface updateRequest {
   shiftWorkOptionID: number | string;
   shiftWorkOptionName: string;
   shiftWorkOptionCode: number | string;
@@ -8,5 +6,5 @@ export interface ShiftWorkMaster {
   shiftWorkOptionEndTimeAM : string;
   shiftWorkOptionStartTimePM : string;
   shiftWorkOptionEndTimePM : string;
-  shiftWorkOptionDescription : string;
+  shiftWorkOptionDescription? : string;
 }

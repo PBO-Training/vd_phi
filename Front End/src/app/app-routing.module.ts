@@ -444,6 +444,16 @@ const routes: Routes = [
         loadChildren: () => import('./pages/master/ms021001/ms021001.module').then(m => m.MS021001Module),
         canActivate: [AuthGuard]
       },
+      {
+        path: 'vacation-shift-work/create',
+        loadChildren: () => import('./pages/master/ms021002/ms021002.module').then(m => m.MS021002Module),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'vacation-shift-work/detail/:id',
+        loadChildren: () => import('./pages/master/ms021002/ms021002.module').then(m => m.MS021002Module),
+        canActivate: [AuthGuard]
+      },
 
     ]
   },

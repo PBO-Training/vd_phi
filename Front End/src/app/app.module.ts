@@ -21,12 +21,16 @@ import { SharedModule } from './theme/shared/shared.module';
 
 
 
+
+
 export function initLanguage(translateService: Translate) {
   return (): Promise<any> => translateService.initLanguage();
 }
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
+
+
 
   ],
   imports: [

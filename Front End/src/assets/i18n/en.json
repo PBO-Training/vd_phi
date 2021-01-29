@@ -685,9 +685,21 @@
                 "shiftwork-code": "Shift Work Code",
                 "shiftwork-description": "Description",
                 "shiftwork-name": "Shift Work Name",
-                "shiftwork-timeAM": "Time AM",
-                "shiftwork-timePM": "Time PM"
+                "shiftworkTime": "Shift Work Time"
 
+            }
+          },
+          "detail": {
+            "label": {
+                "title-update": "Update Shift Work",
+                "title-create": "Create Shift Work",
+                "shift-work-name": "Shift Work Name",
+                "shift-work-description": "Description",
+                "shift-work-code": "Shift Work Code",
+                "shift-work-startTimeAM":"Start Time AM",
+                "shift-work-endTimeAM":"End Time AM",
+                "shift-work-startTimePM":"Start Time PM",
+                "shift-work-endTimePM":"End Time PM"
             }
           }
         },
@@ -1241,8 +1253,8 @@
             "user": "User - Master manager",
             "vacation-type": "Vacation Type - Master manager",
             "degree": "Degree - Master manager",
-            "scope-work": "Scope Work - Master manager"
-
+            "scope-work": "Scope Work - Master manager",
+            "shift-work":"Shift Work - Master manager"
         }
     }
 }

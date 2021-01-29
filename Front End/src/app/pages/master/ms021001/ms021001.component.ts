@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 import { Listprops } from 'src/app/common/page-options';
 import { ScreenAction } from 'src/app/common/screen-action/screen-action';
 import { compare } from 'src/app/theme/shared/directives/sort-table-header.directive';
-import { ShiftWorkMaster } from './ms021001-entity';
-import { ShiftWorkRequest } from './ms021001-request';
+import { ShiftWorkMaster, ShiftWorkRequest } from './ms021001.i';
 import { MS021001Service } from './ms021001.service';
 
 @Component({
@@ -20,25 +21,42 @@ export class MS021001Component implements OnInit {
   authButton = new ScreenAction();
   shiftWorkList : ShiftWorkMaster[];
   getAllRequest : ShiftWorkRequest ;
-
+  valueOld = {
+    shiftWorkOptionName: '',
+    shiftWorkOptionCode: '',
+  };
+  baseForm: FormGroup;
   constructor(
     private fb: FormBuilder,
-    private shiftWorkService : MS021001Service
+    private shiftWorkService : MS021001Service,
+    private titleService: Title,
+    private translate: TranslateService,
     ) {
     this.formSearch = this.fb.group({
+      shiftWorkOptionCode : [null],
+      shiftWorkOptionName : [null]
+    })
+    this.baseForm = this.fb.group({
       shiftWorkOptionCode : [null],
       shiftWorkOptionName : [null]
     })
    }
 
   ngOnInit(): void {
-    this.searchShiftwork(null,30);
+    // change title
+    this.translate.get('title.master.shift-work').subscribe((title: string) => {
+      this.titleService.setTitle(title);
+    });
+    this.initData(null,30,this.baseForm.value)
+
+
   }
-  searchShiftwork(pNum : any,pSize: any){
+
+  initData(pNum : any,pSize: any,formSearch: any){
     this.getAllRequest = {
       pageNum:pNum,
       pageSize:pSize,
-      ...this.formSearch.value
+      ...formSearch
     }
     this.shiftWorkService.getAllShifwork(this.getAllRequest).subscribe(resp => {
       if (resp.content.data !== undefined && resp.content.data !== null && resp.content.data.length >= 0) {
@@ -50,6 +68,13 @@ export class MS021001Component implements OnInit {
       }
     });
   }
+  searchShiftwork(){
+    this.valueOld = JSON.parse(JSON.stringify(this.formSearch.value));
+    this.baseForm.value.shiftWorkOptionCode = this.valueOld.shiftWorkOptionCode;
+    this.baseForm.value.shiftWorkOptionName = this.valueOld.shiftWorkOptionName;
+    this.initData(null, this.screenProps.pageSize, this.baseForm.value);
+
+  }
   resetSort() {
     // reset sort
     this.column = 'shiftworkName';
@@ -58,19 +83,31 @@ export class MS021001Component implements OnInit {
   reset(){
     this.formSearch.reset();
     this.resetSort();
-    this.searchShiftwork(null,this.screenProps.pageSize);
-  }
-  deleteShilftwork(){
+    this.baseForm = this.fb.group({
+      roleName: [null],
+      roleCode: [null]
+    });
+    this.initData(null, this.screenProps.pageSize, this.baseForm.value);
 
   }
+  deleteShilftwork(){
+      this.screenProps.ids =[];
+      if(this.screenProps.setOfCheckedId.size > 0){
+        console.log(this.screenProps.setOfCheckedId)
+        this.screenProps.setOfCheckedId.forEach(x => {
+          this.screenProps.ids.push(x);
+        })
+        console.log(this.screenProps.ids);
+      }
+    }
   changePageSize(pageSize: number): void {
     this.screenProps.pageSize = pageSize;
-    this.searchShiftwork(null,this.screenProps.pageSize);
+    this.initData(null, pageSize, this.baseForm.value);
 
   }
   pageChangeOutput(currentPage: number) {
     this.screenProps.pageNum = currentPage - 1;
-    this.searchShiftwork(this.screenProps.pageNum,this.screenProps.pageSize);
+    this.initData(this.screenProps.pageNum, this.screenProps.pageSize, this.baseForm.value);
 
   }
   updateCheckedSet(id: number, checked: boolean): void{
@@ -105,11 +142,8 @@ export class MS021001Component implements OnInit {
         case 'shiftworkName':
           res = compare(a.shiftWorkOptionName, b.shiftWorkOptionName);
           return event.direction === 'asc' ? res : -res;
-        case 'shiftWorkTimeAM':
-          res = compare(a.shiftWorkOptionStartTimeAM, b.shiftWorkOptionStartTimeAM);
-          return event.direction === 'asc' ? res : -res;
-        case 'shiftWorkTimePM':
-          res = compare(a.shiftWorkOptionStartTimePM, b.shiftWorkOptionEndTimePM);
+        case 'shiftWorkTime':
+          res = compare(a.shiftWorkOptionTime, b.shiftWorkOptionTime);
           return event.direction === 'asc' ? res : -res;
         case 'shiftworkDescription':
           res = compare(a.shiftWorkOptionDescription, b.shiftWorkOptionDescription);
@@ -117,7 +151,5 @@ export class MS021001Component implements OnInit {
       }
     })
   };
-  trackByFn(index, item) {
-    return index;
-  }
+
 }
