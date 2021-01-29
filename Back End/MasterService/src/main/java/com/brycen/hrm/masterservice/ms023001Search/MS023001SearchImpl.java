@@ -46,6 +46,7 @@ public class MS023001SearchImpl implements MS023001SearchIService {
         StringBuffer whereString = new StringBuffer("WHERE so.company_id= :companyID AND so.is_delete=0 ");
         StringBuffer orderByString = new StringBuffer("order by shift_work_option_name asc ");
         StringBuffer queryString = new StringBuffer();
+        
         if (!CheckValueService.checkNull(searchRequest.getShiftWorkOptionCode())) {
             whereString.append("AND so.shift_work_option_code= :shiftWorkOptionCode ");
         }
@@ -61,6 +62,7 @@ public class MS023001SearchImpl implements MS023001SearchIService {
 
         // Set parameter to count total data
         query.setParameter("companyID", companyID);
+       
         if (!CheckValueService.checkNull(searchRequest.getShiftWorkOptionCode())) {
             query.setParameter("shiftWorkOptionCode", searchRequest.getShiftWorkOptionCode());
         }
@@ -73,7 +75,7 @@ public class MS023001SearchImpl implements MS023001SearchIService {
 
         query = em.createNativeQuery(queryString.toString(), ShiftWorkOptionEntity.class);
         query.setParameter("companyID", companyID);
-
+        
         if (!CheckValueService.checkNull(searchRequest.getShiftWorkOptionCode())) {
             query.setParameter("shiftWorkOptionCode", searchRequest.getShiftWorkOptionCode());
         }

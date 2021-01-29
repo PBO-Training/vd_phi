@@ -171,7 +171,10 @@ public class UrlAPI {
     public static final String MS999001_INIT_TOTAL_EMPLOYEE = "ms999001inittotalemployee";
     // ShiftWork
     public static final String MS023001_SEARCH_SHIFTWORKOPTION = "ms023001searchshiftworkoption";
-    
+    public static final String MS023001_DELETE_SHIFTWORKOPTION = "ms023001deleteshiftworkoption";
+    public static final String MS023001_GETDETAIL_SHIFTWORKOPTION = "ms023001getdetailshiftworkoption";
+    public static final String MS023001_UPDATE_SHIFTWORKOPTION = "ms023001updateshiftworkoption";
+    public static final String MS023001_CREATE_SHIFTWORKOPTION = "ms023001createshiftworkoption";
     /**
      * Url Employee Service
      */

@@ -777,6 +777,10 @@ public class ErrorValue {
      * API Search List Role-Screen of Package Holiday in MasterService
      */
     public static final String API_UPDATE_DETAIL_ROLE_SCREEN = "006";
+    /**
+     * API Delete List Role of Package ShiftWork in MasterService
+     */
+    public static final String API_DELETE_LIST_SHIFTWORK = "003";
     
     /**
      * API Delete List Role of Package Role in MasterService

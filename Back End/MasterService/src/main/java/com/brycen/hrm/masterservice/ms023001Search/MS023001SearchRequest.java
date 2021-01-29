@@ -12,7 +12,7 @@ import com.brycen.hrm.common.base.BaseRequest;
  */
 public class MS023001SearchRequest extends BaseRequest {
 
-    /**
+	/**
      * Shift Work name
      */
     private String shiftWorkOptionName;
@@ -21,7 +21,8 @@ public class MS023001SearchRequest extends BaseRequest {
      *  Shift Work code
      */
     private String shiftWorkOptionCode;
-
+    
+ 
 	public String getShiftWorkOptionName() {
 		return shiftWorkOptionName;
 	}
