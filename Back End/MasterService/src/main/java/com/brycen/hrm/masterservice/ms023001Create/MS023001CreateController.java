@@ -1,4 +1,4 @@
-package com.brycen.hrm.masterservice.ms023001Update;
+	package com.brycen.hrm.masterservice.ms023001Create;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,13 +27,13 @@ import com.brycen.hrm.logger.LoggerService;
  */
 @RestController
 @CrossOrigin
-public class MS023001UpdateController {
+public class MS023001CreateController {
 
     /**
      * Call service to delete a list scope work
      */
     @Autowired
-    MS023001UpdateIService updateIService;
+    MS023001CreateIService createIService;
 
     /**
      * Write log
@@ -49,13 +49,13 @@ public class MS023001UpdateController {
      * @param servletReq
      * @return Content and error status
      */
-    @PostMapping(value = UrlAPI.MS023001_UPDATE_SHIFTWORKOPTION)
-    public ResponseEntity<?> updateShiftWork(@RequestBody ShiftWorkOptionEntity request, HttpServletRequest servletReq) {
+    @PostMapping(value = UrlAPI.MS023001_CREATE_SHIFTWORKOPTION)
+    public ResponseEntity<?> createShiftWork(@RequestBody ShiftWorkOptionEntity request, HttpServletRequest servletReq) {
         BaseResponse baseRes = new BaseResponse();
-        logger.write(LogLevel.INFOMATION, UrlAPI.MS023001_UPDATE_SHIFTWORKOPTION, request, null, LogValue.BEGIN_API);
+        logger.write(LogLevel.INFOMATION, UrlAPI.MS023001_CREATE_SHIFTWORKOPTION, request, null, LogValue.BEGIN_API);
         int companyID = (int) servletReq.getAttribute("companyID");
-        baseRes = updateIService.update(request, companyID);       
-        logger.write(LogLevel.INFOMATION, UrlAPI.MS023001_UPDATE_SHIFTWORKOPTION, request, baseRes, LogValue.END_API);
+        baseRes = createIService.insert(request, companyID);
+        logger.write(LogLevel.INFOMATION, UrlAPI.MS023001_CREATE_SHIFTWORKOPTION, request, baseRes, LogValue.END_API);
         return new ResponseEntity<>(baseRes, HttpStatus.OK);
     }
 

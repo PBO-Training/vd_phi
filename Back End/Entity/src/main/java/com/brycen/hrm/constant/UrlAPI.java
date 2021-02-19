@@ -175,6 +175,7 @@ public class UrlAPI {
     public static final String MS023001_GETDETAIL_SHIFTWORKOPTION = "ms023001getdetailshiftworkoption";
     public static final String MS023001_UPDATE_SHIFTWORKOPTION = "ms023001updateshiftworkoption";
     public static final String MS023001_CREATE_SHIFTWORKOPTION = "ms023001createshiftworkoption";
+    public static final String MS023001_INIT_SHIFTWORKOPTION = "ms023001init";
     /**
      * Url Employee Service
      */

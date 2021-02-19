@@ -1,4 +1,4 @@
-package com.brycen.hrm.masterservice.ms023001Update;
+package com.brycen.hrm.masterservice.ms023001Create;
 
 import java.util.Optional;
 
@@ -12,11 +12,13 @@ import org.springframework.stereotype.Service;
 import com.brycen.hrm.common.base.BaseResponse;
 import com.brycen.hrm.common.base.ErrorResponse;
 import com.brycen.hrm.common.checkValue.CheckValueService;
+import com.brycen.hrm.config.auditor.AuditorAwareImpl;
 import com.brycen.hrm.constant.ErrorValue;
 import com.brycen.hrm.constant.UrlAPI;
 import com.brycen.hrm.entity.ShiftWorkOptionEntity;
 import com.brycen.hrm.logger.LogLevel;
 import com.brycen.hrm.logger.LoggerService;
+
 
 /**
  * [Description]: Delete Service Implementation for Scope Work Master Table<br>
@@ -27,36 +29,28 @@ import com.brycen.hrm.logger.LoggerService;
  * @version 1.0
  */
 @Service
-public class MS023001UpdateImpl implements MS023001UpdateIService {
-	
+public class MS023001CreateImpl implements MS023001CreateIService {
+
 	@Autowired
-	public MS023001UpdateRepository updateRepository;
-    /**
-     * Call entity manager to support creation a native query statement
-     */
+	public MS023001CreateRepository createRepository;
+	
     @Autowired
     public EntityManager em;
-
-    /**
-     * Call query to save an instance native query statement
-     */
+ 
     private Query query;
 
-    /**
-     * Write log
-     */
     @Autowired
     LoggerService logger;
     
-    public ErrorResponse checkValue(ShiftWorkOptionEntity shiftworkoptionEntity,Optional<ShiftWorkOptionEntity> currentShiftWork, int companyID) {
+    public ErrorResponse checkValue(ShiftWorkOptionEntity shiftworkoptionEntity, int companyID) {
     	ErrorResponse error = new ErrorResponse();
         StringBuffer errorItemName = new StringBuffer();
         StringBuffer errorItemCode = new StringBuffer();
         
-        ShiftWorkOptionEntity shiftWorkOption = updateRepository.findByShiftWorkOptionCodeAndCompanyID(shiftworkoptionEntity.getShiftWorkOptionCode(), companyID,currentShiftWork.get().getShiftWorkOptionID());
+        ShiftWorkOptionEntity shiftWorkOption = createRepository.findByShiftWorkOptionCodeAndCompanyID(shiftworkoptionEntity.getShiftWorkOptionCode(), companyID);
 		if(shiftWorkOption != null) {
 			errorItemCode.append(ErrorValue.TYPE_INPUT_VALUE_ERROR).append(ErrorValue.SERVICE_API_MASTER).append(ErrorValue.PACKAGE_SHIFTWORK)
-            .append(ErrorValue.API_UPDATE_DETAIL_SHIFTWORK).append(ErrorValue.METHOD_POST).append(ErrorValue.REASON_VALUE_ILLEGAL);
+            .append(ErrorValue.API_CREATE_DETAIL_SHIFTWORK).append(ErrorValue.METHOD_POST).append(ErrorValue.REASON_VALUE_ILLEGAL);
 		    errorItemName.append("shiftWorkCode");
 		    error.setCode(errorItemCode.toString());
 		    error.setItemName(errorItemName.toString());
@@ -68,50 +62,39 @@ public class MS023001UpdateImpl implements MS023001UpdateIService {
     
     @Transactional
 	@Override
-	public BaseResponse update(ShiftWorkOptionEntity shiftworkoptionEntity, int companyID) {
+	public BaseResponse insert(ShiftWorkOptionEntity shiftworkoptionEntity, int companyID) {
     	BaseResponse baseRes = new BaseResponse();
-    	Optional<ShiftWorkOptionEntity> currentShiftWork = updateRepository.findByShiftWorkOptionIDAndCompanyIDAndIsDelete(shiftworkoptionEntity.getShiftWorkOptionID(), companyID, false);
-    	ErrorResponse error = checkValue(shiftworkoptionEntity, currentShiftWork, companyID);
+    	ErrorResponse error = checkValue(shiftworkoptionEntity, companyID);
     	if (error != null) {
             baseRes.setError(error);
-            logger.write(LogLevel.ERROR, UrlAPI.MS023001_UPDATE_SHIFTWORKOPTION, shiftworkoptionEntity, baseRes, "");
+            logger.write(LogLevel.ERROR, UrlAPI.MS023001_CREATE_SHIFTWORKOPTION, shiftworkoptionEntity, baseRes, "");
             return baseRes;
         }
     	StringBuffer strSql = new StringBuffer();
-    	strSql.append("UPDATE shift_work_option s ");
-        strSql.append("SET s.is_delete = 0");
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionCode())) {
-        	strSql.append(" , s.shift_work_option_code= :shiftWorkOptionCode");
-        }
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionName())) {
-        	strSql.append(" , s.shift_work_option_name= :shiftWorkOptionName");
-        }
-        	strSql.append(" , s.shift_work_option_description= :shiftWorkOptionDescriptions");
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionStartTimeAM())) {
-        	strSql.append(" , s.shift_work_option_start_time_am= :shiftWorkOptionStartTimeAM");
-        }
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionStartTimePM())) {
-        	strSql.append(" , s.shift_work_option_start_time_pm= :shiftWorkOptionStartTimePM");
-        }
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionEndTimeAM())) {
-        	strSql.append(" , s.shift_work_option_end_time_am= :shiftWorkOptionEndTimeAM");
-        }
-        if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionEndTimePM())) {
-        	strSql.append(" , s.shift_work_option_end_time_pm= :shiftWorkOptionEndTimePM");
-        }
-        strSql.append(" WHERE s.shift_work_option_id = :shiftWorkOptionID");
-        strSql.append(" AND s.company_id = :companyID ");
+    	AuditorAwareImpl auditorAwareImpl = new AuditorAwareImpl();
+    	strSql.append("INSERT INTO shift_work_option (company_id,create_by,create_date,is_delete,update_by,update_date, ");
+    	strSql.append(" shift_work_option_code, shift_work_option_name,shift_work_option_description,shift_work_option_start_time_am, ");
+    	strSql.append(" shift_work_option_start_time_pm,shift_work_option_end_time_am,shift_work_option_end_time_pm )");
+    	strSql.append("VALUES ( :companyID, :createBy, now(),0,:updateBy, now()");
+        strSql.append(" , :shiftWorkOptionCode");
+        strSql.append(" , :shiftWorkOptionName");      
+        strSql.append(" , :shiftWorkOptionDescriptions");        
+        strSql.append(" , :shiftWorkOptionStartTimeAM");                
+        strSql.append(" , :shiftWorkOptionStartTimePM");                
+        strSql.append(" , :shiftWorkOptionEndTimeAM");        
+        strSql.append(" , :shiftWorkOptionEndTimePM )");
         
         query = em.createNativeQuery(strSql.toString());
-        query.setParameter("shiftWorkOptionID",shiftworkoptionEntity.getShiftWorkOptionID() );
         query.setParameter("companyID", companyID);
+        query.setParameter("createBy",auditorAwareImpl.getCurrentAuditor().get());
+        query.setParameter("updateBy", auditorAwareImpl.getCurrentAuditor().get());
         query.setParameter("shiftWorkOptionDescriptions",shiftworkoptionEntity.getShiftWorkOptionDescription());
         if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionCode())) {
         	query.setParameter("shiftWorkOptionCode",shiftworkoptionEntity.getShiftWorkOptionCode());
         }
         if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionName())) {
         	query.setParameter("shiftWorkOptionName",shiftworkoptionEntity.getShiftWorkOptionName());
-        }              	      
+        }                	
         if (!CheckValueService.checkNull(shiftworkoptionEntity.getShiftWorkOptionStartTimeAM())) {
         	query.setParameter("shiftWorkOptionStartTimeAM",shiftworkoptionEntity.getShiftWorkOptionStartTimeAM());
         }
@@ -127,5 +110,8 @@ public class MS023001UpdateImpl implements MS023001UpdateIService {
         baseRes.setContent(query.executeUpdate());
 		return baseRes;
 	}
+
+
+	
 
 }

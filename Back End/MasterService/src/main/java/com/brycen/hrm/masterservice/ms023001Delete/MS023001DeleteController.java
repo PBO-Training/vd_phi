@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,7 +49,7 @@ public class MS023001DeleteController {
      * @param servletReq
      * @return Content and error status
      */
-    @DeleteMapping(value = UrlAPI.MS023001_DELETE_SHIFTWORKOPTION)
+    @PostMapping(value = UrlAPI.MS023001_DELETE_SHIFTWORKOPTION)
     public ResponseEntity<?> deleteListShiftWork(@RequestBody MS023001DeleteRequest request, HttpServletRequest servletReq) {
         BaseResponse baseRes = new BaseResponse();
         logger.write(LogLevel.INFOMATION, UrlAPI.MS023001_DELETE_SHIFTWORKOPTION, request, null, LogValue.BEGIN_API);

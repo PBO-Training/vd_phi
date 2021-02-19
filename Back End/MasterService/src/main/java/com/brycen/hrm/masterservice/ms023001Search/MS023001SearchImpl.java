@@ -89,8 +89,8 @@ public class MS023001SearchImpl implements MS023001SearchIService {
         }
 
         @SuppressWarnings("unchecked")
-        List<ShiftWorkOptionEntity> shilfworkList = query.setFirstResult(searchRequest.getPageNum() * pageSize).setMaxResults(pageSize).getResultList();
-        List<Object> result = shilfworkList.stream().map(MS023001SearchResponse::new).collect(Collectors.toList());
+        List<ShiftWorkOptionEntity> shiftworkList = query.setFirstResult(searchRequest.getPageNum() * pageSize).setMaxResults(pageSize).getResultList();
+        List<Object> result = shiftworkList.stream().map(MS023001SearchResponse::new).collect(Collectors.toList());
         ContentResponse content = new ContentResponse(result, searchRequest.getPageNum(), pageSize, totalElements);
         BaseResponse baseRes = new BaseResponse();
         baseRes.setContent(content);

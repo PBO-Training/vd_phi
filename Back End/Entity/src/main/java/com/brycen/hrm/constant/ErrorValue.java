@@ -179,6 +179,10 @@ public class ErrorValue {
      * Package Degree in Master Service
      */
     public static final String PACKAGE_DEGREE = "020";
+    /**
+     * Package Shift Work in Master Service
+     */
+    public static final String PACKAGE_SHIFTWORK = "023";
     
     /*=================3 CHARACTER========================*/
     /*=================API IN PACKAGE=====================*/
@@ -841,6 +845,12 @@ public class ErrorValue {
      * API Update A Role of Package Degree in MasterService
      */
     public static final String API_UPDATE_DETAIL_DEGREE = "006";
+    /**
+     * API Update A ShiftWork of Package Shift Work in MasterService
+     */
+    public static final String API_UPDATE_DETAIL_SHIFTWORK = "006";
+    
+    public static final String API_CREATE_DETAIL_SHIFTWORK = "005";
     
     
     /*=================1 CHARACTER====================*/
