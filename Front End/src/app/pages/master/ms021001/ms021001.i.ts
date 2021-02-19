@@ -1,6 +1,6 @@
 
 export interface ShiftWorkMaster {
-  shiftWorkOptionID: number | string;
+  shiftWorkOptionID: number;
   shiftWorkOptionName: string;
   shiftWorkOptionCode: number | string;
   shiftWorkOptionTime: string;

@@ -115,6 +115,7 @@ export class MS018002Component implements OnInit, OnDestroy {
             roleCode: value.content.roleCode
           });
           this.valueOld = JSON.parse(JSON.stringify(value.content));
+
         }
       },
         err => {

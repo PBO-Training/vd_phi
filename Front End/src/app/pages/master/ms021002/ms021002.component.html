@@ -14,10 +14,10 @@
     </div>
     <ng-template #createTitle>
       <h5>{{'master.shiftwork.detail.label.title-create'| translate}}</h5>
-      <app-mstest (newItemEvent)="back($event)" [item]=" submitForm()"></app-mstest>
+      <!-- <app-mstest (newItemEvent)="back($event)" [item]=" submitForm()"></app-mstest> -->
     </ng-template>
     <div class="card-body">
-      <form [formGroup]="formData" (ngSubmit)="submitForm()" class="needs-validation" novalidate appFocus>
+      <form [formGroup]="formData" class="needs-validation" novalidate appFocus>
         <div class="form-row justify-content-left">
           <div class="col-md-4 hide">
             <input type="text" class="form-control form-control-sm" placeholder="Id"
@@ -29,74 +29,157 @@
               <i class="color-red">*</i>
             </label>
             <input type="text" class="form-control form-control-sm"
-                formControlName="shiftWorkCode">
+                formControlName="shiftWorkCode" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkCode.errors && submitted) ||this.formData.controls.shiftWorkCode.errors?.serverError}">
+            <div *ngIf="this.formData.controls.shiftWorkCode.errors" class="invalid-feedback">
+                <div *ngIf="this.formData.controls.shiftWorkCode.errors.required">
+                      {{'master.shiftwork.detail.label.shift-work-code'| translate}} {{'server-error.001'| translate}}</div>
+                <div *ngIf="this.formData.controls.shiftWorkCode.errors.maxlength">
+                      {{'master.shiftwork.detail.label.shift-work-code'| translate}} {{'server-error.008'| translate: maxlenghtCode}}</div>
+
+            </div>
+            <div class="invalid-feedback" *ngIf="this.formData.controls.shiftWorkCode.errors?.serverError">
+
+              <div>{{'master.shiftwork.detail.label.shift-work-code'| translate}} {{'server-error.009'| translate}}</div>
+          </div>
+
+          </div>
+          <div class="col-md-4">
             <label class="floating-label">
               {{'master.shiftwork.detail.label.shift-work-name'| translate}}
               <i class="color-red">*</i>
             </label>
             <input type="text" class="form-control form-control-sm"
-                formControlName="shiftWorkName">
-          </div>
-          <div class="col-md-4 ">
-            <label class="floating-label">
-              {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}}
-              <i class="color-red">*</i>
-            </label>
-            <div class="input-group-prepend">
-              <select class="mb-12 form-control form-control-sm" id="starttimehourAM" formControlName="shiftWorkStartHourAM" >
-                <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
-              </select>&nbsp;:&nbsp;
-              <select class="mb-12 form-control form-control-sm" id="starttimeminAM" formControlName="shiftWorkStartMinAM">
-                <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
-              </select>
-            </div>
-            <label class="floating-label">
-              {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}}
-              <i class="color-red">*</i>
-            </label>
-            <div class="input-group-prepend">
-            <select class="mb-12 form-control form-control-sm" id="endtimehourAM" formControlName="shiftWorkEndHourAM" >
-              <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
-            </select>&nbsp;:&nbsp;
-            <select class="mb-12 form-control form-control-sm" id="endtimeminAM" formControlName="shiftWorkEndMinAM" >
-              <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
-            </select>
+                formControlName="shiftWorkName" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkName.errors && submitted) }">
+            <div *ngIf="this.formData.controls.shiftWorkName.errors" class="invalid-feedback">
+                <div *ngIf="this.formData.controls.shiftWorkName.errors.required">
+                      {{'master.shiftwork.detail.label.shift-work-name'| translate}} {{'server-error.001'| translate}}</div>
+                <div *ngIf="this.formData.controls.shiftWorkName.errors.maxlength">
+                      {{'master.shiftwork.detail.label.shift-work-name'| translate}} {{'server-error.008'| translate: maxlenghtName}}</div>
             </div>
           </div>
-          <div class="col-md-4 ">
+        </div>
+        <div class="form-row justify-content-left">
+            <div class="col-md-4">
+              <label class="floating-label">
+                {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}}
+                <i class="color-red">*</i>
+              </label>
+              <div class="input-group-prepend">
+                <div class="col-md-6 col-6 pl-0 pr-1">
+                <select class="mb-12 form-control form-control-sm" id="starttimehourAM" formControlName="shiftWorkStartHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourAM.errors && submitted) }" >
+                  <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkStartHourAM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkStartHourAM.errors.required && submitted">
+                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                </div>
+                </div>
+                <div class="col-md-6 col-6 pl-1 pr-0">
+                <select class="mb-12 form-control form-control-sm" id="starttimeminAM" formControlName="shiftWorkStartMinAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartMinAM.errors && submitted) }">
+                  <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkStartMinAM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkStartMinAM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="floating-label">
+                {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}}
+                <i class="color-red">*</i>
+              </label>
+              <div class="input-group-prepend">
+              <div class="col-md-6 col-6 pl-0 pr-1">
+                <select class="mb-12 form-control form-control-sm" id="endtimehourAM" formControlName="shiftWorkEndHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndHourAM.errors && submitted) }" >
+                  <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkEndHourAM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkEndHourAM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-6 pl-1 pr-0">
+                <select class="mb-12 form-control form-control-sm" id="endtimeminAM" formControlName="shiftWorkEndMinAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndMinAM.errors && submitted) }">
+                  <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkEndMinAM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkEndMinAM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
+              </div>
+            </div>
+        </div>
+        <div class="form-row justify-content-left">
+          <div class="col-md-4">
             <label class="floating-label">
               {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}}
               <i class="color-red">*</i>
             </label>
             <div class="input-group-prepend">
-              <select class="mb-12 form-control form-control-sm" id="starttimehourPM" formControlName="shiftWorkStartHourPM" >
-                <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
-              </select>&nbsp;:&nbsp;
-              <select class="mb-12 form-control form-control-sm" id="starttimeminPM" formControlName="shiftWorkStartMinPM">
-                <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
-              </select>
+              <div class="col-md-6 col-6 pl-0 pr-1">
+                <select class="mb-12 form-control form-control-sm" id="starttimehourPM" formControlName="shiftWorkStartHourPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourPM.errors && submitted) }" >
+                  <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkStartHourPM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkStartHourPM.errors.required && submitted">
+                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-6 pl-1 pr-0">
+                <select class="mb-12 form-control form-control-sm" id="starttimeminPM" formControlName="shiftWorkStartMinPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartMinPM.errors && submitted) }" >
+                  <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkStartMinPM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkStartMinPM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col-md-4">
             <label class="floating-label">
               {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}}
               <i class="color-red">*</i>
             </label>
             <div class="input-group-prepend">
-              <select class="mb-12 form-control form-control-sm" id="endtimehourPM" formControlName="shiftWorkEndHourPM" >
-                <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
-              </select>&nbsp;:&nbsp;
-              <select class="mb-12 form-control form-control-sm" id="endtimeminPM" formControlName="shiftWorkEndMinPM" >
-                <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
-              </select>
+              <div class="col-md-6 col-6 pl-0 pr-1">
+                <select class="mb-12 form-control form-control-sm" id="endtimehourPM" formControlName="shiftWorkEndHourPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndHourPM.errors && submitted) }">
+                  <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkEndHourPM.errors" class="invalid-feedback input-group-prepend ">
+                  <div *ngIf="this.formData.controls.shiftWorkEndHourPM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
+              <div class="col-md-6 col-6 pl-1 pr-0">
+                <select class="mb-12 form-control form-control-sm" id="endtimeminPM" formControlName="shiftWorkEndMinPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndMinPM.errors && submitted) }">
+                  <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
+                </select>
+                <div *ngIf="this.formData.controls.shiftWorkEndMinPM.errors" class="invalid-feedback input-group-prepend">
+                  <div *ngIf="this.formData.controls.shiftWorkEndMinPM.errors.required && submitted" class="ml-1">
+                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div class="form-row justify-content-left">
           <div class="col-md-6 mb-3">
-              <label class="floating-label">
-                {{'master.shiftwork.detail.label.shift-work-description'| translate}}
-              </label>
-              <textarea class="form-control form-control-sm" rows="4" wrap="on" style="resize:none;" formControlName="shiftWorkDescriptions" >
+            <label class="floating-label">
+              {{'master.shiftwork.detail.label.shift-work-description'| translate}}
+            </label>
+            <textarea class="form-control form-control-sm" rows="4" wrap="on" style="resize:none;" formControlName="shiftWorkDescriptions" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkDescriptions.errors && submitted) }" >
 
-              </textarea>
-          </div>
+            </textarea>
+            <div *ngIf="this.formData.controls.shiftWorkDescriptions.errors" class="invalid-feedback">
+              <div *ngIf="this.formData.controls.shiftWorkDescriptions.errors.maxlength && submitted">
+                    {{'master.shiftwork.detail.label.shift-work-description'| translate}} {{'server-error.008'| translate:maxlenghtDescription}}</div>
+            </div>
+
+        </div>
         </div>
         <div class="mt-2 form-row">
           <div class="col-12">
@@ -105,7 +188,7 @@
                   <i class="feather icon-save"></i>
                   {{'button.save'| translate}}
               </button>
-              <button  class="btn btn btn-secondary btn-sm btn-master" type="button">
+              <button (click)="back()" class="btn btn btn-secondary btn-sm btn-master" type="button">
                   <i class="feather icon-rotate-ccw"></i>
                   {{'button.back'| translate}}
               </button>

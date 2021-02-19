@@ -16,7 +16,13 @@
               <label for="Code">
                   {{'master.shiftwork.list.code'| translate}}
               </label>
-              <input type="text" class="form-control form-control-sm" formControlName="shiftWorkOptionCode">
+              <!-- <input type="text" class="form-control form-control-sm" formControlName="shiftWorkOptionCode"> -->
+              <ng-select placeholder="All" class="custom" id="shiftworkcode"
+                    formControlName="shiftWorkOptionCode">
+                    <ng-option *ngFor="let item of boxShiftWorkCode" [value]="item.shiftWorkOptionCode">
+                         {{item.shiftWorkOptionCode}}
+                    </ng-option>
+              </ng-select>
           </div>
           <div class="col-sm-3">
               <label for="Name">
@@ -65,8 +71,7 @@
               <option
                   *ngFor="let option of screenProps.pageOpiton"
                   [selected]="option === screenProps.pageSize"
-                  [value]="option"
-              >
+                  [value]="option">
                   {{option}}
               </option>
           </select>
@@ -93,8 +98,8 @@
                 <input
                     type="checkbox"
                     class="custom-control-input"
-                    (change)="checkAll($event)"
-                    (click)="checkAll($event)"
+                    (change)="checkAll($event.target.checked)"
+                    (click)="checkAll($event.target.checked)"
                     [(ngModel)]="checked"
                 >
                 <span class="custom-control-label"></span>

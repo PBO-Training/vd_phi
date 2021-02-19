@@ -157,7 +157,7 @@ export class MS003002Component implements OnInit, OnDestroy {
     this.formData.controls.skillDescription.setValidators([Validators.maxLength(LengthConstant.MAX_LENGTH_DESCRIPTION)]);
     this.formData.controls.skillTypeID.setValue(this.formData.controls.skillTypeID.value);
     this.validator.updateTreeValidity(this.formData);
-    if (!this.formData.invalid) {
+    if (this.formData.invalid) {
       // if form have skill ID => Update else Create
       if (this.f.skillID.value) {
         this.skillService.updateSkill(this.formData.value).pipe(takeUntil(this.unsubscribe$)).subscribe(resp => {

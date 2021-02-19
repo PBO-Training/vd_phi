@@ -17,4 +17,11 @@ export class MS021002Service {
   updateShiftwork(body:any): Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkUpdate}`, body);
   }
+  createShiftwork(body:any): Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkCreate}`, body);
+  }
+  initStepBreakTime(body:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkInitBreakTime}`, body);
+  }
 }
+

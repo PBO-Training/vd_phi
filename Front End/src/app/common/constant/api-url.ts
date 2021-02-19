@@ -250,5 +250,8 @@ export enum DashboardApiUrl {
 export enum ShiftworkApiUrl{
     ShiftworkGetAll = '/ms/ms023001searchshiftworkoption',
     ShiftworkGetDetail = '/ms/ms023001getdetailshiftworkoption',
-    ShiftworkUpdate ='/ms/ms023001updateshiftworkoption'
+    ShiftworkUpdate ='/ms/ms023001updateshiftworkoption',
+    ShiftworkDelete = '/ms/ms023001deleteshiftworkoption',
+    ShiftworkCreate = '/ms/ms023001createshiftworkoption',
+    ShiftworkInitBreakTime = '/ms/ms023001init'
 }

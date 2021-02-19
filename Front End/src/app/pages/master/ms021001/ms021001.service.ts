@@ -16,11 +16,10 @@ export class MS021001Service {
     // TODO
     return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkGetAll}`, body);
   }
-  // deleteRole(ids: any) {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: { listDelete: ids },
-  //   };
-  //   return this.http.delete<any>(`${environment.apiUrl}${url.RoleApiUrl.RoleDelete}`, httpOptions);
-  // }
+  deleteShiftWork(ids: any) {
 
+    return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkDelete}`, ids);
+  }
 }
+
+

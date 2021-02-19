@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Listprops } from 'src/app/common/page-options';
 import { ScreenAction } from 'src/app/common/screen-action/screen-action';
+import { ModalConfirmComponent } from 'src/app/theme/shared/components/modal-confirm/modal-confirm.component';
+import { ToastService } from 'src/app/theme/shared/components/toast-container/toast-service';
 import { compare } from 'src/app/theme/shared/directives/sort-table-header.directive';
 import { ShiftWorkMaster, ShiftWorkRequest } from './ms021001.i';
 import { MS021001Service } from './ms021001.service';
@@ -20,7 +23,9 @@ export class MS021001Component implements OnInit {
   formSearch: FormGroup;
   authButton = new ScreenAction();
   shiftWorkList : ShiftWorkMaster[];
+  boxShiftWorkCode : ShiftWorkMaster[];
   getAllRequest : ShiftWorkRequest ;
+  deleteRequest : any;
   valueOld = {
     shiftWorkOptionName: '',
     shiftWorkOptionCode: '',
@@ -31,6 +36,8 @@ export class MS021001Component implements OnInit {
     private shiftWorkService : MS021001Service,
     private titleService: Title,
     private translate: TranslateService,
+    private modalService: NgbModal,
+    private toastService: ToastService,
     ) {
     this.formSearch = this.fb.group({
       shiftWorkOptionCode : [null],
@@ -47,11 +54,20 @@ export class MS021001Component implements OnInit {
     this.translate.get('title.master.shift-work').subscribe((title: string) => {
       this.titleService.setTitle(title);
     });
-    this.initData(null,30,this.baseForm.value)
-
-
+    this.initData(null,30,this.baseForm.value);
+    this.initBoxCode();
   }
-
+  initBoxCode(){
+    let Request={
+      pageNum: "",
+      pageSize: ""
+    }
+    this.shiftWorkService.getAllShifwork(Request).subscribe(resp => {
+      if (resp.content.data !== undefined && resp.content.data !== null && resp.content.data.length >= 0) {
+        this.boxShiftWorkCode = resp.content.data;
+      }
+    })
+  }
   initData(pNum : any,pSize: any,formSearch: any){
     this.getAllRequest = {
       pageNum:pNum,
@@ -84,8 +100,8 @@ export class MS021001Component implements OnInit {
     this.formSearch.reset();
     this.resetSort();
     this.baseForm = this.fb.group({
-      roleName: [null],
-      roleCode: [null]
+      shiftWorkOptionCode : [null],
+      shiftWorkOptionName : [null]
     });
     this.initData(null, this.screenProps.pageSize, this.baseForm.value);
 
@@ -93,19 +109,52 @@ export class MS021001Component implements OnInit {
   deleteShilftwork(){
       this.screenProps.ids =[];
       if(this.screenProps.setOfCheckedId.size > 0){
-        console.log(this.screenProps.setOfCheckedId)
-        this.screenProps.setOfCheckedId.forEach(x => {
-          this.screenProps.ids.push(x);
+          this.screenProps.setOfCheckedId.forEach(x => {
+            this.screenProps.ids.push(x);
         })
-        console.log(this.screenProps.ids);
+        this.openPopup(this.screenProps.ids)
+      }else {
+        this.toastService.show('notification-message.unchecked', { classname: 'bg-warning text-light', delay: 3000 });
       }
     }
+
+   // open popup confirm
+   openPopup(ids: number[]) {
+    // NgbModal bootstrap using abtract ViewContainerRef of angular create dynamic components, https://angular.io/api/core/ViewContainerRef;
+    const modalRef = this.modalService.open(ModalConfirmComponent, {centered: true});
+    // COMUNICATION WITH DYNAMIC COMPONENTS USING @Input() or @Ouput() with componentInstance
+    this.translate.get('confirm-message.delete').subscribe(
+      (text: string) => {
+        modalRef.componentInstance.title = text;
+      }
+    );
+    modalRef.result.then(result => {
+      this.deleteRequest={"listDelete": ids}
+      if (result === 'delete') {
+         this.shiftWorkService.deleteShiftWork(this.deleteRequest).subscribe(resp =>{
+          if(resp.content > 0){
+            this.checked = false;
+            this.screenProps.ids = [];
+            this.screenProps.setOfCheckedId.clear();
+            this.reset();
+            this.screenProps.page = 1;
+            this.toastService.show('notification-message.delete-success', { classname: 'bg-success text-light', delay: 3000 });
+          }
+         })
+      }
+
+    });
+  }
   changePageSize(pageSize: number): void {
+    this.checked = false;
+    this.checkAll(false);
     this.screenProps.pageSize = pageSize;
     this.initData(null, pageSize, this.baseForm.value);
 
   }
   pageChangeOutput(currentPage: number) {
+    this.checked = false;
+    this.checkAll(false);
     this.screenProps.pageNum = currentPage - 1;
     this.initData(this.screenProps.pageNum, this.screenProps.pageSize, this.baseForm.value);
 
@@ -117,9 +166,9 @@ export class MS021001Component implements OnInit {
       this.screenProps.setOfCheckedId.delete(id);
     }
   }
-  checkAll(event){
+  checkAll(checked){
     this.shiftWorkList.forEach(item => {
-    this.updateCheckedSet(+item.shiftWorkOptionID, event.target.checked);
+    this.updateCheckedSet(item.shiftWorkOptionID, checked);
     });
   }
   onItemChecked(id: number, event){

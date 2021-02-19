@@ -70,7 +70,7 @@
                         <label>
                             {{'master.skill.detail.label.description'| translate}}
                         </label>
-                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm" formControlName="skillDescription" 
+                        <textarea appResizeTerexa rows="12" cols="100" type="text" class="form-control form-control-sm" formControlName="skillDescription"
                         [ngClass]="{ 'is-invalid': (submitted && f.skillDescription.errors && f.skillDescription.pristine) || f.skillDescription.errors?.serverError} ">
                         </textarea>
                         <div *ngIf="submitted && f.skillDescription.errors && f.skillDescription.pristine" class="invalid-feedback">
