@@ -677,6 +677,32 @@
                 }
             }
         },
+        "shiftwork":{
+          "list": {
+            "name": "シフト勤務名",
+            "code": "シフト勤務コード",
+            "table": {
+                "shiftwork-code": "シフト勤務コード",
+                "shiftwork-description": "説明",
+                "shiftwork-name": "シフト勤務名",
+                "shiftworkTime": "時間"
+
+            }
+          },
+          "detail": {
+            "label": {
+                "title-update": "シフト勤務を更新する",
+                "title-create": "交代制勤務を作成する",
+                "shift-work-name": "シフト勤務名",
+                "shift-work-description": "説明",
+                "shift-work-code": "シフト勤務コード",
+                "shift-work-startTimeAM":"始まる時間 午前",
+                "shift-work-endTimeAM":"終了時間 午前",
+                "shift-work-startTimePM":"始まる時間 午後",
+                "shift-work-endTimePM":"終了時間 午後"
+            }
+          }
+        },
         "screen": {
             "list": {
                 "name": "スクリーン名前",
@@ -1106,7 +1132,8 @@
                 "user": "ユーザー",
                 "vacation-type": "休みのタイプ",
                 "degree": "程度",
-                "scope-work": "責任者"
+                "scope-work": "責任者",
+                "shift-work": "交代制勤務"
             }
         }
     },
@@ -1162,7 +1189,8 @@
                 "user": "ユーザー",
                 "vacation-type": "休みのタイプ",
                 "degree": "程度",
-                "scope-work": "責任者"
+                "scope-work": "責任者",
+                "shift-work": "交代制勤務"
             }
         },
         "child": {
@@ -1225,7 +1253,8 @@
             "user": "ユーザー-マスターマ管理",
             "vacation-type": "休みのタイプ-マスターマ管理",
             "degree": "程度-マスターマ管理",
-            "scope-work": "責任者-マスターマ管理"
+            "scope-work": "責任者-マスターマ管理",
+            "shift-work":"交代制勤務 - マスターマ管理"
 
         }
     }

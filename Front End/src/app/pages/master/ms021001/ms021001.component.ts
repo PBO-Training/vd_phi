@@ -3,8 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
+import { mergeMap, takeUntil } from 'rxjs/operators';
 import { Listprops } from 'src/app/common/page-options';
 import { ScreenAction } from 'src/app/common/screen-action/screen-action';
+import { TranslationService } from 'src/app/services/translate/translation.service';
 import { ModalConfirmComponent } from 'src/app/theme/shared/components/modal-confirm/modal-confirm.component';
 import { ToastService } from 'src/app/theme/shared/components/toast-container/toast-service';
 import { compare } from 'src/app/theme/shared/directives/sort-table-header.directive';
@@ -26,6 +29,7 @@ export class MS021001Component implements OnInit {
   boxShiftWorkCode : ShiftWorkMaster[];
   getAllRequest : ShiftWorkRequest ;
   deleteRequest : any;
+  private unsubscribe$ = new Subject();
   valueOld = {
     shiftWorkOptionName: '',
     shiftWorkOptionCode: '',
@@ -38,6 +42,7 @@ export class MS021001Component implements OnInit {
     private translate: TranslateService,
     private modalService: NgbModal,
     private toastService: ToastService,
+    public translationService: TranslationService,
     ) {
     this.formSearch = this.fb.group({
       shiftWorkOptionCode : [null],
@@ -52,6 +57,12 @@ export class MS021001Component implements OnInit {
   ngOnInit(): void {
     // change title
     this.translate.get('title.master.shift-work').subscribe((title: string) => {
+      this.titleService.setTitle(title);
+    });
+    // change title when change language
+    this.translationService.changeTranslatetion().pipe(takeUntil(this.unsubscribe$),
+      mergeMap(lang => this.translate.get('title.master.shift-work'))
+    ).subscribe((title: string) => {
       this.titleService.setTitle(title);
     });
     this.initData(null,30,this.baseForm.value);
@@ -85,6 +96,7 @@ export class MS021001Component implements OnInit {
     });
   }
   searchShiftwork(){
+    this.screenProps.page =1 ;
     this.valueOld = JSON.parse(JSON.stringify(this.formSearch.value));
     this.baseForm.value.shiftWorkOptionCode = this.valueOld.shiftWorkOptionCode;
     this.baseForm.value.shiftWorkOptionName = this.valueOld.shiftWorkOptionName;
@@ -97,6 +109,7 @@ export class MS021001Component implements OnInit {
     this.direction = 'asc';
   }
   reset(){
+    this.screenProps.page =1 ;
     this.formSearch.reset();
     this.resetSort();
     this.baseForm = this.fb.group({

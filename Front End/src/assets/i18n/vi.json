@@ -677,6 +677,32 @@
                 }
             }
         },
+        "shiftwork":{
+          "list": {
+            "name": "Tên ca làm việc",
+            "code": "Mã ca làm việc",
+            "table": {
+                "shiftwork-code": "Mã ca làm việc",
+                "shiftwork-description": "Mô tả",
+                "shiftwork-name": "Tên ca làm việc",
+                "shiftworkTime": "Thời gian"
+
+            }
+          },
+          "detail": {
+            "label": {
+                "title-update": "Cập nhật ca làm việc",
+                "title-create": "Thêm mới ca làm việc",
+                "shift-work-name": "Tên ca làm việc",
+                "shift-work-description": "Mô tả",
+                "shift-work-code": "Mã ca làm việc",
+                "shift-work-startTimeAM":"Thời gian bắt đầu AM",
+                "shift-work-endTimeAM":"Thời gian kết thúc AM",
+                "shift-work-startTimePM":"Thời gian bắt đầu PM",
+                "shift-work-endTimePM":"Thời gian kết thúc PM"
+            }
+          }
+        },
         "screen": {
             "list": {
                 "name": "Tên màn hình",
@@ -1104,7 +1130,8 @@
                 "user": "Tài khoản hệ thống",
                 "vacation-type": "Loại ngày nghỉ",
                 "degree": "Bằng cấp",
-                "scope-work": "Vị trí đảm nhiệm"
+                "scope-work": "Vị trí đảm nhiệm",
+                "shift-work": "Ca làm việc"
             }
         }
     },
@@ -1160,7 +1187,8 @@
                 "user": "Tài khoản hệ thống",
                 "vacation-type": "Loại ngày nghỉ",
                 "degree": "Bằng cấp",
-                "scope-work": "Vị trí đảm nhiệm"
+                "scope-work": "Vị trí đảm nhiệm",
+                "shift-work": "Ca làm việc"
             }
         },
         "child": {
@@ -1223,7 +1251,8 @@
             "user": "Tài khoản hệ thống - Dữ liệu chung",
             "vacation-type": "Loại ngày nghỉ - Dữ liệu chung",
             "degree": "Bằng cấp - Dữ liệu chung",
-            "scope-work": "Vị trí đảm nhiệm - Dữ liệu chung"
+            "scope-work": "Vị trí đảm nhiệm - Dữ liệu chung",
+            "shift-work":"Ca làm việc - Dữ liệu chung"
 
         }
     }

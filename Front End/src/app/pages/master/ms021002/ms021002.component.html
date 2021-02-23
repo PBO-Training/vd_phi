@@ -14,7 +14,7 @@
     </div>
     <ng-template #createTitle>
       <h5>{{'master.shiftwork.detail.label.title-create'| translate}}</h5>
-      <!-- <app-mstest (newItemEvent)="back($event)" [item]=" submitForm()"></app-mstest> -->
+
     </ng-template>
     <div class="card-body">
       <form [formGroup]="formData" class="needs-validation" novalidate appFocus>
@@ -66,21 +66,27 @@
               </label>
               <div class="input-group-prepend">
                 <div class="col-md-6 col-6 pl-0 pr-1">
-                <select class="mb-12 form-control form-control-sm" id="starttimehourAM" formControlName="shiftWorkStartHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourAM.errors && submitted) }" >
-                  <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                <select class="mb-12 form-control form-control-sm" id="starttimehourAM" formControlName="shiftWorkStartHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourAM.errors && submitted)||this.formData.controls.shiftWorkStartHourAM.errors?.Err }" >
+                  <option value="" selected disabled>{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                  <option *ngFor="let item of this.hourList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkStartHourAM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkStartHourAM.errors.required && submitted">
-                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} {{'vacation.detail.vacation-hour-unit'| translate}} {{'server-error.001'| translate}}</div>
+                </div>
+                 <div *ngIf="this.formData.controls.shiftWorkStartHourAM.errors?.Err" class="invalid-feedback">
+                  <div >
+                        Start hour is bigger than End hour</div>
                 </div>
                 </div>
                 <div class="col-md-6 col-6 pl-1 pr-0">
                 <select class="mb-12 form-control form-control-sm" id="starttimeminAM" formControlName="shiftWorkStartMinAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartMinAM.errors && submitted) }">
+                  <option value="" selected disabled>{{'vacation.detail.vacation-min-unit'| translate}}</option>
                   <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkStartMinAM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkStartMinAM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-startTimeAM'| translate}} {{'vacation.detail.vacation-min-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
                 </div>
               </div>
@@ -92,21 +98,24 @@
               </label>
               <div class="input-group-prepend">
               <div class="col-md-6 col-6 pl-0 pr-1">
-                <select class="mb-12 form-control form-control-sm" id="endtimehourAM" formControlName="shiftWorkEndHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndHourAM.errors && submitted) }" >
-                  <option *ngFor="let item of this.hourListAM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                <select class="mb-12 form-control form-control-sm" id="endtimehourAM" formControlName="shiftWorkEndHourAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndHourAM.errors && submitted)}" >
+                  <option value="" selected disabled>{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                  <option *ngFor="let item of this.hourList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkEndHourAM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkEndHourAM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} {{'vacation.detail.vacation-hour-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
+
               </div>
               <div class="col-md-6 col-6 pl-1 pr-0">
                 <select class="mb-12 form-control form-control-sm" id="endtimeminAM" formControlName="shiftWorkEndMinAM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndMinAM.errors && submitted) }">
+                  <option value="" selected disabled>{{'vacation.detail.vacation-min-unit'| translate}}</option>
                   <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkEndMinAM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkEndMinAM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-endTimeAM'| translate}} {{'vacation.detail.vacation-min-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
               </div>
               </div>
@@ -120,21 +129,27 @@
             </label>
             <div class="input-group-prepend">
               <div class="col-md-6 col-6 pl-0 pr-1">
-                <select class="mb-12 form-control form-control-sm" id="starttimehourPM" formControlName="shiftWorkStartHourPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourPM.errors && submitted) }" >
-                  <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                <select class="mb-12 form-control form-control-sm" id="starttimehourPM" formControlName="shiftWorkStartHourPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartHourPM.errors && submitted)||this.formData.controls.shiftWorkStartHourPM.errors?.Err }" >
+                  <option value="" selected disabled>{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                  <option *ngFor="let item of this.hourList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkStartHourPM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkStartHourPM.errors.required && submitted">
-                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} {{'vacation.detail.vacation-hour-unit'| translate}} {{'server-error.001'| translate}}</div>
+                </div>
+                <div *ngIf="this.formData.controls.shiftWorkStartHourPM.errors?.Err" class="invalid-feedback">
+                  <div >
+                        Start hour is bigger than End hour</div>
                 </div>
               </div>
               <div class="col-md-6 col-6 pl-1 pr-0">
                 <select class="mb-12 form-control form-control-sm" id="starttimeminPM" formControlName="shiftWorkStartMinPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkStartMinPM.errors && submitted) }" >
+                  <option value="" selected disabled>{{'vacation.detail.vacation-min-unit'| translate}}</option>
                   <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkStartMinPM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkStartMinPM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-startTimePM'| translate}} {{'vacation.detail.vacation-min-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
               </div>
             </div>
@@ -147,20 +162,22 @@
             <div class="input-group-prepend">
               <div class="col-md-6 col-6 pl-0 pr-1">
                 <select class="mb-12 form-control form-control-sm" id="endtimehourPM" formControlName="shiftWorkEndHourPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndHourPM.errors && submitted) }">
-                  <option *ngFor="let item of this.hourListPM; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                  <option value="" selected disabled>{{'vacation.detail.vacation-hour-unit'| translate}}</option>
+                  <option *ngFor="let item of this.hourList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-hour-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkEndHourPM.errors" class="invalid-feedback input-group-prepend ">
                   <div *ngIf="this.formData.controls.shiftWorkEndHourPM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} (Hour) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} {{'vacation.detail.vacation-hour-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
               </div>
               <div class="col-md-6 col-6 pl-1 pr-0">
                 <select class="mb-12 form-control form-control-sm" id="endtimeminPM" formControlName="shiftWorkEndMinPM" [ngClass]="{ 'is-invalid': (this.formData.controls.shiftWorkEndMinPM.errors && submitted) }">
+                  <option value="" selected disabled>{{'vacation.detail.vacation-min-unit'| translate}}</option>
                   <option *ngFor="let item of this.minList; let i = index" value="{{item}}">{{item}} {{'vacation.detail.vacation-min-unit'| translate}}</option>
                 </select>
                 <div *ngIf="this.formData.controls.shiftWorkEndMinPM.errors" class="invalid-feedback input-group-prepend">
                   <div *ngIf="this.formData.controls.shiftWorkEndMinPM.errors.required && submitted" class="ml-1">
-                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} (Min) {{'server-error.001'| translate}}</div>
+                        {{'master.shiftwork.detail.label.shift-work-endTimePM'| translate}} {{'vacation.detail.vacation-min-unit'| translate}} {{'server-error.001'| translate}}</div>
                 </div>
               </div>
             </div>

@@ -21,7 +21,7 @@ export class Translate  {
     @Inject(LOCAL_STORAGE) private storage: StorageService ) {
     }
    public initLanguage() {
-   return new Promise((resolve) => {
+   return new Promise<void>((resolve) => {
       this.translate.addLangs(LANG_LIST.map((lang) => lang.code));
       const language = this.getLanguage();
       if (language) {

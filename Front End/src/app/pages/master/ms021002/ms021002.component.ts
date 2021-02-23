@@ -4,14 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
-import { upperCase } from 'lodash';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { LengthConstant } from 'src/app/common/constant/length';
-import { ValidatorForm } from 'src/app/common/validator/update-validity';
 import { ModalConfirmComponent } from 'src/app/theme/shared/components/modal-confirm/modal-confirm.component';
 import { ToastService } from 'src/app/theme/shared/components/toast-container/toast-service';
-import { MS021001Service } from '../ms021001/ms021001.service';
 import { updateRequest } from './ms021002.i.';
 import { MS021002Service } from './ms021002.service';
 
@@ -25,15 +20,25 @@ export class MS021002Component implements OnInit {
   isDuplicate = false;
   submitted = false;
   isCheckValueDirty = false;
+  isCheckHourAM = false;
+  isCheckHourPM = false;
+  isCheckTimeWork = false;
+  HourWorkSystem = 0;
+  MinWorkSystem = 0;
+  timWorkDefault = {
+    timeWorkHourAM :0,
+    timeWorkMinAM : 0,
+    timeWorkHourPM :0,
+    timeWorkMinPM : 0,
+  };
   req : any;
   formData: FormGroup;
-  hourListAM : any[] = [];
-  hourListPM : any[] = [];
+  hourList : any[] = [];
   minList : any[]=[];
   updRequest : updateRequest;
   maxlenghtName = {value : LengthConstant.MAX_LENGTH_NAME};
   maxlenghtCode = {value : LengthConstant.MAX_LENGTH_CODE};
-  maxlenghtDescription = {value : LengthConstant.MAX_LENGTH_DESCRIPTION};
+  maxlenghtDescription = {value : LengthConstant.MAX_LENGTH_NAME};
   valueOld = {
           shiftWorkID : '',
           shiftWorkCode : '',
@@ -48,7 +53,6 @@ export class MS021002Component implements OnInit {
           shiftWorkEndHourPM : '',
           shiftWorkEndMinPM : ''
   }
-  validator = new ValidatorForm();
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -70,7 +74,7 @@ export class MS021002Component implements OnInit {
         ]),],
       shiftWorkDescriptions: ['',
         Validators.compose([
-          Validators.maxLength(LengthConstant.MAX_LENGTH_DESCRIPTION),
+          Validators.maxLength(LengthConstant.MAX_LENGTH_CODE),
       ]),],
       shiftWorkCode: ['',
         Validators.compose([
@@ -113,10 +117,15 @@ export class MS021002Component implements OnInit {
     });
 
   }
-
+  //Thực hiên event nút Save
   submitForm(){
+    console.log(this.HourWorkSystem);
+    console.log(this.MinWorkSystem);
+
     this.submitted = true;
     this.isCheckValueDirty = this.CheckValue(this.valueOld,this.formData.value);
+    this.isCheckHourAM = this.checkHourAM(this.formData.value.shiftWorkStartHourAM,this.formData.value.shiftWorkEndHourAM);
+    this.isCheckHourPM = this.checkHourPM(this.formData.value.shiftWorkStartHourPM,this.formData.value.shiftWorkEndHourPM);
     this.updRequest = {
       shiftWorkOptionID : this.formData.value.shiftWorkID,
       shiftWorkOptionCode : this.formData.value.shiftWorkCode.toUpperCase(),
@@ -128,35 +137,66 @@ export class MS021002Component implements OnInit {
       shiftWorkOptionEndTimePM : this.formData.value.shiftWorkEndHourPM + ":" + this.formData.value.shiftWorkEndMinPM
     };
     if(!this.formData.invalid){
-     console.log(
-      this.checkTime(this.formData.value.shiftWorkStartHourAM,this.formData.value.shiftWorkStartMinAM,
-                     this.formData.value.shiftWorkEndHourAM,this.formData.value.shiftWorkEndMinAM,
-                     this.formData.value.shiftWorkStartHourPM,this.formData.value.shiftWorkStartMinPM,
-                     this.formData.value.shiftWorkEndHourPM,this.formData.value.shiftWorkEndMinPM));
-      if(this.isUpdate === true  && this.isCheckValueDirty === false){
-        this.ms021002Service.updateShiftwork(this.updRequest).subscribe((resp) =>{
-          if(resp.error === null){
-            this.toastService.show('notification-message.save-success', { classname: 'bg-success text-light', delay: 3000 });
-            this.router.navigate(['/vacation-shift-work']);
+      this.isCheckTimeWork = this.checkTimeInput(this.formData.value.shiftWorkStartHourAM,this.formData.value.shiftWorkStartMinAM,
+                      this.formData.value.shiftWorkEndHourAM,this.formData.value.shiftWorkEndMinAM,
+                      this.formData.value.shiftWorkStartHourPM,this.formData.value.shiftWorkStartMinPM,
+                      this.formData.value.shiftWorkEndHourPM,this.formData.value.shiftWorkEndMinPM,this.HourWorkSystem,this.MinWorkSystem);
+      if(this.isUpdate === true  && this.isCheckValueDirty === false ){
+        if(!this.isCheckHourAM){
+          this.formData.get('shiftWorkStartHourAM').setErrors({
+            Err : true
+          })
+        }
+        if(!this.isCheckHourPM ){
+          this.formData.get('shiftWorkStartHourPM').setErrors({
+            Err : true
+          })
+        }
+        if(this.isCheckHourAM && this.isCheckHourPM) {
+          if(this.isCheckTimeWork === true){
+            this.ms021002Service.updateShiftwork(this.updRequest).subscribe((resp) =>{
+              if(resp.error === null){
+                this.toastService.show('notification-message.save-success', { classname: 'bg-success text-light', delay: 3000 });
+                this.router.navigate(['/vacation-shift-work']);
+              }
+              else{
+                this.formData.get(resp.error.itemName).setErrors({
+                  serverError: resp.error
+                });
+              }
+            })
+          }else if(this.isCheckTimeWork === false){
+            this.toastService.show('Not enough time '+this.HourWorkSystem +' hours', { classname: 'bg-warning text-light', delay: 3000 });
           }
-          else{
-            this.formData.get(resp.error.itemName).setErrors({
-              serverError: resp.error
-            });
-          }
-        })
+        }
       }else if(this.isUpdate === false && this.isCheckValueDirty === false){
-        this.ms021002Service.createShiftwork(this.updRequest).subscribe(resp => {
-          if(resp.error === null){
-            this.toastService.show('notification-message.save-success', { classname: 'bg-success text-light', delay: 3000 });
-            this.router.navigate(['/vacation-shift-work']);
-          }
-          else{
-            this.formData.get(resp.error.itemName).setErrors({
-              serverError: resp.error
+        if(!this.isCheckHourAM){
+          this.formData.get('shiftWorkStartHourAM').setErrors({
+            Err : true
+          })
+        }
+        if(!this.isCheckHourPM ){
+          this.formData.get('shiftWorkStartHourPM').setErrors({
+            Err : true
+          })
+        }
+        if(this.isCheckHourAM && this.isCheckHourPM){
+          if(this.isCheckTimeWork === true ){
+            this.ms021002Service.createShiftwork(this.updRequest).subscribe(resp => {
+              if(resp.error === null){
+                this.toastService.show('notification-message.save-success', { classname: 'bg-success text-light', delay: 3000 });
+                this.router.navigate(['/vacation-shift-work']);
+              }
+              else{
+                this.formData.get(resp.error.itemName).setErrors({
+                  serverError: resp.error
+                });
+              }
             });
+          }else if(this.isCheckTimeWork === false){
+            this.toastService.show('Not enough time '+this.HourWorkSystem +' hours', { classname: 'bg-warning text-light', delay: 3000 });
           }
-        });
+        }
       }else if(this.isCheckValueDirty === true){
         this.router.navigate(['/vacation-shift-work']);
       }
@@ -164,6 +204,7 @@ export class MS021002Component implements OnInit {
   }
 
   initData(){
+    this.getTimeWorkSystem();
     if(this.isUpdate){
       this.req = {"shiftWorkOptionID":this.route.snapshot.params.id}
       this.ms021002Service.getDetailShifwork(this.req).subscribe(resp => {
@@ -230,13 +271,9 @@ export class MS021002Component implements OnInit {
     });
   }
   setHour(){
-    for(let i = 1;i <= 12; i++){
-      this.hourListAM.push(i);
+    for(let i = 1;i <= 24; i++){
+      this.hourList.push(i);
     }
-
-     for(let i = 13;i <= 24; i++){
-       this.hourListPM.push(i);
-     }
   }
   setMin(){
     this.ms021002Service.initStepBreakTime('').subscribe(resp =>{
@@ -246,33 +283,76 @@ export class MS021002Component implements OnInit {
         }else {
           this.minList.push(i);
         }
-
       }
     })
   }
-  checkTime(hourStartAM : any, minuteStartAM:any,
+  getTimeWorkSystem(){
+    this.ms021002Service.getTimeWorkSystem('').subscribe(resp => {
+      this.timWorkDefault.timeWorkHourAM = parseInt(resp.content[0].timeEndWorkAM.split(":", 1)) - parseInt(resp.content[0].timeStartWorkAM.split(":", 1))
+      this.timWorkDefault.timeWorkMinAM =  parseInt(resp.content[0].timeEndWorkAM.slice(-2)) - parseInt(resp.content[0].timeStartWorkAM.slice(-2))
+        if(this.timWorkDefault.timeWorkMinAM < 0 ){
+          this.timWorkDefault.timeWorkHourAM --;
+          this.timWorkDefault.timeWorkMinAM = Math.abs(this.timWorkDefault.timeWorkMinAM);
+        }
+      this.timWorkDefault.timeWorkHourPM = parseInt(resp.content[0].timeEndWorkPM.split(":", 1)) - parseInt(resp.content[0].timeStartWorkPM.split(":", 1))
+      this.timWorkDefault.timeWorkMinPM = parseInt(resp.content[0].timeEndWorkPM.slice(-2)) - parseInt(resp.content[0].timeStartWorkPM.slice(-2))
+        if(this.timWorkDefault.timeWorkMinPM < 0 ){
+          this.timWorkDefault.timeWorkHourPM --;
+          this.timWorkDefault.timeWorkMinPM = Math.abs(this.timWorkDefault.timeWorkMinPM);
+        }
+      this.HourWorkSystem =  this.timWorkDefault.timeWorkHourAM + this.timWorkDefault.timeWorkHourPM;
+      this.MinWorkSystem = this.timWorkDefault.timeWorkMinAM + this.timWorkDefault.timeWorkMinPM;
+        if(this.MinWorkSystem === 60){
+          this.HourWorkSystem ++;
+          this.MinWorkSystem = 0;
+        }
+    })
+  }
+  checkHourAM(hourStartAM : any,hourEndAM : any):boolean{
+    if(parseInt(hourStartAM) < parseInt(hourEndAM)){
+      return true;
+      }else {
+      return false;
+    }
+  }
+  checkHourPM(hourStartPM : any, hourEndPM : any ):boolean{
+    if(parseInt(hourEndPM) > parseInt(hourStartPM)){
+      return true;
+      }else {
+      return false;
+    }
+  }
+
+  checkTimeInput(hourStartAM : any, minuteStartAM:any,
             hourEndAM : any, minuteEndAM:any,
             hourStartPM : any, minuteStartPM:any,
-            hourEndPM : any, minuteEndPM:any ): boolean{
-   let hourAM = parseInt(hourEndAM) - parseInt(hourStartAM)
-   let minuteAM = parseInt(minuteStartAM) + parseInt(minuteEndAM)
-   if( minuteAM === 60){
-     hourAM++;
-     minuteAM = 0;
-   }
-   let hourPM = parseInt(hourEndPM) - parseInt(hourStartPM)
-   let mimutePM = parseInt(minuteStartPM) + parseInt(minuteEndPM)
-   if(mimutePM === 60){
-    hourPM++;
-    mimutePM = 0;
+            hourEndPM : any, minuteEndPM:any, fullHourSystem : any, fullMinSystem : any ): boolean{
+    let hourAM;
+    let minuteAM;
+    let hourPM;
+    let mimutePM;
+
+   if(this.checkHourAM(hourStartAM,hourEndAM)&& this.checkHourPM(hourStartPM,hourEndPM)){
+     hourAM = parseInt(hourEndAM) - parseInt(hourStartAM)
+     minuteAM = parseInt(minuteEndAM) - parseInt(minuteStartAM)
+       if( minuteAM < 0){
+         hourAM --;
+         minuteAM = Math.abs(parseInt(minuteEndAM) - parseInt(minuteStartAM));
+      }
+    hourPM = parseInt(hourEndPM) - parseInt(hourStartPM)
+    mimutePM =  parseInt(minuteEndPM) - parseInt(minuteStartPM)
+       if(mimutePM < 0){
+         hourPM--;
+         mimutePM = Math.abs(parseInt(minuteEndPM) - parseInt(minuteStartPM));
+       }
    }
    let hourFull = hourAM + hourPM;
-   let minuteFull = minuteAM + mimutePM;
-   if(minuteFull === 60){
-    hourFull ++;
-    minuteFull = 0;
-   }
-   if(hourFull === 8 && minuteFull === 0){
+   let minuteFull = mimutePM + minuteAM;
+    if(minuteFull === 60){
+     hourFull ++;
+     minuteFull = 0;
+    }
+   if(hourFull === fullHourSystem && minuteFull === fullMinSystem){
     return true;
 
    }else{
@@ -284,6 +364,7 @@ export class MS021002Component implements OnInit {
     this.setHour();
     this.setMin();
     this.initData();
+
 
   }
 

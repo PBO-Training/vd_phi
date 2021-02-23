@@ -8,3 +8,4 @@ export interface updateRequest {
   shiftWorkOptionEndTimePM : string;
   shiftWorkOptionDescription? : string;
 }
+

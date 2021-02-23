@@ -10,14 +10,14 @@
   </legend>
   <div id="collapseExample" [ngbCollapse]="screenProps.isCollapsed">
     <div class="card-body search-body">
-      <form [formGroup]="formSearch" (ngSubmit)="searchShiftwork()" appFocus>
+      <form [formGroup]="formSearch" appFocus>
         <div class="row">
           <div class="col-sm-3">
               <label for="Code">
                   {{'master.shiftwork.list.code'| translate}}
               </label>
               <!-- <input type="text" class="form-control form-control-sm" formControlName="shiftWorkOptionCode"> -->
-              <ng-select placeholder="All" class="custom" id="shiftworkcode"
+              <ng-select placeholder="{{'ng-select.place-holder-all'|translate}}" class="custom" id="shiftworkcode"
                     formControlName="shiftWorkOptionCode">
                     <ng-option *ngFor="let item of boxShiftWorkCode" [value]="item.shiftWorkOptionCode">
                          {{item.shiftWorkOptionCode}}

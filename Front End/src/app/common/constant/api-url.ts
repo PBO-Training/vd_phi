@@ -253,5 +253,6 @@ export enum ShiftworkApiUrl{
     ShiftworkUpdate ='/ms/ms023001updateshiftworkoption',
     ShiftworkDelete = '/ms/ms023001deleteshiftworkoption',
     ShiftworkCreate = '/ms/ms023001createshiftworkoption',
-    ShiftworkInitBreakTime = '/ms/ms023001init'
+    ShiftworkInitBreakTime = '/ms/ms023001init',
+    ShiftworkGetTimeWorkSystem = '/ms/ms023001gettimeworksystem'
 }

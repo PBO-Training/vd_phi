@@ -23,5 +23,10 @@ export class MS021002Service {
   initStepBreakTime(body:any):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkInitBreakTime}`, body);
   }
+  getTimeWorkSystem(body:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}${url.ShiftworkApiUrl.ShiftworkGetTimeWorkSystem}`, body);
+  }
+  ///
+
 }
 
