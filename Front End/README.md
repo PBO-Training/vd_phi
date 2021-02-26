@@ -8,7 +8,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 * Install Node.js, for more information on installing see [https://nodejs.org/en/](https://nodejs.org/en/)
 
-* Install the Angular CLI, open a terminal window and run the following command: `npm install -g @angular/cli`
+* Install the Angular CLI, open a terminal window and run the following command: `npm install -g @angular/cli@9`
 
 
 ## Development server
